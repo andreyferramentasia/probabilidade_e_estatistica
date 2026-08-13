@@ -1,912 +1,1039 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guia de Estudos - Aula 8 - Probabilidade e Estatística (EAD)</title>
-<meta name="description" content="Guia de Estudos CEAD/UNIGRAN — Aula 8 da disciplina de Probabilidade e Estatística (EAD), com teoria, exemplos em Python e exercícios comentados.">
-<style>
-  :root {
-    --azul-escuro: #1B3A8C;
-    --ciano: #29ABE2;
-    --azul-claro: #D6E8F5;
-    --cinza-claro: #F4F4F4;
-    --cinza-texto: #333333;
-    --atencao-borda: #E0932C;
-    --atencao-fundo: #FFF4E0;
-    --branco: #FFFFFF;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia de Estudos - Aula 8 - Probabilidade e Estatística (EAD)</title>
+  <meta name="description"
+    content="Guia de Estudos CEAD/UNIGRAN — Aula 8 da disciplina de Probabilidade e Estatística (EAD), com teoria, exemplos em Python e exercícios comentados.">
+  <style>
+    :root {
+      --azul-escuro: #1B3A8C;
+      --ciano: #29ABE2;
+      --azul-claro: #D6E8F5;
+      --cinza-claro: #F4F4F4;
+      --cinza-texto: #333333;
+      --atencao-borda: #E0932C;
+      --atencao-fundo: #FFF4E0;
+      --branco: #FFFFFF;
+    }
 
-  * {
-    box-sizing: border-box;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  body {
-    font-family: Georgia, 'Times New Roman', serif;
-    color: var(--cinza-texto);
-    background: #EAEFF6;
-    margin: 0;
-    padding: 0;
-    line-height: 1.75;
-  }
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--cinza-texto);
+      background: #EAEFF6;
+      margin: 0;
+      padding: 0;
+      line-height: 1.75;
+    }
 
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    background: var(--branco);
-    padding: 48px 56px 70px 56px;
-    box-shadow: 0 0 18px rgba(0, 0, 0, 0.12);
-  }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--branco);
+      padding: 48px 56px 70px 56px;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.12);
+    }
 
-  .cabecalho-textual {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-variant: small-caps;
-    font-style: italic;
-    color: var(--azul-escuro);
-    font-size: 1.05em;
-    letter-spacing: 0.5px;
-    padding-bottom: 14px;
-    margin-bottom: 18px;
-  }
+    .cabecalho-textual {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-variant: small-caps;
+      font-style: italic;
+      color: var(--azul-escuro);
+      font-size: 1.05em;
+      letter-spacing: 0.5px;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
 
-  .cabecalho-textual .curso {
-    display: block;
-    font-style: normal;
-    font-variant: normal;
-    font-size: 0.75em;
-    color: var(--ciano);
-    font-weight: bold;
-    margin-top: 4px;
-  }
+    .cabecalho-textual .curso {
+      display: block;
+      font-style: normal;
+      font-variant: normal;
+      font-size: 0.75em;
+      color: var(--ciano);
+      font-weight: bold;
+      margin-top: 4px;
+    }
 
-  .cabecalho-textual .logo {
-    height: 48px;
-    flex-shrink: 0;
-  }
+    .cabecalho-textual .logo {
+      height: 48px;
+      flex-shrink: 0;
+    }
 
-  .capa-cabecalho {
-    display: flex;
-    align-items: flex-start;
-    margin-top: 10px;
-    margin-bottom: 40px;
-  }
+    .capa-cabecalho {
+      display: flex;
+      align-items: flex-start;
+      margin-top: 10px;
+      margin-bottom: 40px;
+    }
 
-  .capa-numero {
-    position: relative;
-    flex-shrink: 0;
-    width: 230px;
-    height: 208px;
-    background: var(--ciano);
-    color: var(--branco);
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    clip-path: polygon(0 0, 100% 0, 100% 76%, 50% 100%, 0 76%);
-    filter: drop-shadow(6px 8px 6px rgba(0, 0, 0, 0.35));
-  }
+    .capa-numero {
+      position: relative;
+      flex-shrink: 0;
+      width: 230px;
+      height: 208px;
+      background: var(--ciano);
+      color: var(--branco);
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      clip-path: polygon(0 0, 100% 0, 100% 76%, 50% 100%, 0 76%);
+      filter: drop-shadow(6px 8px 6px rgba(0, 0, 0, 0.35));
+    }
 
-  .capa-numero .num {
-    font-size: 5em;
-    line-height: 1;
-  }
+    .capa-numero .num {
+      font-size: 5em;
+      line-height: 1;
+    }
 
-  .capa-numero .ord-wrap {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 4px;
-    margin-top: -1.6em;
-  }
+    .capa-numero .ord-wrap {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: 4px;
+      margin-top: -1.6em;
+    }
 
-  .capa-numero .ord {
-    font-size: 1.8em;
-    line-height: 1;
-  }
+    .capa-numero .ord {
+      font-size: 1.8em;
+      line-height: 1;
+    }
 
-  .capa-numero .ord-linha {
-    width: 16px;
-    height: 3px;
-    background: var(--branco);
-    margin-top: 5px;
-  }
+    .capa-numero .ord-linha {
+      width: 16px;
+      height: 3px;
+      background: var(--branco);
+      margin-top: 5px;
+    }
 
-  .capa-aula-fundo {
-    flex-grow: 1;
-    height: 158px;
-    display: flex;
-    align-items: center;
-    padding-left: 40px;
-    background: linear-gradient(to right, #D9D9D9, #FAFAFA);
-    box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.18);
-  }
+    .capa-aula-fundo {
+      flex-grow: 1;
+      height: 158px;
+      display: flex;
+      align-items: center;
+      padding-left: 40px;
+      background: linear-gradient(to right, #D9D9D9, #FAFAFA);
+      box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.18);
+    }
 
-  .capa-aula-fundo span {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-style: italic;
-    font-size: 3em;
-    color: #1A1A1A;
-  }
+    .capa-aula-fundo span {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      font-style: italic;
+      font-size: 3em;
+      color: #1A1A1A;
+    }
 
-  .capa-titulo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    font-size: 1.55em;
-    line-height: 1.4;
-    color: #1A1A1A;
-    margin: 6px 0 26px;
-  }
+    .capa-titulo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 1.55em;
+      line-height: 1.4;
+      color: #1A1A1A;
+      margin: 6px 0 26px;
+    }
 
-  .capa-intro {
-    font-style: italic;
-    text-indent: 0;
-    text-align: justify;
-    hyphens: auto;
-  }
+    .capa-intro {
+      font-style: italic;
+      text-indent: 0;
+      text-align: justify;
+      hyphens: auto;
+    }
 
-  .bloco-header {
-    font-family: Arial, Helvetica, sans-serif;
-    background: var(--azul-escuro);
-    color: var(--branco);
-    text-transform: uppercase;
-    font-weight: bold;
-    padding: 13px 22px;
-    font-size: 1.02em;
-    border-radius: 3px;
-    margin-top: 42px;
-    margin-bottom: 22px;
-    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
-  }
+    .bloco-header {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--azul-escuro);
+      color: var(--branco);
+      text-transform: uppercase;
+      font-weight: bold;
+      padding: 13px 22px;
+      font-size: 1.02em;
+      border-radius: 3px;
+      margin-top: 42px;
+      margin-bottom: 22px;
+      box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+    }
 
-  .secao-titulo {
-    display: flex;
-    align-items: stretch;
-    margin-top: 48px;
-    margin-bottom: 24px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
-  }
+    .secao-titulo {
+      display: flex;
+      align-items: stretch;
+      margin-top: 48px;
+      margin-bottom: 24px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+    }
 
-  .secao-etiqueta {
-    background: var(--azul-escuro);
-    color: var(--branco);
-    padding: 10px 20px;
-    white-space: nowrap;
-    border-radius: 4px 0 0 4px;
-    font-size: 0.95em;
-  }
+    .secao-etiqueta {
+      background: var(--azul-escuro);
+      color: var(--branco);
+      padding: 10px 20px;
+      white-space: nowrap;
+      border-radius: 4px 0 0 4px;
+      font-size: 0.95em;
+    }
 
-  .secao-nome {
-    background: var(--azul-claro);
-    color: var(--azul-escuro);
-    padding: 10px 20px;
-    flex-grow: 1;
-    border-radius: 0 4px 4px 0;
-    font-size: 0.95em;
-  }
+    .secao-nome {
+      background: var(--azul-claro);
+      color: var(--azul-escuro);
+      padding: 10px 20px;
+      flex-grow: 1;
+      border-radius: 0 4px 4px 0;
+      font-size: 0.95em;
+    }
 
-  .subtitulo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: var(--azul-escuro);
-    font-size: 1.02em;
-    margin-top: 22px;
-  }
+    .subtitulo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      color: var(--azul-escuro);
+      font-size: 1.02em;
+      margin-top: 22px;
+    }
 
-  p {
-    margin: 16px 0;
-    text-indent: 1.25cm;
-    text-align: justify;
-    hyphens: auto;
-  }
+    p {
+      margin: 16px 0;
+      text-indent: 1.25cm;
+      text-align: justify;
+      hyphens: auto;
+    }
 
-  .box p,
-  .docente-box p {
-    text-indent: 0;
-    text-align: justify;
-  }
+    .box p,
+    .docente-box p {
+      text-indent: 0;
+      text-align: justify;
+    }
 
-  .box {
-    border-radius: 6px;
-    padding: 20px 24px;
-    margin: 26px 0;
-    page-break-inside: avoid;
-  }
-
-  .box-titulo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.82em;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  .box-conceito {
-    background: var(--azul-claro);
-    border-left: 5px solid var(--azul-escuro);
-  }
-  .box-conceito .box-titulo { color: var(--azul-escuro); }
-
-  .box-exemplo {
-    background: #EAF7FC;
-    border-left: 5px solid var(--ciano);
-  }
-  .box-exemplo .box-titulo { color: #1381AD; }
-
-  .box-atencao {
-    background: var(--atencao-fundo);
-    border-left: 5px solid var(--atencao-borda);
-  }
-  .box-atencao .box-titulo { color: var(--atencao-borda); }
-
-  .box-python {
-    background: #FFFFFF;
-    border: 1px solid #DADCE0;
-    border-radius: 8px;
-    padding: 0;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15);
-  }
-  .codigo-cabecalho {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #F1F3F4;
-    border-bottom: 1px solid #DADCE0;
-    color: #5F6368;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.78em;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 6px 14px;
-  }
-  .botao-play {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #1A73E8;
-    color: #FFFFFF;
-    font-size: 0.65em;
-  }
-  .box-python pre {
-    margin: 0;
-    white-space: pre;
-    overflow-x: auto;
-    padding: 14px 18px;
-    background: #F8F9FA;
-    color: #3C4043;
-    font-family: Consolas, 'Courier New', monospace;
-    font-size: 0.88em;
-  }
-  .cm-kw  { color: #1967D2; font-weight: bold; }
-  .cm-str { color: #188038; }
-  .cm-com { color: #80868B; font-style: italic; }
-  .cm-num { color: #AF00DB; }
-  .cm-bi  { color: #C5221F; }
-
-  .box-exercicio {
-    background: var(--branco);
-    border: 2px solid var(--ciano);
-  }
-  .box-exercicio .box-titulo { color: #1381AD; }
-
-  .box-resumo {
-    background: var(--azul-claro);
-    border: 1px solid var(--azul-escuro);
-    font-style: italic;
-  }
-  .box-resumo .box-titulo { color: var(--azul-escuro); font-style: normal; }
-
-  .box-formula {
-    background: var(--branco);
-    border: 2px solid var(--azul-escuro);
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.05em;
-    font-weight: bold;
-    color: var(--azul-escuro);
-    padding: 22px 18px;
-  }
-  .box-formula .box-titulo {
-    color: var(--ciano);
-    text-align: left;
-  }
-
-  .formula-math {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    font-size: 1.15em;
-    margin: 6px 0;
-  }
-  .fracao {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    vertical-align: middle;
-    line-height: 1.3;
-  }
-  .fracao .num {
-    padding: 0 8px 4px;
-    border-bottom: 2px solid var(--azul-escuro);
-  }
-  .fracao .den {
-    padding: 4px 8px 0;
-  }
-  .nota-formula {
-    display: block;
-    margin-top: 10px;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-weight: normal;
-    font-style: italic;
-    font-size: 0.75em;
-    color: #5F6368;
-  }
-
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 22px 0;
-    font-size: 0.92em;
-  }
-
-  .tabela-wrapper {
-    overflow-x: auto;
-    margin: 26px 0;
-  }
-  .tabela-wrapper table { margin: 0; }
-
-  th {
-    background: var(--azul-escuro);
-    color: var(--branco);
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: left;
-    padding: 12px 14px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
-  }
-
-  td {
-    padding: 11px 14px;
-    border-bottom: 1px solid #ccc;
-  }
-
-  tr:nth-child(even) td {
-    background: var(--cinza-claro);
-  }
-
-  .sumario-item {
-    display: flex;
-    gap: 14px;
-    margin: 14px 0;
-    align-items: baseline;
-  }
-  .sumario-aula {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: var(--ciano);
-    white-space: nowrap;
-  }
-
-  .docente-box {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    background: var(--azul-claro);
-    border-left: 5px solid var(--azul-escuro);
-    border-radius: 6px;
-    padding: 20px;
-  }
-
-  ul, ol {
-    margin: 16px 0;
-    padding-left: 28px;
-  }
-
-  li { margin: 10px 0; }
-
-  .explicacao-codigo {
-    margin: 12px 0 20px 0;
-  }
-
-  .explicacao-codigo p {
-    margin: 3px 0;
-    text-indent: 0;
-    text-align: left;
-  }
-
-  .assinatura {
-    text-align: right;
-    font-style: italic;
-    margin-top: 22px;
-    color: var(--azul-escuro);
-  }
-
-  .figura {
-    margin: 30px 0;
-    text-align: center;
-  }
-  .figura img {
-    max-width: 100%;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  }
-  .figura figcaption {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.8em;
-    color: #5F6368;
-    margin-top: 10px;
-    text-align: left;
-  }
-
-  @media print {
-    body { background: var(--branco); }
-    .container { box-shadow: none; max-width: 100%; padding: 10px; }
-    .box, table, .secao-titulo, .capa-cabecalho, .capa-titulo, .bloco-header, .figura,
-    .docente-box, .tabela-wrapper, .sumario-item {
+    .box {
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin: 26px 0;
       page-break-inside: avoid;
     }
-    .cabecalho-textual { display: none; }
-    @page { size: A4; margin: 2cm; }
-  }
 
-  .pagina-abertura {
-    position: relative;
-  }
+    .box-titulo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.82em;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: block;
+    }
 
-  .capa-cabecalho {
-    position: relative;
-    overflow: visible;
-  }
+    .box-conceito {
+      background: var(--azul-claro);
+      border-left: 5px solid var(--azul-escuro);
+    }
 
-  .curva-decorativa {
-    position: absolute;
-    right: -56px;
-    bottom: -46px;
-    width: 170px;
-    height: 130px;
-    z-index: 0;
-    pointer-events: none;
-  }
+    .box-conceito .box-titulo {
+      color: var(--azul-escuro);
+    }
 
-  .capa-cabecalho > *:not(.curva-decorativa) {
-    position: relative;
-    z-index: 1;
-  }
+    .box-exemplo {
+      background: #EAF7FC;
+      border-left: 5px solid var(--ciano);
+    }
 
-  .nav-capitulos {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 4px;
-    background: var(--azul-escuro);
-    padding: 10px 16px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.85em;
-    font-weight: bold;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  }
+    .box-exemplo .box-titulo {
+      color: #1381AD;
+    }
 
-  .nav-capitulos a {
-    color: var(--branco);
-    text-decoration: none;
-    padding: 8px 14px;
-    border-radius: 4px;
-    transition: background 0.15s;
-  }
+    .box-atencao {
+      background: var(--atencao-fundo);
+      border-left: 5px solid var(--atencao-borda);
+    }
 
-  .nav-capitulos a:hover {
-    background: rgba(255, 255, 255, 0.18);
-  }
+    .box-atencao .box-titulo {
+      color: var(--atencao-borda);
+    }
 
-  .nav-capitulos a.ativo {
-    background: var(--ciano);
-  }
+    .box-python {
+      background: #FFFFFF;
+      border: 1px solid #DADCE0;
+      border-radius: 8px;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15);
+    }
 
-  @media print {
-    .nav-capitulos { display: none; }
-  }
+    .codigo-cabecalho {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #F1F3F4;
+      border-bottom: 1px solid #DADCE0;
+      color: #5F6368;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.78em;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 6px 14px;
+    }
 
-  .skip-link {
-    position: absolute;
-    left: -9999px;
-    top: 0;
-    background: var(--branco);
-    color: var(--azul-escuro);
-    padding: 10px 16px;
-    z-index: 200;
-    border-radius: 0 0 6px 0;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  .skip-link:focus {
-    left: 0;
-  }
+    .botao-play {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #1A73E8;
+      color: #FFFFFF;
+      font-size: 0.65em;
+    }
 
-  .nav-capitulos a:focus-visible {
-    outline: 2px solid var(--branco);
-    outline-offset: 2px;
-  }
+    .box-python pre {
+      margin: 0;
+      white-space: pre;
+      overflow-x: auto;
+      padding: 14px 18px;
+      background: #F8F9FA;
+      color: #3C4043;
+      font-family: Consolas, 'Courier New', monospace;
+      font-size: 0.88em;
+    }
 
-  .secao-nome {
-    margin: 0;
-  }
+    .cm-kw {
+      color: #1967D2;
+      font-weight: bold;
+    }
 
-  .sumario-lista {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+    .cm-str {
+      color: #188038;
+    }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-</style>
+    .cm-com {
+      color: #80868B;
+      font-style: italic;
+    }
+
+    .cm-num {
+      color: #AF00DB;
+    }
+
+    .cm-bi {
+      color: #C5221F;
+    }
+
+    .box-exercicio {
+      background: var(--branco);
+      border: 2px solid var(--ciano);
+    }
+
+    .box-exercicio .box-titulo {
+      color: #1381AD;
+    }
+
+    .box-resumo {
+      background: var(--azul-claro);
+      border: 1px solid var(--azul-escuro);
+      font-style: italic;
+    }
+
+    .box-resumo .box-titulo {
+      color: var(--azul-escuro);
+      font-style: normal;
+    }
+
+    .box-formula {
+      background: var(--branco);
+      border: 2px solid var(--azul-escuro);
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.05em;
+      font-weight: bold;
+      color: var(--azul-escuro);
+      padding: 22px 18px;
+    }
+
+    .box-formula .box-titulo {
+      color: var(--ciano);
+      text-align: left;
+    }
+
+    .formula-math {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 1.15em;
+      margin: 6px 0;
+    }
+
+    .fracao {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      line-height: 1.3;
+    }
+
+    .fracao .num {
+      padding: 0 8px 4px;
+      border-bottom: 2px solid var(--azul-escuro);
+    }
+
+    .fracao .den {
+      padding: 4px 8px 0;
+    }
+
+    .nota-formula {
+      display: block;
+      margin-top: 10px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-weight: normal;
+      font-style: italic;
+      font-size: 0.75em;
+      color: #5F6368;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 22px 0;
+      font-size: 0.92em;
+    }
+
+    .tabela-wrapper {
+      overflow-x: auto;
+      margin: 26px 0;
+    }
+
+    .tabela-wrapper table {
+      margin: 0;
+    }
+
+    th {
+      background: var(--azul-escuro);
+      color: var(--branco);
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: left;
+      padding: 12px 14px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
+    }
+
+    td {
+      padding: 11px 14px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    tr:nth-child(even) td {
+      background: var(--cinza-claro);
+    }
+
+    .sumario-item {
+      display: flex;
+      gap: 14px;
+      margin: 14px 0;
+      align-items: baseline;
+    }
+
+    .sumario-aula {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      color: var(--ciano);
+      white-space: nowrap;
+    }
+
+    .docente-box {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: var(--azul-claro);
+      border-left: 5px solid var(--azul-escuro);
+      border-radius: 6px;
+      padding: 20px;
+    }
+
+    ul,
+    ol {
+      margin: 16px 0;
+      padding-left: 28px;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+
+    .explicacao-codigo {
+      margin: 12px 0 20px 0;
+    }
+
+    .explicacao-codigo p {
+      margin: 3px 0;
+      text-indent: 0;
+      text-align: left;
+    }
+
+    .assinatura {
+      text-align: right;
+      font-style: italic;
+      margin-top: 22px;
+      color: var(--azul-escuro);
+    }
+
+    .figura {
+      margin: 30px 0;
+      text-align: center;
+    }
+
+    .figura img {
+      max-width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .figura figcaption {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.8em;
+      color: #5F6368;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    @media print {
+      body {
+        background: var(--branco);
+      }
+
+      .container {
+        box-shadow: none;
+        max-width: 100%;
+        padding: 10px;
+      }
+
+      .box,
+      table,
+      .secao-titulo,
+      .capa-cabecalho,
+      .capa-titulo,
+      .bloco-header,
+      .figura,
+      .docente-box,
+      .tabela-wrapper,
+      .sumario-item {
+        page-break-inside: avoid;
+      }
+
+      .cabecalho-textual {
+        display: none;
+      }
+
+      @page {
+        size: A4;
+        margin: 2cm;
+      }
+    }
+
+    .pagina-abertura {
+      position: relative;
+    }
+
+    .capa-cabecalho {
+      position: relative;
+      overflow: visible;
+    }
+
+    .curva-decorativa {
+      position: absolute;
+      right: -56px;
+      bottom: -46px;
+      width: 170px;
+      height: 130px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .capa-cabecalho>*:not(.curva-decorativa) {
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-capitulos {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+      background: var(--azul-escuro);
+      padding: 10px 16px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.85em;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .nav-capitulos a {
+      color: var(--branco);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+
+    .nav-capitulos a:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .nav-capitulos a.ativo {
+      background: var(--ciano);
+    }
+
+    @media print {
+      .nav-capitulos {
+        display: none;
+      }
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: var(--branco);
+      color: var(--azul-escuro);
+      padding: 10px 16px;
+      z-index: 200;
+      border-radius: 0 0 6px 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      left: 0;
+    }
+
+    .nav-capitulos a:focus-visible {
+      outline: 2px solid var(--branco);
+      outline-offset: 2px;
+    }
+
+    .secao-nome {
+      margin: 0;
+    }
+
+    .sumario-lista {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
 </head>
+
 <body>
-<a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
-<nav class="nav-capitulos" aria-label="Navegação entre aulas">
-  <a href="Guia_Cap_1_Modelo.html">Aula 01</a>
-  <a href="Guia_Cap_2_Modelo.html">Aula 02</a>
-  <a href="Guia_Cap_3_Modelo.html">Aula 03</a>
-  <a href="Guia_Cap_4_Modelo.html">Aula 04</a>
-  <a href="Guia_Cap_5_Modelo.html">Aula 05</a>
-  <a href="Guia_Cap_6_Modelo.html">Aula 06</a>
-  <a href="Guia_Cap_7_Modelo.html">Aula 07</a>
-  <a href="Guia_Cap_8_Modelo.html" class="ativo" aria-current="page">Aula 08</a>
-</nav>
-<div class="container">
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
+  <nav class="nav-capitulos" aria-label="Navegação entre aulas">
+    <a href="index.html">Aula 01</a>
+    <a href="Guia_Cap_2_Modelo.html">Aula 02</a>
+    <a href="Guia_Cap_3_Modelo.html">Aula 03</a>
+    <a href="Guia_Cap_4_Modelo.html">Aula 04</a>
+    <a href="Guia_Cap_5_Modelo.html">Aula 05</a>
+    <a href="Guia_Cap_6_Modelo.html">Aula 06</a>
+    <a href="Guia_Cap_7_Modelo.html">Aula 07</a>
+    <a href="Guia_Cap_8_Modelo.html" class="ativo" aria-current="page">Aula 08</a>
+  </nav>
+  <div class="container">
 
-  <header class="cabecalho-textual">
-    <div>
-      CEAD/UNIGRAN · Guia de Estudos
-      <span class="curso">PROBABILIDADE E ESTATÍSTICA (EAD)</span>
-    </div>
-    <img class="logo" src="imagens/logo-unigran.png" alt="Logo UNIGRAN CEAD">
-  </header>
-  <main id="conteudo-principal">
+    <header class="cabecalho-textual">
+      <div>
+        CEAD/UNIGRAN · Guia de Estudos
+        <span class="curso">PROBABILIDADE E ESTATÍSTICA (EAD)</span>
+      </div>
+      <img class="logo" src="imagens/logo-unigran.png" alt="Logo UNIGRAN CEAD">
+    </header>
+    <main id="conteudo-principal">
 
-  <div class="pagina-abertura">
-    <div class="capa-cabecalho">
-      <div class="capa-numero"><span class="num">8</span><span class="ord-wrap"><span class="ord">a</span><span class="ord-linha"></span></span></div>
-      <div class="capa-aula-fundo"><span>Aula</span></div>
-      <svg class="curva-decorativa" viewBox="0 0 170 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <path d="M170,130 L170,20 C110,5 75,55 90,85 C102,110 55,130 0,120 L0,130 Z" fill="#29ABE2"/>
-        <path d="M170,130 L170,50 C130,40 105,75 118,95 C128,112 85,130 40,130 Z" fill="#1B3A8C" opacity="0.55"/>
-      </svg>
-    </div>
+      <div class="pagina-abertura">
+        <div class="capa-cabecalho">
+          <div class="capa-numero"><span class="num">8</span><span class="ord-wrap"><span class="ord">a</span><span
+                class="ord-linha"></span></span></div>
+          <div class="capa-aula-fundo"><span>Aula</span></div>
+          <svg class="curva-decorativa" viewBox="0 0 170 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+            focusable="false">
+            <path d="M170,130 L170,20 C110,5 75,55 90,85 C102,110 55,130 0,120 L0,130 Z" fill="#29ABE2" />
+            <path d="M170,130 L170,50 C130,40 105,75 118,95 C128,112 85,130 40,130 Z" fill="#1B3A8C" opacity="0.55" />
+          </svg>
+        </div>
 
-    <h1 class="capa-titulo">Como prever um valor a partir de outro?</h1>
+        <h1 class="capa-titulo">Como prever um valor a partir de outro?</h1>
 
-    <p class="capa-intro">
-      Na Aula 7 aprendemos a medir a força de uma relação entre duas
-      variáveis com a correlação. Agora damos o próximo passo: quando
-      essa relação é forte o bastante, podemos traçar uma reta que
-      resume o padrão dos dados e usá-la para prever o valor de uma
-      variável a partir da outra. É a ideia central da regressão linear,
-      fechando o ciclo que começamos com o diagrama de dispersão.
-    </p>
-    <div class="assinatura">Grande abraço, Prof. Andrey</div>
-  </div>
+        <p class="capa-intro">
+          Na Aula 7 aprendemos a medir a força de uma relação entre duas
+          variáveis com a correlação. Agora damos o próximo passo: quando
+          essa relação é forte o bastante, podemos traçar uma reta que
+          resume o padrão dos dados e usá-la para prever o valor de uma
+          variável a partir da outra. É a ideia central da regressão linear,
+          fechando o ciclo que começamos com o diagrama de dispersão.
+        </p>
+        <div class="assinatura">Grande abraço, Prof. Andrey</div>
+      </div>
 
-  <h2 class="bloco-header">Objetivos de Aprendizagem</h2>
-  <p>Ao término desta aula, vocês serão capazes de:</p>
-  <ul>
-    <li>Reconhecer quando é adequado ajustar uma reta de regressão a um
-      conjunto de dados;</li>
-    <li>Identificar a variável explicativa (X) e a variável resposta
-      (Y) em um problema de previsão;</li>
-    <li>Calcular a inclinação e o intercepto da reta de regressão a
-      partir das "cinco grandes" estatísticas;</li>
-    <li>Interpretar a inclinação e o intercepto de uma reta de
-      regressão;</li>
-    <li>Fazer previsões usando a reta de regressão e reconhecer os
-      riscos da extrapolação.</li>
-  </ul>
+      <h2 class="bloco-header">Objetivos de Aprendizagem</h2>
+      <p>Ao término desta aula, vocês serão capazes de:</p>
+      <ul>
+        <li>Reconhecer quando é adequado ajustar uma reta de regressão a um
+          conjunto de dados;</li>
+        <li>Identificar a variável explicativa (X) e a variável resposta
+          (Y) em um problema de previsão;</li>
+        <li>Calcular a inclinação e o intercepto da reta de regressão a
+          partir das "cinco grandes" estatísticas;</li>
+        <li>Interpretar a inclinação e o intercepto de uma reta de
+          regressão;</li>
+        <li>Fazer previsões usando a reta de regressão e reconhecer os
+          riscos da extrapolação.</li>
+      </ul>
 
-  <h2 class="bloco-header">Seções de Estudo</h2>
-  <ol class="sumario-lista">
-  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 1</span> A reta de regressão: prevendo Y a partir de X</li>
-  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 2</span> Calculando a inclinação e o intercepto</li>
-  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 3</span> Fazendo previsões e evitando armadilhas</li>
-  </ol>
+      <h2 class="bloco-header">Seções de Estudo</h2>
+      <ol class="sumario-lista">
+        <li class="sumario-item"><span class="sumario-aula">SEÇÃO 1</span> A reta de regressão: prevendo Y a partir de X
+        </li>
+        <li class="sumario-item"><span class="sumario-aula">SEÇÃO 2</span> Calculando a inclinação e o intercepto</li>
+        <li class="sumario-item"><span class="sumario-aula">SEÇÃO 3</span> Fazendo previsões e evitando armadilhas</li>
+      </ol>
 
-  <!-- SEÇÃO 1 -->
-  <div class="secao-titulo">
-    <div class="secao-etiqueta">SEÇÃO 1</div>
-    <h3 class="secao-nome">A reta de regressão: prevendo Y a partir de X</h3>
-  </div>
+      <!-- SEÇÃO 1 -->
+      <div class="secao-titulo">
+        <div class="secao-etiqueta">SEÇÃO 1</div>
+        <h3 class="secao-nome">A reta de regressão: prevendo Y a partir de X</h3>
+      </div>
 
-  <p>
-    Quando duas variáveis numéricas têm uma correlação pelo menos
-    moderada (|r| ≥ 0,50) e o diagrama de dispersão mostra um padrão
-    linear, podemos traçar a <strong>reta de regressão</strong>: a
-    reta que melhor se ajusta aos pontos e que serve para prever o
-    valor médio de uma variável a partir da outra.
-  </p>
-  <p>
-    A variável usada para prever é chamada de <strong>variável
-    explicativa</strong> (X); a variável que se quer prever é a
-    <strong>variável resposta</strong> (Y). Diferente da correlação,
-    em que X e Y podem trocar de lugar livremente, na regressão essa
-    escolha importa: X é sempre o que você já sabe, Y é sempre o que
-    você quer descobrir.
-  </p>
+      <p>
+        Quando duas variáveis numéricas têm uma correlação pelo menos
+        moderada (|r| ≥ 0,50) e o diagrama de dispersão mostra um padrão
+        linear, podemos traçar a <strong>reta de regressão</strong>: a
+        reta que melhor se ajusta aos pontos e que serve para prever o
+        valor médio de uma variável a partir da outra.
+      </p>
+      <p>
+        A variável usada para prever é chamada de <strong>variável
+          explicativa</strong> (X); a variável que se quer prever é a
+        <strong>variável resposta</strong> (Y). Diferente da correlação,
+        em que X e Y podem trocar de lugar livremente, na regressão essa
+        escolha importa: X é sempre o que você já sabe, Y é sempre o que
+        você quer descobrir.
+      </p>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo cotidiano</span>
-    Usar "horas de estudo" para prever a "nota da prova": horas de
-    estudo é a variável explicativa (X), porque já sabemos esse valor
-    antes da prova; a nota é a variável resposta (Y), o que queremos
-    prever.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo cotidiano</span>
+        Usar "horas de estudo" para prever a "nota da prova": horas de
+        estudo é a variável explicativa (X), porque já sabemos esse valor
+        antes da prova; a nota é a variável resposta (Y), o que queremos
+        prever.
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo em Tecnologia</span>
-    Na Aula 7, vimos que o número de seguidores de uma conta de rede
-    social tem correlação forte (r ≈ 0,90) com a média de curtidas por
-    publicação. Como a relação é forte e linear, podemos usar o número
-    de seguidores (X) para prever a média de curtidas (Y) de uma
-    conta.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo em Tecnologia</span>
+        Na Aula 7, vimos que o número de seguidores de uma conta de rede
+        social tem correlação forte (r ≈ 0,90) com a média de curtidas por
+        publicação. Como a relação é forte e linear, podemos usar o número
+        de seguidores (X) para prever a média de curtidas (Y) de uma
+        conta.
+      </div>
 
-  <figure class="figura">
-    <img src="imagens/secao1-reta-seguidores.jpg" alt="Diagrama de dispersão de seguidores e curtidas médias com a reta de regressão ajustada aos pontos" loading="lazy" decoding="async">
-    <figcaption>Figura 1 – A mesma relação entre seguidores e curtidas
-    médias da Aula 7, agora com a reta de regressão ajustada aos
-    pontos. Fonte: elaborado pelo autor. Acesso em: 07 jul.
-    2026.</figcaption>
-  </figure>
+      <figure class="figura">
+        <img src="imagens/secao1-reta-seguidores.jpg"
+          alt="Diagrama de dispersão de seguidores e curtidas médias com a reta de regressão ajustada aos pontos"
+          loading="lazy" decoding="async">
+        <figcaption>Figura 1 – A mesma relação entre seguidores e curtidas
+          médias da Aula 7, agora com a reta de regressão ajustada aos
+          pontos. Fonte: elaborado pelo autor. Acesso em: 07 jul.
+          2026.</figcaption>
+      </figure>
 
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Condição</th><th scope="col">O que verificar</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Padrão linear</td><td>O diagrama de dispersão lembra uma reta, não uma curva</td></tr>
-    <tr><td>Correlação suficiente</td><td>|r| é pelo menos 0,50 (moderada a forte)</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Condição</th>
+              <th scope="col">O que verificar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Padrão linear</td>
+              <td>O diagrama de dispersão lembra uma reta, não uma curva</td>
+            </tr>
+            <tr>
+              <td>Correlação suficiente</td>
+              <td>|r| é pelo menos 0,50 (moderada a forte)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <div class="box box-atencao">
-    <span class="box-titulo">Atenção</span>
-    Nunca ajuste uma reta de regressão sem antes checar as duas
-    condições da tabela acima. Usar uma reta em dados fracamente
-    correlacionados ou com padrão curvo produz previsões sem sentido.
-  </div>
+      <div class="box box-atencao">
+        <span class="box-titulo">Atenção</span>
+        Nunca ajuste uma reta de regressão sem antes checar as duas
+        condições da tabela acima. Usar uma reta em dados fracamente
+        correlacionados ou com padrão curvo produz previsões sem sentido.
+      </div>
 
-  <div class="box box-formula">
-    <span class="box-titulo">Fórmula destacada</span>
-    <div class="formula-math">
-      <span>y = m·x + b</span>
-    </div>
-    <span class="nota-formula">m é a inclinação da reta; b é o intercepto (onde a reta cruza o eixo y)</span>
-  </div>
+      <div class="box box-formula">
+        <span class="box-titulo">Fórmula destacada</span>
+        <div class="formula-math">
+          <span>y = m·x + b</span>
+        </div>
+        <span class="nota-formula">m é a inclinação da reta; b é o intercepto (onde a reta cruza o eixo y)</span>
+      </div>
 
-  <div class="box box-resumo">
-    <span class="box-titulo">Resumo da Seção 1</span>
-    A reta de regressão prevê a variável resposta (Y) a partir da
-    variável explicativa (X), mas só deve ser usada quando o padrão é
-    linear e a correlação é pelo menos moderada.
-  </div>
+      <div class="box box-resumo">
+        <span class="box-titulo">Resumo da Seção 1</span>
+        A reta de regressão prevê a variável resposta (Y) a partir da
+        variável explicativa (X), mas só deve ser usada quando o padrão é
+        linear e a correlação é pelo menos moderada.
+      </div>
 
-  <!-- SEÇÃO 2 -->
-  <div class="secao-titulo">
-    <div class="secao-etiqueta">SEÇÃO 2</div>
-    <h3 class="secao-nome">Calculando a inclinação e o intercepto</h3>
-  </div>
+      <!-- SEÇÃO 2 -->
+      <div class="secao-titulo">
+        <div class="secao-etiqueta">SEÇÃO 2</div>
+        <h3 class="secao-nome">Calculando a inclinação e o intercepto</h3>
+      </div>
 
-  <p>
-    Para encontrar a reta de regressão, primeiro reunimos as
-    <strong>"cinco grandes" estatísticas</strong>: a média de x (x̄), a
-    média de y (ȳ), o desvio-padrão de x (sx), o desvio-padrão de y
-    (sy) e a correlação entre x e y (r). Com esses cinco números,
-    calculamos a inclinação (m) e o intercepto (b) da reta.
-  </p>
-  <p>
-    A <strong>inclinação</strong> mostra o quanto y muda, em média,
-    para cada unidade que x aumenta. O <strong>intercepto</strong> é o
-    valor previsto de y quando x é igual a zero, o ponto onde a reta
-    cruza o eixo vertical.
-  </p>
+      <p>
+        Para encontrar a reta de regressão, primeiro reunimos as
+        <strong>"cinco grandes" estatísticas</strong>: a média de x (x̄), a
+        média de y (ȳ), o desvio-padrão de x (sx), o desvio-padrão de y
+        (sy) e a correlação entre x e y (r). Com esses cinco números,
+        calculamos a inclinação (m) e o intercepto (b) da reta.
+      </p>
+      <p>
+        A <strong>inclinação</strong> mostra o quanto y muda, em média,
+        para cada unidade que x aumenta. O <strong>intercepto</strong> é o
+        valor previsto de y quando x é igual a zero, o ponto onde a reta
+        cruza o eixo vertical.
+      </p>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo cotidiano</span>
-    Se a inclinação entre horas de estudo e nota da prova é 5, isso
-    significa que, em média, cada hora extra de estudo está associada
-    a 5 pontos a mais na nota.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo cotidiano</span>
+        Se a inclinação entre horas de estudo e nota da prova é 5, isso
+        significa que, em média, cada hora extra de estudo está associada
+        a 5 pontos a mais na nota.
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo em Tecnologia</span>
-    Retomando os dados de stories publicados (x) e respostas recebidas
-    (y) da Aula 7: x̄ = 4, ȳ = 4, sx = 2, sy = 1 e r = 0,50. Essas são
-    as "cinco grandes" estatísticas que vamos usar para calcular a
-    reta de regressão no exemplo resolvido desta aula.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo em Tecnologia</span>
+        Retomando os dados de stories publicados (x) e respostas recebidas
+        (y) da Aula 7: x̄ = 4, ȳ = 4, sx = 2, sy = 1 e r = 0,50. Essas são
+        as "cinco grandes" estatísticas que vamos usar para calcular a
+        reta de regressão no exemplo resolvido desta aula.
+      </div>
 
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Estatística</th><th scope="col">Valor</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>x̄ (média de x)</td><td>4</td></tr>
-    <tr><td>ȳ (média de y)</td><td>4</td></tr>
-    <tr><td>sx (desvio-padrão de x)</td><td>2</td></tr>
-    <tr><td>sy (desvio-padrão de y)</td><td>1</td></tr>
-    <tr><td>r (correlação)</td><td>0,50</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Estatística</th>
+              <th scope="col">Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>x̄ (média de x)</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>ȳ (média de y)</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>sx (desvio-padrão de x)</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>sy (desvio-padrão de y)</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>r (correlação)</td>
+              <td>0,50</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <div class="box box-atencao">
-    <span class="box-titulo">Atenção</span>
-    Calcule sempre a inclinação (m) antes do intercepto (b): a fórmula
-    do intercepto depende do valor de m. O sinal da inclinação sempre
-    acompanha o sinal da correlação: r positivo gera m positivo; r
-    negativo gera m negativo.
-  </div>
+      <div class="box box-atencao">
+        <span class="box-titulo">Atenção</span>
+        Calcule sempre a inclinação (m) antes do intercepto (b): a fórmula
+        do intercepto depende do valor de m. O sinal da inclinação sempre
+        acompanha o sinal da correlação: r positivo gera m positivo; r
+        negativo gera m negativo.
+      </div>
 
-  <div class="box box-formula">
-    <span class="box-titulo">Fórmula destacada</span>
-    <div class="formula-math">
-      <span>m = r ·</span>
-      <span class="fracao"><span class="num">sy</span><span class="den">sx</span></span>
-    </div>
-    <span class="nota-formula">b = ȳ − m · x̄ (calcule m primeiro, depois use esse valor para achar b)</span>
-  </div>
+      <div class="box box-formula">
+        <span class="box-titulo">Fórmula destacada</span>
+        <div class="formula-math">
+          <span>m = r ·</span>
+          <span class="fracao"><span class="num">sy</span><span class="den">sx</span></span>
+        </div>
+        <span class="nota-formula">b = ȳ − m · x̄ (calcule m primeiro, depois use esse valor para achar b)</span>
+      </div>
 
-  <div class="box box-resumo">
-    <span class="box-titulo">Resumo da Seção 2</span>
-    As "cinco grandes" estatísticas (x̄, ȳ, sx, sy, r) permitem
-    calcular a inclinação (m = r ·
-    <span class="fracao"><span class="num">sy</span><span class="den">sx</span></span>)
-    e o intercepto (b = ȳ − m · x̄) da reta de regressão.
-  </div>
+      <div class="box box-resumo">
+        <span class="box-titulo">Resumo da Seção 2</span>
+        As "cinco grandes" estatísticas (x̄, ȳ, sx, sy, r) permitem
+        calcular a inclinação (m = r ·
+        <span class="fracao"><span class="num">sy</span><span class="den">sx</span></span>)
+        e o intercepto (b = ȳ − m · x̄) da reta de regressão.
+      </div>
 
-  <!-- SEÇÃO 3 -->
-  <div class="secao-titulo">
-    <div class="secao-etiqueta">SEÇÃO 3</div>
-    <h3 class="secao-nome">Fazendo previsões e evitando armadilhas</h3>
-  </div>
+      <!-- SEÇÃO 3 -->
+      <div class="secao-titulo">
+        <div class="secao-etiqueta">SEÇÃO 3</div>
+        <h3 class="secao-nome">Fazendo previsões e evitando armadilhas</h3>
+      </div>
 
-  <p>
-    Com a reta y = m·x + b em mãos, prever y para um novo valor de x é
-    simples: basta substituir x na equação e calcular. O resultado é
-    uma previsão para o valor médio de y, não uma certeza absoluta.
-  </p>
-  <p>
-    O maior cuidado é a <strong>extrapolação</strong>: usar a reta para
-    prever y com valores de x fora do intervalo que foi realmente
-    observado nos dados. Fora desse intervalo, não há garantia de que
-    o padrão linear continue valendo.
-  </p>
+      <p>
+        Com a reta y = m·x + b em mãos, prever y para um novo valor de x é
+        simples: basta substituir x na equação e calcular. O resultado é
+        uma previsão para o valor médio de y, não uma certeza absoluta.
+      </p>
+      <p>
+        O maior cuidado é a <strong>extrapolação</strong>: usar a reta para
+        prever y com valores de x fora do intervalo que foi realmente
+        observado nos dados. Fora desse intervalo, não há garantia de que
+        o padrão linear continue valendo.
+      </p>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo cotidiano</span>
-    Se os dados de horas de estudo variam de 1 a 10 horas, prever a
-    nota de quem estudou 50 horas é extrapolação: não há garantia de
-    que a reta continue valendo tão longe do intervalo observado.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo cotidiano</span>
+        Se os dados de horas de estudo variam de 1 a 10 horas, prever a
+        nota de quem estudou 50 horas é extrapolação: não há garantia de
+        que a reta continue valendo tão longe do intervalo observado.
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo em Tecnologia</span>
-    A reta ajustada com contas de 5 a 80 mil seguidores não deve ser
-    usada para prever a média de curtidas de uma conta com 2 milhões
-    de seguidores: esse valor de x está muito fora do intervalo
-    observado nos dados originais.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo em Tecnologia</span>
+        A reta ajustada com contas de 5 a 80 mil seguidores não deve ser
+        usada para prever a média de curtidas de uma conta com 2 milhões
+        de seguidores: esse valor de x está muito fora do intervalo
+        observado nos dados originais.
+      </div>
 
-  <figure class="figura">
-    <img src="imagens/secao3-extrapolacao.jpg" alt="Reta de regressão dos dados de stories e respostas, com a região observada em azul e as regiões de extrapolação em laranja claro nas duas pontas" loading="lazy" decoding="async">
-    <figcaption>Figura 2 – Fora do intervalo observado (área
-    sombreada), a reta deixa de ser confiável: isso é extrapolação.
-    Fonte: elaborado pelo autor. Acesso em: 07 jul. 2026.</figcaption>
-  </figure>
+      <figure class="figura">
+        <img src="imagens/secao3-extrapolacao.jpg"
+          alt="Reta de regressão dos dados de stories e respostas, com a região observada em azul e as regiões de extrapolação em laranja claro nas duas pontas"
+          loading="lazy" decoding="async">
+        <figcaption>Figura 2 – Fora do intervalo observado (área
+          sombreada), a reta deixa de ser confiável: isso é extrapolação.
+          Fonte: elaborado pelo autor. Acesso em: 07 jul. 2026.</figcaption>
+      </figure>
 
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Armadilha</th><th scope="col">Por que evitar</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Extrapolação</td><td>Prever y para x fora do intervalo observado nos dados</td></tr>
-    <tr><td>Intercepto sem sentido</td><td>Nem sempre x = 0 é uma situação real ou observada</td></tr>
-    <tr><td>Outliers</td><td>Pontos distantes da reta podem distorcer a previsão</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Armadilha</th>
+              <th scope="col">Por que evitar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Extrapolação</td>
+              <td>Prever y para x fora do intervalo observado nos dados</td>
+            </tr>
+            <tr>
+              <td>Intercepto sem sentido</td>
+              <td>Nem sempre x = 0 é uma situação real ou observada</td>
+            </tr>
+            <tr>
+              <td>Outliers</td>
+              <td>Pontos distantes da reta podem distorcer a previsão</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <div class="box box-atencao">
-    <span class="box-titulo">Atenção</span>
-    O intercepto (b) nem sempre tem uma interpretação útil. Se os
-    dados não incluem valores de x próximos de zero, o intercepto é
-    apenas um resultado matemático da fórmula, não uma previsão
-    confiável.
-  </div>
+      <div class="box box-atencao">
+        <span class="box-titulo">Atenção</span>
+        O intercepto (b) nem sempre tem uma interpretação útil. Se os
+        dados não incluem valores de x próximos de zero, o intercepto é
+        apenas um resultado matemático da fórmula, não uma previsão
+        confiável.
+      </div>
 
-  <div class="box box-formula">
-    <span class="box-titulo">Fórmula destacada</span>
-    <div class="formula-math">
-      <span>y = m·x + b</span>
-    </div>
-    <span class="nota-formula">válida apenas para valores de x dentro do intervalo observado nos dados</span>
-  </div>
+      <div class="box box-formula">
+        <span class="box-titulo">Fórmula destacada</span>
+        <div class="formula-math">
+          <span>y = m·x + b</span>
+        </div>
+        <span class="nota-formula">válida apenas para valores de x dentro do intervalo observado nos dados</span>
+      </div>
 
-  <div class="box box-resumo">
-    <span class="box-titulo">Resumo da Seção 3</span>
-    Prever y é substituir x na equação da reta, mas a previsão só é
-    confiável dentro do intervalo de x observado nos dados; fora dele,
-    é extrapolação.
-  </div>
+      <div class="box box-resumo">
+        <span class="box-titulo">Resumo da Seção 3</span>
+        Prever y é substituir x na equação da reta, mas a previsão só é
+        confiável dentro do intervalo de x observado nos dados; fora dele,
+        é extrapolação.
+      </div>
 
-  <h2 class="bloco-header">Exemplo Matemático Resolvido</h2>
-  <p>
-    Usando as "cinco grandes" estatísticas dos stories publicados (x)
-    e respostas recebidas (y) da Aula 7 (x̄ = 4, ȳ = 4, sx = 2, sy = 1,
-    r = 0,50), encontre a reta de regressão e preveja quantas respostas
-    são esperadas em um dia com 5 stories publicados.
-  </p>
-  <ol>
-    <li><strong>Dados:</strong> x̄ = 4; ȳ = 4; sx = 2; sy = 1; r = 0,50</li>
-    <li><strong>Fórmula:</strong> m = r ·
-      <span class="fracao"><span class="num">sy</span><span class="den">sx</span></span>;
-      b = ȳ − m · x̄</li>
-    <li><strong>Substituição:</strong> m = 0,50 ·
-      <span class="fracao"><span class="num">1</span><span class="den">2</span></span>;
-      depois b = 4 − m · 4</li>
-    <li><strong>Cálculo:</strong> m = 0,25; b = 4 − (0,25 × 4) = 4 − 1 =
-      3; reta: y = 0,25x + 3</li>
-    <li><strong>Interpretação:</strong> a cada story a mais publicado
-      por dia, espera-se, em média, 0,25 resposta a mais. Para um dia
-      com 5 stories, a reta prevê y = 0,25 × 5 + 3 = 4,25 respostas.
-      O intercepto (3) seria a previsão para 0 stories, mas x = 0
-      está fora do intervalo observado (2 a 6 stories), então essa
-      previsão específica não é confiável.</li>
-  </ol>
+      <h2 class="bloco-header">Exemplo Matemático Resolvido</h2>
+      <p>
+        Usando as "cinco grandes" estatísticas dos stories publicados (x)
+        e respostas recebidas (y) da Aula 7 (x̄ = 4, ȳ = 4, sx = 2, sy = 1,
+        r = 0,50), encontre a reta de regressão e preveja quantas respostas
+        são esperadas em um dia com 5 stories publicados.
+      </p>
+      <ol>
+        <li><strong>Dados:</strong> x̄ = 4; ȳ = 4; sx = 2; sy = 1; r = 0,50</li>
+        <li><strong>Fórmula:</strong> m = r ·
+          <span class="fracao"><span class="num">sy</span><span class="den">sx</span></span>;
+          b = ȳ − m · x̄
+        </li>
+        <li><strong>Substituição:</strong> m = 0,50 ·
+          <span class="fracao"><span class="num">1</span><span class="den">2</span></span>;
+          depois b = 4 − m · 4
+        </li>
+        <li><strong>Cálculo:</strong> m = 0,25; b = 4 − (0,25 × 4) = 4 − 1 =
+          3; reta: y = 0,25x + 3</li>
+        <li><strong>Interpretação:</strong> a cada story a mais publicado
+          por dia, espera-se, em média, 0,25 resposta a mais. Para um dia
+          com 5 stories, a reta prevê y = 0,25 × 5 + 3 = 4,25 respostas.
+          O intercepto (3) seria a previsão para 0 stories, mas x = 0
+          está fora do intervalo observado (2 a 6 stories), então essa
+          previsão específica não é confiável.</li>
+      </ol>
 
-  <h2 class="bloco-header">Exemplo em Python</h2>
-  <p>
-    O módulo <code>statistics</code> também tem a função
-    <code>linear_regression</code>, que calcula diretamente a
-    inclinação e o intercepto da reta de regressão. O programa abaixo
-    repete o cálculo do exemplo resolvido e faz a previsão para 5
-    stories.
-  </p>
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python"><span class="cm-kw">import</span> statistics
+      <h2 class="bloco-header">Exemplo em Python</h2>
+      <p>
+        O módulo <code>statistics</code> também tem a função
+        <code>linear_regression</code>, que calcula diretamente a
+        inclinação e o intercepto da reta de regressão. O programa abaixo
+        repete o cálculo do exemplo resolvido e faz a previsão para 5
+        stories.
+      </p>
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python"><span class="cm-kw">import</span> statistics
 
 stories = [<span class="cm-num">2</span>, <span class="cm-num">4</span>, <span class="cm-num">6</span>]
 respostas = [<span class="cm-num">3</span>, <span class="cm-num">5</span>, <span class="cm-num">4</span>]
@@ -919,49 +1046,49 @@ reta = statistics.linear_regression(stories, respostas)
 previsao = reta.slope * <span class="cm-num">5</span> + reta.intercept
 <span class="cm-bi">print</span>(<span class="cm-str">f"Previsão para 5 stories: {previsao} respostas"</span>)
 </code></pre>
-  </div>
-  <div class="explicacao-codigo">
-    <p><strong>Entrada:</strong> listas com o número de stories e de
-      respostas em 3 dias.</p>
-    <p><strong>Processamento:</strong> <code>statistics.linear_regression</code>
-      calcula m e b diretamente a partir dos pares (x, y); em seguida,
-      a equação da reta é usada para prever y quando x = 5.</p>
-    <p><strong>Saída:</strong> "Inclinação (m): 0.25", "Intercepto (b):
-      3.0" e "Previsão para 5 stories: 4.25 respostas".</p>
-    <p><strong>Interpretação:</strong> o resultado confirma o cálculo
-      manual, incluindo a previsão de 4,25 respostas para um dia com 5
-      stories, um valor dentro do intervalo observado nos dados.</p>
-  </div>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Entrada:</strong> listas com o número de stories e de
+          respostas em 3 dias.</p>
+        <p><strong>Processamento:</strong> <code>statistics.linear_regression</code>
+          calcula m e b diretamente a partir dos pares (x, y); em seguida,
+          a equação da reta é usada para prever y quando x = 5.</p>
+        <p><strong>Saída:</strong> "Inclinação (m): 0.25", "Intercepto (b):
+          3.0" e "Previsão para 5 stories: 4.25 respostas".</p>
+        <p><strong>Interpretação:</strong> o resultado confirma o cálculo
+          manual, incluindo a previsão de 4,25 respostas para um dia com 5
+          stories, um valor dentro do intervalo observado nos dados.</p>
+      </div>
 
-  <h2 class="bloco-header">Exercícios</h2>
+      <h2 class="bloco-header">Exercícios</h2>
 
-  <div class="box box-exercicio">
-    <span class="box-titulo">Exercício 1</span>
-    Usando os dados da Aula 7 sobre horas de uso do celular (x) e
-    notificações abertas (y): x = [2, 3, 4, 5, 6]; y = [10, 12, 15, 14,
-    20]. Escreva um programa em Python, usando
-    <code>statistics.linear_regression</code>, que calcule a
-    inclinação e o intercepto da reta de regressão e preveja quantas
-    notificações são esperadas para 4,5 horas de uso.
-  </div>
+      <div class="box box-exercicio">
+        <span class="box-titulo">Exercício 1</span>
+        Usando os dados da Aula 7 sobre horas de uso do celular (x) e
+        notificações abertas (y): x = [2, 3, 4, 5, 6]; y = [10, 12, 15, 14,
+        20]. Escreva um programa em Python, usando
+        <code>statistics.linear_regression</code>, que calcule a
+        inclinação e o intercepto da reta de regressão e preveja quantas
+        notificações são esperadas para 4,5 horas de uso.
+      </div>
 
-  <div class="box box-exercicio">
-    <span class="box-titulo">Exercício 2</span>
-    Usando os dados da Aula 7 sobre velocidade de Wi-Fi em Mbps (x) e
-    tempo de carregamento de vídeo em segundos (y): x = [10, 20, 30,
-    50, 80]; y = [25, 18, 14, 9, 5]. Escreva um programa em Python
-    que: (a) calcule a inclinação e o intercepto da reta de regressão;
-    (b) preveja o tempo de carregamento para uma rede de 40 Mbps; (c)
-    imprima se essa previsão está dentro ou fora do intervalo de
-    velocidades observado nos dados.
-  </div>
+      <div class="box box-exercicio">
+        <span class="box-titulo">Exercício 2</span>
+        Usando os dados da Aula 7 sobre velocidade de Wi-Fi em Mbps (x) e
+        tempo de carregamento de vídeo em segundos (y): x = [10, 20, 30,
+        50, 80]; y = [25, 18, 14, 9, 5]. Escreva um programa em Python
+        que: (a) calcule a inclinação e o intercepto da reta de regressão;
+        (b) preveja o tempo de carregamento para uma rede de 40 Mbps; (c)
+        imprima se essa previsão está dentro ou fora do intervalo de
+        velocidades observado nos dados.
+      </div>
 
-  <h2 class="bloco-header">Gabarito Comentado</h2>
+      <h2 class="bloco-header">Gabarito Comentado</h2>
 
-  <p><strong>Exercício 1</strong></p>
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python"><span class="cm-kw">import</span> statistics
+      <p><strong>Exercício 1</strong></p>
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python"><span class="cm-kw">import</span> statistics
 
 horas = [<span class="cm-num">2</span>, <span class="cm-num">3</span>, <span class="cm-num">4</span>, <span class="cm-num">5</span>, <span class="cm-num">6</span>]
 notificacoes = [<span class="cm-num">10</span>, <span class="cm-num">12</span>, <span class="cm-num">15</span>, <span class="cm-num">14</span>, <span class="cm-num">20</span>]
@@ -972,20 +1099,20 @@ previsao = reta.slope * <span class="cm-num">4.5</span> + reta.intercept
 <span class="cm-bi">print</span>(<span class="cm-str">f"m: {reta.slope:.2f} | b: {reta.intercept:.2f}"</span>)
 <span class="cm-bi">print</span>(<span class="cm-str">f"Previsão para 4,5 horas: {previsao:.2f} notificações"</span>)
 </code></pre>
-  </div>
-  <div class="explicacao-codigo">
-    <p><strong>Saída:</strong> "m: 2.20 | b: 5.40" e "Previsão para 4,5
-      horas: 15.30 notificações".</p>
-    <p><strong>Comentário:</strong> a cada hora extra de uso, o modelo
-      prevê, em média, 2,2 notificações a mais. Como 4,5 horas está
-      dentro do intervalo observado (2 a 6 horas), a previsão de 15,3
-      notificações é confiável.</p>
-  </div>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Saída:</strong> "m: 2.20 | b: 5.40" e "Previsão para 4,5
+          horas: 15.30 notificações".</p>
+        <p><strong>Comentário:</strong> a cada hora extra de uso, o modelo
+          prevê, em média, 2,2 notificações a mais. Como 4,5 horas está
+          dentro do intervalo observado (2 a 6 horas), a previsão de 15,3
+          notificações é confiável.</p>
+      </div>
 
-  <p><strong>Exercício 2</strong></p>
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python"><span class="cm-kw">import</span> statistics
+      <p><strong>Exercício 2</strong></p>
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python"><span class="cm-kw">import</span> statistics
 
 velocidade = [<span class="cm-num">10</span>, <span class="cm-num">20</span>, <span class="cm-num">30</span>, <span class="cm-num">50</span>, <span class="cm-num">80</span>]
 tempo_carregamento = [<span class="cm-num">25</span>, <span class="cm-num">18</span>, <span class="cm-num">14</span>, <span class="cm-num">9</span>, <span class="cm-num">5</span>]
@@ -1001,118 +1128,141 @@ previsao = reta.slope * <span class="cm-num">40</span> + reta.intercept
 <span class="cm-kw">else</span>:
     <span class="cm-bi">print</span>(<span class="cm-str">"40 Mbps está fora do intervalo observado (extrapolação)"</span>)
 </code></pre>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Saída:</strong> "m: -0.2656 | b: 24.2922", "Previsão
+          para 40 Mbps: 13.67 segundos" e "40 Mbps está dentro do
+          intervalo observado".</p>
+        <p><strong>Comentário:</strong> a inclinação negativa confirma que
+          velocidades maiores de Wi-Fi reduzem o tempo de carregamento.
+          Como 40 Mbps fica entre 10 e 80 Mbps (o intervalo observado), a
+          previsão de 13,67 segundos é confiável.</p>
+      </div>
+
+      <h2 class="bloco-header">Retomando a Conversa Inicial</h2>
+
+      <p><strong>Seção 1, Reta de regressão:</strong> prevê a variável
+        resposta (Y) a partir da variável explicativa (X), desde que o
+        padrão seja linear e a correlação seja pelo menos moderada.</p>
+
+      <p><strong>Seção 2, Inclinação e intercepto:</strong> calculados a
+        partir das "cinco grandes" estatísticas (x̄, ȳ, sx, sy, r), com
+        m = r ·
+        <span class="fracao"><span class="num">sy</span><span class="den">sx</span></span>
+        e b = ȳ − m · x̄.
+      </p>
+
+      <p><strong>Seção 3, Previsões:</strong> basta substituir x na
+        equação da reta, mas a previsão só é confiável dentro do intervalo
+        de x observado nos dados; fora dele, é extrapolação.</p>
+
+      <h2 class="bloco-header">Revisão Rápida</h2>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Conceito</th>
+              <th scope="col">Fórmula</th>
+              <th scope="col">Erro comum</th>
+              <th scope="col">Dica de prova</th>
+              <th scope="col">Aplicação em Tecnologia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Reta de regressão</td>
+              <td>y = m·x + b</td>
+              <td>Usar sem checar padrão linear e |r| ≥ 0,50</td>
+              <td>X prevê; Y é previsto</td>
+              <td>Seguidores prevendo curtidas médias</td>
+            </tr>
+            <tr>
+              <td>Inclinação (m)</td>
+              <td><span class="fracao"><span class="num">sy</span><span class="den">sx</span></span> × r</td>
+              <td>Calcular b antes de m</td>
+              <td>Sinal de m = sinal de r</td>
+              <td>Stories publicados prevendo respostas</td>
+            </tr>
+            <tr>
+              <td>Intercepto (b)</td>
+              <td>ȳ − m · x̄</td>
+              <td>Interpretar b quando x = 0 não é observado</td>
+              <td>Nem todo intercepto faz sentido</td>
+              <td>Previsão quando x está fora do uso comum</td>
+            </tr>
+            <tr>
+              <td>Extrapolação</td>
+              <td>N/A</td>
+              <td>Prever y para x fora do intervalo dos dados</td>
+              <td>Confira o intervalo de x antes de prever</td>
+              <td>Velocidade de Wi-Fi prevendo tempo de carregamento</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="bloco-header">Sugestões de Leituras e Sites</h2>
+      <p><strong>LEITURAS</strong></p>
+      <p>RUMSEY, Deborah J. <em>Statistics For Dummies</em>. 2. ed. Hoboken,
+        NJ: Wiley Publishing, 2011. (livro-base desta aula, recomendado para
+        aprofundamento em regressão linear.)</p>
+      <p><strong>SITES</strong></p>
+      <p>Khan Academy, Estatística e Probabilidade:
+        https://pt.khanacademy.org/math/statistics-probability (aulas
+        gratuitas em português sobre reta de regressão e previsões.)</p>
+
+      <h2 class="bloco-header">Glossário</h2>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Termo</th>
+              <th scope="col">Definição</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Reta de regressão</td>
+              <td>Reta que melhor se ajusta a um conjunto de dados, usada para prever y a partir de x.</td>
+            </tr>
+            <tr>
+              <td>Variável explicativa (X)</td>
+              <td>Variável usada para fazer a previsão.</td>
+            </tr>
+            <tr>
+              <td>Variável resposta (Y)</td>
+              <td>Variável que se quer prever.</td>
+            </tr>
+            <tr>
+              <td>Inclinação (m)</td>
+              <td>Quanto y muda, em média, para cada unidade que x aumenta.</td>
+            </tr>
+            <tr>
+              <td>Intercepto (b)</td>
+              <td>Valor previsto de y quando x é igual a zero.</td>
+            </tr>
+            <tr>
+              <td>Extrapolação</td>
+              <td>Fazer previsões com valores de x fora do intervalo observado nos dados.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="bloco-header">Referências Bibliográficas</h2>
+      <p>VIEIRA, Sonia. <em>Estatística básica</em> – 2ª edição revista e
+        ampliada. 2. ed. Porto Alegre: +A Educação - Cengage Learning Brasil,
+        2018. E-book. p.Cover. ISBN 9788522128082. Disponível em:
+        https://integrada.minhabiblioteca.com.br/reader/books/9788522128082/.
+        Acesso em: 01 dez. 2025.</p>
+      <p>MORETTIN, Pedro A. <em>Estatística básica</em>. 10. ed. Rio de
+        Janeiro: Saraiva Uni, 2023. E-book. p.i. ISBN 9788571441484.
+        Disponível em:
+        https://integrada.minhabiblioteca.com.br/reader/books/9788571441484/.
+        Acesso em: 01 dez. 2025.</p>
+
+    </main>
   </div>
-  <div class="explicacao-codigo">
-    <p><strong>Saída:</strong> "m: -0.2656 | b: 24.2922", "Previsão
-      para 40 Mbps: 13.67 segundos" e "40 Mbps está dentro do
-      intervalo observado".</p>
-    <p><strong>Comentário:</strong> a inclinação negativa confirma que
-      velocidades maiores de Wi-Fi reduzem o tempo de carregamento.
-      Como 40 Mbps fica entre 10 e 80 Mbps (o intervalo observado), a
-      previsão de 13,67 segundos é confiável.</p>
-  </div>
-
-  <h2 class="bloco-header">Retomando a Conversa Inicial</h2>
-
-  <p><strong>Seção 1, Reta de regressão:</strong> prevê a variável
-  resposta (Y) a partir da variável explicativa (X), desde que o
-  padrão seja linear e a correlação seja pelo menos moderada.</p>
-
-  <p><strong>Seção 2, Inclinação e intercepto:</strong> calculados a
-  partir das "cinco grandes" estatísticas (x̄, ȳ, sx, sy, r), com
-  m = r ·
-  <span class="fracao"><span class="num">sy</span><span class="den">sx</span></span>
-  e b = ȳ − m · x̄.</p>
-
-  <p><strong>Seção 3, Previsões:</strong> basta substituir x na
-  equação da reta, mas a previsão só é confiável dentro do intervalo
-  de x observado nos dados; fora dele, é extrapolação.</p>
-
-  <h2 class="bloco-header">Revisão Rápida</h2>
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr>
-      <th scope="col">Conceito</th>
-      <th scope="col">Fórmula</th>
-      <th scope="col">Erro comum</th>
-      <th scope="col">Dica de prova</th>
-      <th scope="col">Aplicação em Tecnologia</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>Reta de regressão</td>
-      <td>y = m·x + b</td>
-      <td>Usar sem checar padrão linear e |r| ≥ 0,50</td>
-      <td>X prevê; Y é previsto</td>
-      <td>Seguidores prevendo curtidas médias</td>
-    </tr>
-    <tr>
-      <td>Inclinação (m)</td>
-      <td><span class="fracao"><span class="num">sy</span><span class="den">sx</span></span> × r</td>
-      <td>Calcular b antes de m</td>
-      <td>Sinal de m = sinal de r</td>
-      <td>Stories publicados prevendo respostas</td>
-    </tr>
-    <tr>
-      <td>Intercepto (b)</td>
-      <td>ȳ − m · x̄</td>
-      <td>Interpretar b quando x = 0 não é observado</td>
-      <td>Nem todo intercepto faz sentido</td>
-      <td>Previsão quando x está fora do uso comum</td>
-    </tr>
-    <tr>
-      <td>Extrapolação</td>
-      <td>N/A</td>
-      <td>Prever y para x fora do intervalo dos dados</td>
-      <td>Confira o intervalo de x antes de prever</td>
-      <td>Velocidade de Wi-Fi prevendo tempo de carregamento</td>
-    </tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h2 class="bloco-header">Sugestões de Leituras e Sites</h2>
-  <p><strong>LEITURAS</strong></p>
-  <p>RUMSEY, Deborah J. <em>Statistics For Dummies</em>. 2. ed. Hoboken,
-  NJ: Wiley Publishing, 2011. (livro-base desta aula, recomendado para
-  aprofundamento em regressão linear.)</p>
-  <p><strong>SITES</strong></p>
-  <p>Khan Academy, Estatística e Probabilidade:
-  https://pt.khanacademy.org/math/statistics-probability (aulas
-  gratuitas em português sobre reta de regressão e previsões.)</p>
-
-  <h2 class="bloco-header">Glossário</h2>
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Termo</th><th scope="col">Definição</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Reta de regressão</td><td>Reta que melhor se ajusta a um conjunto de dados, usada para prever y a partir de x.</td></tr>
-    <tr><td>Variável explicativa (X)</td><td>Variável usada para fazer a previsão.</td></tr>
-    <tr><td>Variável resposta (Y)</td><td>Variável que se quer prever.</td></tr>
-    <tr><td>Inclinação (m)</td><td>Quanto y muda, em média, para cada unidade que x aumenta.</td></tr>
-    <tr><td>Intercepto (b)</td><td>Valor previsto de y quando x é igual a zero.</td></tr>
-    <tr><td>Extrapolação</td><td>Fazer previsões com valores de x fora do intervalo observado nos dados.</td></tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h2 class="bloco-header">Referências Bibliográficas</h2>
-  <p>VIEIRA, Sonia. <em>Estatística básica</em> – 2ª edição revista e
-  ampliada. 2. ed. Porto Alegre: +A Educação - Cengage Learning Brasil,
-  2018. E-book. p.Cover. ISBN 9788522128082. Disponível em:
-  https://integrada.minhabiblioteca.com.br/reader/books/9788522128082/.
-  Acesso em: 01 dez. 2025.</p>
-  <p>MORETTIN, Pedro A. <em>Estatística básica</em>. 10. ed. Rio de
-  Janeiro: Saraiva Uni, 2023. E-book. p.i. ISBN 9788571441484.
-  Disponível em:
-  https://integrada.minhabiblioteca.com.br/reader/books/9788571441484/.
-  Acesso em: 01 dez. 2025.</p>
-
-  </main>
-</div>
 </body>
+
 </html>

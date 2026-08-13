@@ -1,910 +1,1046 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guia de Estudos - Aula 5 - Probabilidade e Estatística (EAD)</title>
-<meta name="description" content="Guia de Estudos CEAD/UNIGRAN — Aula 5 da disciplina de Probabilidade e Estatística (EAD), com teoria, exemplos em Python e exercícios comentados.">
-<style>
-  :root {
-    --azul-escuro: #1B3A8C;
-    --ciano: #29ABE2;
-    --azul-claro: #D6E8F5;
-    --cinza-claro: #F4F4F4;
-    --cinza-texto: #333333;
-    --atencao-borda: #E0932C;
-    --atencao-fundo: #FFF4E0;
-    --branco: #FFFFFF;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia de Estudos - Aula 5 - Probabilidade e Estatística (EAD)</title>
+  <meta name="description"
+    content="Guia de Estudos CEAD/UNIGRAN — Aula 5 da disciplina de Probabilidade e Estatística (EAD), com teoria, exemplos em Python e exercícios comentados.">
+  <style>
+    :root {
+      --azul-escuro: #1B3A8C;
+      --ciano: #29ABE2;
+      --azul-claro: #D6E8F5;
+      --cinza-claro: #F4F4F4;
+      --cinza-texto: #333333;
+      --atencao-borda: #E0932C;
+      --atencao-fundo: #FFF4E0;
+      --branco: #FFFFFF;
+    }
 
-  * {
-    box-sizing: border-box;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  body {
-    font-family: Georgia, 'Times New Roman', serif;
-    color: var(--cinza-texto);
-    background: #EAEFF6;
-    margin: 0;
-    padding: 0;
-    line-height: 1.75;
-  }
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--cinza-texto);
+      background: #EAEFF6;
+      margin: 0;
+      padding: 0;
+      line-height: 1.75;
+    }
 
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    background: var(--branco);
-    padding: 48px 56px 70px 56px;
-    box-shadow: 0 0 18px rgba(0, 0, 0, 0.12);
-  }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--branco);
+      padding: 48px 56px 70px 56px;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.12);
+    }
 
-  .cabecalho-textual {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-variant: small-caps;
-    font-style: italic;
-    color: var(--azul-escuro);
-    font-size: 1.05em;
-    letter-spacing: 0.5px;
-    padding-bottom: 14px;
-    margin-bottom: 18px;
-  }
+    .cabecalho-textual {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-variant: small-caps;
+      font-style: italic;
+      color: var(--azul-escuro);
+      font-size: 1.05em;
+      letter-spacing: 0.5px;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
 
-  .cabecalho-textual .curso {
-    display: block;
-    font-style: normal;
-    font-variant: normal;
-    font-size: 0.75em;
-    color: var(--ciano);
-    font-weight: bold;
-    margin-top: 4px;
-  }
+    .cabecalho-textual .curso {
+      display: block;
+      font-style: normal;
+      font-variant: normal;
+      font-size: 0.75em;
+      color: var(--ciano);
+      font-weight: bold;
+      margin-top: 4px;
+    }
 
-  .cabecalho-textual .logo {
-    height: 48px;
-    flex-shrink: 0;
-  }
+    .cabecalho-textual .logo {
+      height: 48px;
+      flex-shrink: 0;
+    }
 
-  .capa-cabecalho {
-    display: flex;
-    align-items: flex-start;
-    margin-top: 10px;
-    margin-bottom: 40px;
-  }
+    .capa-cabecalho {
+      display: flex;
+      align-items: flex-start;
+      margin-top: 10px;
+      margin-bottom: 40px;
+    }
 
-  .capa-numero {
-    position: relative;
-    flex-shrink: 0;
-    width: 230px;
-    height: 208px;
-    background: var(--ciano);
-    color: var(--branco);
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    clip-path: polygon(0 0, 100% 0, 100% 76%, 50% 100%, 0 76%);
-    filter: drop-shadow(6px 8px 6px rgba(0, 0, 0, 0.35));
-  }
+    .capa-numero {
+      position: relative;
+      flex-shrink: 0;
+      width: 230px;
+      height: 208px;
+      background: var(--ciano);
+      color: var(--branco);
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      clip-path: polygon(0 0, 100% 0, 100% 76%, 50% 100%, 0 76%);
+      filter: drop-shadow(6px 8px 6px rgba(0, 0, 0, 0.35));
+    }
 
-  .capa-numero .num {
-    font-size: 5em;
-    line-height: 1;
-  }
+    .capa-numero .num {
+      font-size: 5em;
+      line-height: 1;
+    }
 
-  .capa-numero .ord-wrap {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 4px;
-    margin-top: -1.6em;
-  }
+    .capa-numero .ord-wrap {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: 4px;
+      margin-top: -1.6em;
+    }
 
-  .capa-numero .ord {
-    font-size: 1.8em;
-    line-height: 1;
-  }
+    .capa-numero .ord {
+      font-size: 1.8em;
+      line-height: 1;
+    }
 
-  .capa-numero .ord-linha {
-    width: 16px;
-    height: 3px;
-    background: var(--branco);
-    margin-top: 5px;
-  }
+    .capa-numero .ord-linha {
+      width: 16px;
+      height: 3px;
+      background: var(--branco);
+      margin-top: 5px;
+    }
 
-  .capa-aula-fundo {
-    flex-grow: 1;
-    height: 158px;
-    display: flex;
-    align-items: center;
-    padding-left: 40px;
-    background: linear-gradient(to right, #D9D9D9, #FAFAFA);
-    box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.18);
-  }
+    .capa-aula-fundo {
+      flex-grow: 1;
+      height: 158px;
+      display: flex;
+      align-items: center;
+      padding-left: 40px;
+      background: linear-gradient(to right, #D9D9D9, #FAFAFA);
+      box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.18);
+    }
 
-  .capa-aula-fundo span {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-style: italic;
-    font-size: 3em;
-    color: #1A1A1A;
-  }
+    .capa-aula-fundo span {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      font-style: italic;
+      font-size: 3em;
+      color: #1A1A1A;
+    }
 
-  .capa-titulo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    font-size: 1.55em;
-    line-height: 1.4;
-    color: #1A1A1A;
-    margin: 6px 0 26px;
-  }
+    .capa-titulo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 1.55em;
+      line-height: 1.4;
+      color: #1A1A1A;
+      margin: 6px 0 26px;
+    }
 
-  .capa-intro {
-    font-style: italic;
-    text-indent: 0;
-    text-align: justify;
-    hyphens: auto;
-  }
+    .capa-intro {
+      font-style: italic;
+      text-indent: 0;
+      text-align: justify;
+      hyphens: auto;
+    }
 
-  .bloco-header {
-    font-family: Arial, Helvetica, sans-serif;
-    background: var(--azul-escuro);
-    color: var(--branco);
-    text-transform: uppercase;
-    font-weight: bold;
-    padding: 13px 22px;
-    font-size: 1.02em;
-    border-radius: 3px;
-    margin-top: 42px;
-    margin-bottom: 22px;
-    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
-  }
+    .bloco-header {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--azul-escuro);
+      color: var(--branco);
+      text-transform: uppercase;
+      font-weight: bold;
+      padding: 13px 22px;
+      font-size: 1.02em;
+      border-radius: 3px;
+      margin-top: 42px;
+      margin-bottom: 22px;
+      box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+    }
 
-  .secao-titulo {
-    display: flex;
-    align-items: stretch;
-    margin-top: 48px;
-    margin-bottom: 24px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
-  }
+    .secao-titulo {
+      display: flex;
+      align-items: stretch;
+      margin-top: 48px;
+      margin-bottom: 24px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+    }
 
-  .secao-etiqueta {
-    background: var(--azul-escuro);
-    color: var(--branco);
-    padding: 10px 20px;
-    white-space: nowrap;
-    border-radius: 4px 0 0 4px;
-    font-size: 0.95em;
-  }
+    .secao-etiqueta {
+      background: var(--azul-escuro);
+      color: var(--branco);
+      padding: 10px 20px;
+      white-space: nowrap;
+      border-radius: 4px 0 0 4px;
+      font-size: 0.95em;
+    }
 
-  .secao-nome {
-    background: var(--azul-claro);
-    color: var(--azul-escuro);
-    padding: 10px 20px;
-    flex-grow: 1;
-    border-radius: 0 4px 4px 0;
-    font-size: 0.95em;
-  }
+    .secao-nome {
+      background: var(--azul-claro);
+      color: var(--azul-escuro);
+      padding: 10px 20px;
+      flex-grow: 1;
+      border-radius: 0 4px 4px 0;
+      font-size: 0.95em;
+    }
 
-  .subtitulo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: var(--azul-escuro);
-    font-size: 1.02em;
-    margin-top: 22px;
-  }
+    .subtitulo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      color: var(--azul-escuro);
+      font-size: 1.02em;
+      margin-top: 22px;
+    }
 
-  p {
-    margin: 16px 0;
-    text-indent: 1.25cm;
-    text-align: justify;
-    hyphens: auto;
-  }
+    p {
+      margin: 16px 0;
+      text-indent: 1.25cm;
+      text-align: justify;
+      hyphens: auto;
+    }
 
-  .box p,
-  .docente-box p {
-    text-indent: 0;
-    text-align: justify;
-  }
+    .box p,
+    .docente-box p {
+      text-indent: 0;
+      text-align: justify;
+    }
 
-  .box {
-    border-radius: 6px;
-    padding: 20px 24px;
-    margin: 26px 0;
-    page-break-inside: avoid;
-  }
-
-  .box-titulo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.82em;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  .box-conceito {
-    background: var(--azul-claro);
-    border-left: 5px solid var(--azul-escuro);
-  }
-  .box-conceito .box-titulo { color: var(--azul-escuro); }
-
-  .box-exemplo {
-    background: #EAF7FC;
-    border-left: 5px solid var(--ciano);
-  }
-  .box-exemplo .box-titulo { color: #1381AD; }
-
-  .box-atencao {
-    background: var(--atencao-fundo);
-    border-left: 5px solid var(--atencao-borda);
-  }
-  .box-atencao .box-titulo { color: var(--atencao-borda); }
-
-  .box-python {
-    background: #FFFFFF;
-    border: 1px solid #DADCE0;
-    border-radius: 8px;
-    padding: 0;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15);
-  }
-  .codigo-cabecalho {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #F1F3F4;
-    border-bottom: 1px solid #DADCE0;
-    color: #5F6368;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.78em;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 6px 14px;
-  }
-  .botao-play {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #1A73E8;
-    color: #FFFFFF;
-    font-size: 0.65em;
-  }
-  .box-python pre {
-    margin: 0;
-    white-space: pre;
-    overflow-x: auto;
-    padding: 14px 18px;
-    background: #F8F9FA;
-    color: #3C4043;
-    font-family: Consolas, 'Courier New', monospace;
-    font-size: 0.88em;
-  }
-  .cm-kw  { color: #1967D2; font-weight: bold; }
-  .cm-str { color: #188038; }
-  .cm-com { color: #80868B; font-style: italic; }
-  .cm-num { color: #AF00DB; }
-  .cm-bi  { color: #C5221F; }
-
-  .box-exercicio {
-    background: var(--branco);
-    border: 2px solid var(--ciano);
-  }
-  .box-exercicio .box-titulo { color: #1381AD; }
-
-  .box-resumo {
-    background: var(--azul-claro);
-    border: 1px solid var(--azul-escuro);
-    font-style: italic;
-  }
-  .box-resumo .box-titulo { color: var(--azul-escuro); font-style: normal; }
-
-  .box-formula {
-    background: var(--branco);
-    border: 2px solid var(--azul-escuro);
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.05em;
-    font-weight: bold;
-    color: var(--azul-escuro);
-    padding: 22px 18px;
-  }
-  .box-formula .box-titulo {
-    color: var(--ciano);
-    text-align: left;
-  }
-
-  .formula-math {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    font-size: 1.15em;
-    margin: 6px 0;
-  }
-  .fracao {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    vertical-align: middle;
-    line-height: 1.3;
-  }
-  .fracao .num {
-    padding: 0 8px 4px;
-    border-bottom: 2px solid var(--azul-escuro);
-  }
-  .fracao .den {
-    padding: 4px 8px 0;
-  }
-  .nota-formula {
-    display: block;
-    margin-top: 10px;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-weight: normal;
-    font-style: italic;
-    font-size: 0.75em;
-    color: #5F6368;
-  }
-
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 22px 0;
-    font-size: 0.92em;
-  }
-
-  .tabela-wrapper {
-    overflow-x: auto;
-    margin: 26px 0;
-  }
-  .tabela-wrapper table { margin: 0; }
-
-  th {
-    background: var(--azul-escuro);
-    color: var(--branco);
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: left;
-    padding: 12px 14px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
-  }
-
-  td {
-    padding: 11px 14px;
-    border-bottom: 1px solid #ccc;
-  }
-
-  tr:nth-child(even) td {
-    background: var(--cinza-claro);
-  }
-
-  .sumario-item {
-    display: flex;
-    gap: 14px;
-    margin: 14px 0;
-    align-items: baseline;
-  }
-  .sumario-aula {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: var(--ciano);
-    white-space: nowrap;
-  }
-
-  .docente-box {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    background: var(--azul-claro);
-    border-left: 5px solid var(--azul-escuro);
-    border-radius: 6px;
-    padding: 20px;
-  }
-
-  ul, ol {
-    margin: 16px 0;
-    padding-left: 28px;
-  }
-
-  li { margin: 10px 0; }
-
-  .explicacao-codigo {
-    margin: 12px 0 20px 0;
-  }
-
-  .explicacao-codigo p {
-    margin: 3px 0;
-    text-indent: 0;
-    text-align: left;
-  }
-
-  .assinatura {
-    text-align: right;
-    font-style: italic;
-    margin-top: 22px;
-    color: var(--azul-escuro);
-  }
-
-  .figura {
-    margin: 30px 0;
-    text-align: center;
-  }
-  .figura img {
-    max-width: 100%;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  }
-  .figura figcaption {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.8em;
-    color: #5F6368;
-    margin-top: 10px;
-    text-align: left;
-  }
-
-  @media print {
-    body { background: var(--branco); }
-    .container { box-shadow: none; max-width: 100%; padding: 10px; }
-    .box, table, .secao-titulo, .capa-cabecalho, .capa-titulo, .bloco-header, .figura,
-    .docente-box, .tabela-wrapper, .sumario-item {
+    .box {
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin: 26px 0;
       page-break-inside: avoid;
     }
-    .cabecalho-textual { display: none; }
-    @page { size: A4; margin: 2cm; }
-  }
 
-  .pagina-abertura {
-    position: relative;
-  }
+    .box-titulo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.82em;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: block;
+    }
 
-  .capa-cabecalho {
-    position: relative;
-    overflow: visible;
-  }
+    .box-conceito {
+      background: var(--azul-claro);
+      border-left: 5px solid var(--azul-escuro);
+    }
 
-  .curva-decorativa {
-    position: absolute;
-    right: -56px;
-    bottom: -46px;
-    width: 170px;
-    height: 130px;
-    z-index: 0;
-    pointer-events: none;
-  }
+    .box-conceito .box-titulo {
+      color: var(--azul-escuro);
+    }
 
-  .capa-cabecalho > *:not(.curva-decorativa) {
-    position: relative;
-    z-index: 1;
-  }
+    .box-exemplo {
+      background: #EAF7FC;
+      border-left: 5px solid var(--ciano);
+    }
 
-  .nav-capitulos {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 4px;
-    background: var(--azul-escuro);
-    padding: 10px 16px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.85em;
-    font-weight: bold;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  }
+    .box-exemplo .box-titulo {
+      color: #1381AD;
+    }
 
-  .nav-capitulos a {
-    color: var(--branco);
-    text-decoration: none;
-    padding: 8px 14px;
-    border-radius: 4px;
-    transition: background 0.15s;
-  }
+    .box-atencao {
+      background: var(--atencao-fundo);
+      border-left: 5px solid var(--atencao-borda);
+    }
 
-  .nav-capitulos a:hover {
-    background: rgba(255, 255, 255, 0.18);
-  }
+    .box-atencao .box-titulo {
+      color: var(--atencao-borda);
+    }
 
-  .nav-capitulos a.ativo {
-    background: var(--ciano);
-  }
+    .box-python {
+      background: #FFFFFF;
+      border: 1px solid #DADCE0;
+      border-radius: 8px;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15);
+    }
 
-  @media print {
-    .nav-capitulos { display: none; }
-  }
+    .codigo-cabecalho {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #F1F3F4;
+      border-bottom: 1px solid #DADCE0;
+      color: #5F6368;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.78em;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 6px 14px;
+    }
 
-  .skip-link {
-    position: absolute;
-    left: -9999px;
-    top: 0;
-    background: var(--branco);
-    color: var(--azul-escuro);
-    padding: 10px 16px;
-    z-index: 200;
-    border-radius: 0 0 6px 0;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  .skip-link:focus {
-    left: 0;
-  }
+    .botao-play {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #1A73E8;
+      color: #FFFFFF;
+      font-size: 0.65em;
+    }
 
-  .nav-capitulos a:focus-visible {
-    outline: 2px solid var(--branco);
-    outline-offset: 2px;
-  }
+    .box-python pre {
+      margin: 0;
+      white-space: pre;
+      overflow-x: auto;
+      padding: 14px 18px;
+      background: #F8F9FA;
+      color: #3C4043;
+      font-family: Consolas, 'Courier New', monospace;
+      font-size: 0.88em;
+    }
 
-  .secao-nome {
-    margin: 0;
-  }
+    .cm-kw {
+      color: #1967D2;
+      font-weight: bold;
+    }
 
-  .sumario-lista {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+    .cm-str {
+      color: #188038;
+    }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-</style>
+    .cm-com {
+      color: #80868B;
+      font-style: italic;
+    }
+
+    .cm-num {
+      color: #AF00DB;
+    }
+
+    .cm-bi {
+      color: #C5221F;
+    }
+
+    .box-exercicio {
+      background: var(--branco);
+      border: 2px solid var(--ciano);
+    }
+
+    .box-exercicio .box-titulo {
+      color: #1381AD;
+    }
+
+    .box-resumo {
+      background: var(--azul-claro);
+      border: 1px solid var(--azul-escuro);
+      font-style: italic;
+    }
+
+    .box-resumo .box-titulo {
+      color: var(--azul-escuro);
+      font-style: normal;
+    }
+
+    .box-formula {
+      background: var(--branco);
+      border: 2px solid var(--azul-escuro);
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.05em;
+      font-weight: bold;
+      color: var(--azul-escuro);
+      padding: 22px 18px;
+    }
+
+    .box-formula .box-titulo {
+      color: var(--ciano);
+      text-align: left;
+    }
+
+    .formula-math {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 1.15em;
+      margin: 6px 0;
+    }
+
+    .fracao {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      line-height: 1.3;
+    }
+
+    .fracao .num {
+      padding: 0 8px 4px;
+      border-bottom: 2px solid var(--azul-escuro);
+    }
+
+    .fracao .den {
+      padding: 4px 8px 0;
+    }
+
+    .nota-formula {
+      display: block;
+      margin-top: 10px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-weight: normal;
+      font-style: italic;
+      font-size: 0.75em;
+      color: #5F6368;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 22px 0;
+      font-size: 0.92em;
+    }
+
+    .tabela-wrapper {
+      overflow-x: auto;
+      margin: 26px 0;
+    }
+
+    .tabela-wrapper table {
+      margin: 0;
+    }
+
+    th {
+      background: var(--azul-escuro);
+      color: var(--branco);
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: left;
+      padding: 12px 14px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
+    }
+
+    td {
+      padding: 11px 14px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    tr:nth-child(even) td {
+      background: var(--cinza-claro);
+    }
+
+    .sumario-item {
+      display: flex;
+      gap: 14px;
+      margin: 14px 0;
+      align-items: baseline;
+    }
+
+    .sumario-aula {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      color: var(--ciano);
+      white-space: nowrap;
+    }
+
+    .docente-box {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: var(--azul-claro);
+      border-left: 5px solid var(--azul-escuro);
+      border-radius: 6px;
+      padding: 20px;
+    }
+
+    ul,
+    ol {
+      margin: 16px 0;
+      padding-left: 28px;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+
+    .explicacao-codigo {
+      margin: 12px 0 20px 0;
+    }
+
+    .explicacao-codigo p {
+      margin: 3px 0;
+      text-indent: 0;
+      text-align: left;
+    }
+
+    .assinatura {
+      text-align: right;
+      font-style: italic;
+      margin-top: 22px;
+      color: var(--azul-escuro);
+    }
+
+    .figura {
+      margin: 30px 0;
+      text-align: center;
+    }
+
+    .figura img {
+      max-width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .figura figcaption {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.8em;
+      color: #5F6368;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    @media print {
+      body {
+        background: var(--branco);
+      }
+
+      .container {
+        box-shadow: none;
+        max-width: 100%;
+        padding: 10px;
+      }
+
+      .box,
+      table,
+      .secao-titulo,
+      .capa-cabecalho,
+      .capa-titulo,
+      .bloco-header,
+      .figura,
+      .docente-box,
+      .tabela-wrapper,
+      .sumario-item {
+        page-break-inside: avoid;
+      }
+
+      .cabecalho-textual {
+        display: none;
+      }
+
+      @page {
+        size: A4;
+        margin: 2cm;
+      }
+    }
+
+    .pagina-abertura {
+      position: relative;
+    }
+
+    .capa-cabecalho {
+      position: relative;
+      overflow: visible;
+    }
+
+    .curva-decorativa {
+      position: absolute;
+      right: -56px;
+      bottom: -46px;
+      width: 170px;
+      height: 130px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .capa-cabecalho>*:not(.curva-decorativa) {
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-capitulos {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+      background: var(--azul-escuro);
+      padding: 10px 16px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.85em;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .nav-capitulos a {
+      color: var(--branco);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+
+    .nav-capitulos a:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .nav-capitulos a.ativo {
+      background: var(--ciano);
+    }
+
+    @media print {
+      .nav-capitulos {
+        display: none;
+      }
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: var(--branco);
+      color: var(--azul-escuro);
+      padding: 10px 16px;
+      z-index: 200;
+      border-radius: 0 0 6px 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      left: 0;
+    }
+
+    .nav-capitulos a:focus-visible {
+      outline: 2px solid var(--branco);
+      outline-offset: 2px;
+    }
+
+    .secao-nome {
+      margin: 0;
+    }
+
+    .sumario-lista {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
 </head>
+
 <body>
-<a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
-<nav class="nav-capitulos" aria-label="Navegação entre aulas">
-  <a href="Guia_Cap_1_Modelo.html">Aula 01</a>
-  <a href="Guia_Cap_2_Modelo.html">Aula 02</a>
-  <a href="Guia_Cap_3_Modelo.html">Aula 03</a>
-  <a href="Guia_Cap_4_Modelo.html">Aula 04</a>
-  <a href="Guia_Cap_5_Modelo.html" class="ativo" aria-current="page">Aula 05</a>
-  <a href="Guia_Cap_6_Modelo.html">Aula 06</a>
-  <a href="Guia_Cap_7_Modelo.html">Aula 07</a>
-  <a href="Guia_Cap_8_Modelo.html">Aula 08</a>
-</nav>
-<div class="container">
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
+  <nav class="nav-capitulos" aria-label="Navegação entre aulas">
+    <a href="index.html">Aula 01</a>
+    <a href="Guia_Cap_2_Modelo.html">Aula 02</a>
+    <a href="Guia_Cap_3_Modelo.html">Aula 03</a>
+    <a href="Guia_Cap_4_Modelo.html">Aula 04</a>
+    <a href="Guia_Cap_5_Modelo.html" class="ativo" aria-current="page">Aula 05</a>
+    <a href="Guia_Cap_6_Modelo.html">Aula 06</a>
+    <a href="Guia_Cap_7_Modelo.html">Aula 07</a>
+    <a href="Guia_Cap_8_Modelo.html">Aula 08</a>
+  </nav>
+  <div class="container">
 
-  <header class="cabecalho-textual">
-    <div>
-      CEAD/UNIGRAN · Guia de Estudos
-      <span class="curso">PROBABILIDADE E ESTATÍSTICA (EAD)</span>
-    </div>
-    <img class="logo" src="imagens/logo-unigran.png" alt="Logo UNIGRAN CEAD">
-  </header>
-  <main id="conteudo-principal">
+    <header class="cabecalho-textual">
+      <div>
+        CEAD/UNIGRAN · Guia de Estudos
+        <span class="curso">PROBABILIDADE E ESTATÍSTICA (EAD)</span>
+      </div>
+      <img class="logo" src="imagens/logo-unigran.png" alt="Logo UNIGRAN CEAD">
+    </header>
+    <main id="conteudo-principal">
 
-  <div class="pagina-abertura">
-    <div class="capa-cabecalho">
-      <div class="capa-numero"><span class="num">5</span><span class="ord-wrap"><span class="ord">a</span><span class="ord-linha"></span></span></div>
-      <div class="capa-aula-fundo"><span>Aula</span></div>
-      <svg class="curva-decorativa" viewBox="0 0 170 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <path d="M170,130 L170,20 C110,5 75,55 90,85 C102,110 55,130 0,120 L0,130 Z" fill="#29ABE2"/>
-        <path d="M170,130 L170,50 C130,40 105,75 118,95 C128,112 85,130 40,130 Z" fill="#1B3A8C" opacity="0.55"/>
-      </svg>
-    </div>
+      <div class="pagina-abertura">
+        <div class="capa-cabecalho">
+          <div class="capa-numero"><span class="num">5</span><span class="ord-wrap"><span class="ord">a</span><span
+                class="ord-linha"></span></span></div>
+          <div class="capa-aula-fundo"><span>Aula</span></div>
+          <svg class="curva-decorativa" viewBox="0 0 170 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+            focusable="false">
+            <path d="M170,130 L170,20 C110,5 75,55 90,85 C102,110 55,130 0,120 L0,130 Z" fill="#29ABE2" />
+            <path d="M170,130 L170,50 C130,40 105,75 118,95 C128,112 85,130 40,130 Z" fill="#1B3A8C" opacity="0.55" />
+          </svg>
+        </div>
 
-    <h1 class="capa-titulo">Como enxergar a forma dos dados numéricos?</h1>
+        <h1 class="capa-titulo">Como enxergar a forma dos dados numéricos?</h1>
 
-    <p class="capa-intro">
-      Na Aula 4 vimos gráficos para categorias (pizza e barras). Dados
-      numéricos, como tempo, idade ou preço, pedem outros tipos de
-      gráfico. Nesta aula você vai conhecer o histograma, o boxplot e o
-      gráfico de linha do tempo, três maneiras de enxergar a forma, o
-      centro e a dispersão de dados numéricos, além de aprender a
-      desconfiar de escalas que distorcem esses gráficos.
-    </p>
-    <div class="assinatura">Grande abraço, Prof. Andrey</div>
-  </div>
+        <p class="capa-intro">
+          Na Aula 4 vimos gráficos para categorias (pizza e barras). Dados
+          numéricos, como tempo, idade ou preço, pedem outros tipos de
+          gráfico. Nesta aula você vai conhecer o histograma, o boxplot e o
+          gráfico de linha do tempo, três maneiras de enxergar a forma, o
+          centro e a dispersão de dados numéricos, além de aprender a
+          desconfiar de escalas que distorcem esses gráficos.
+        </p>
+        <div class="assinatura">Grande abraço, Prof. Andrey</div>
+      </div>
 
-  <h2 class="bloco-header">Objetivos de Aprendizagem</h2>
-  <p>Ao término desta aula, vocês serão capazes de:</p>
-  <ul>
-    <li>Interpretar um histograma e reconhecer se os dados são
-      simétricos ou assimétricos (à direita ou à esquerda);</li>
-    <li>Relacionar a forma de um histograma com a posição da média e
-      da mediana;</li>
-    <li>Construir e interpretar um boxplot a partir do resumo de cinco
-      números (mínimo, Q1, mediana, Q3, máximo);</li>
-    <li>Interpretar um gráfico de linha do tempo, identificando
-      tendências e padrões cíclicos;</li>
-    <li>Reconhecer técnicas comuns de gráficos numéricos enganosos,
-      como escalas cortadas e agrupamentos inadequados.</li>
-  </ul>
+      <h2 class="bloco-header">Objetivos de Aprendizagem</h2>
+      <p>Ao término desta aula, vocês serão capazes de:</p>
+      <ul>
+        <li>Interpretar um histograma e reconhecer se os dados são
+          simétricos ou assimétricos (à direita ou à esquerda);</li>
+        <li>Relacionar a forma de um histograma com a posição da média e
+          da mediana;</li>
+        <li>Construir e interpretar um boxplot a partir do resumo de cinco
+          números (mínimo, Q1, mediana, Q3, máximo);</li>
+        <li>Interpretar um gráfico de linha do tempo, identificando
+          tendências e padrões cíclicos;</li>
+        <li>Reconhecer técnicas comuns de gráficos numéricos enganosos,
+          como escalas cortadas e agrupamentos inadequados.</li>
+      </ul>
 
-  <h2 class="bloco-header">Seções de Estudo</h2>
-  <ol class="sumario-lista">
-  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 1</span> Histograma: a forma dos dados numéricos</li>
-  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 2</span> Boxplot: o resumo de cinco números</li>
-  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 3</span> Gráfico de linha do tempo e cuidados com escalas</li>
-  </ol>
+      <h2 class="bloco-header">Seções de Estudo</h2>
+      <ol class="sumario-lista">
+        <li class="sumario-item"><span class="sumario-aula">SEÇÃO 1</span> Histograma: a forma dos dados numéricos</li>
+        <li class="sumario-item"><span class="sumario-aula">SEÇÃO 2</span> Boxplot: o resumo de cinco números</li>
+        <li class="sumario-item"><span class="sumario-aula">SEÇÃO 3</span> Gráfico de linha do tempo e cuidados com
+          escalas</li>
+      </ol>
 
-  <!-- SEÇÃO 1 -->
-  <div class="secao-titulo">
-    <div class="secao-etiqueta">SEÇÃO 1</div>
-    <h3 class="secao-nome">Histograma: a forma dos dados numéricos</h3>
-  </div>
+      <!-- SEÇÃO 1 -->
+      <div class="secao-titulo">
+        <div class="secao-etiqueta">SEÇÃO 1</div>
+        <h3 class="secao-nome">Histograma: a forma dos dados numéricos</h3>
+      </div>
 
-  <p>
-    O <strong>histograma</strong> agrupa dados numéricos em faixas de
-    valores (por exemplo, de 0 a 10, de 10 a 20...) e desenha uma
-    barra para cada faixa, com altura igual à quantidade (ou
-    percentual) de dados naquela faixa. Diferente do gráfico de
-    barras, as barras do histograma ficam coladas umas nas outras,
-    porque representam faixas contínuas de um mesmo intervalo, e não
-    categorias separadas.
-  </p>
+      <p>
+        O <strong>histograma</strong> agrupa dados numéricos em faixas de
+        valores (por exemplo, de 0 a 10, de 10 a 20...) e desenha uma
+        barra para cada faixa, com altura igual à quantidade (ou
+        percentual) de dados naquela faixa. Diferente do gráfico de
+        barras, as barras do histograma ficam coladas umas nas outras,
+        porque representam faixas contínuas de um mesmo intervalo, e não
+        categorias separadas.
+      </p>
 
-  <figure class="figura">
-    <img src="imagens/secao1-histograma-suporte.jpg" alt="Histograma do tempo de resposta do suporte de um aplicativo, assimétrico à direita" loading="lazy" decoding="async">
-    <figcaption>Figura 1 – Histograma do tempo de resposta do suporte
-    de um aplicativo para 60 chamados. A cauda longa à direita indica
-    assimetria à direita. Fonte: elaborado pelo autor. Acesso em: 07
-    jul. 2026.</figcaption>
-  </figure>
+      <figure class="figura">
+        <img src="imagens/secao1-histograma-suporte.jpg"
+          alt="Histograma do tempo de resposta do suporte de um aplicativo, assimétrico à direita" loading="lazy"
+          decoding="async">
+        <figcaption>Figura 1 – Histograma do tempo de resposta do suporte
+          de um aplicativo para 60 chamados. A cauda longa à direita indica
+          assimetria à direita. Fonte: elaborado pelo autor. Acesso em: 07
+          jul. 2026.</figcaption>
+      </figure>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo cotidiano</span>
-    Um histograma das notas de uma prova pode mostrar um "monte"
-    concentrado entre 6 e 8, com poucas notas muito baixas ou muito
-    altas. Essa forma ajuda a enxergar rapidamente onde a maioria dos
-    alunos se encontra.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo cotidiano</span>
+        Um histograma das notas de uma prova pode mostrar um "monte"
+        concentrado entre 6 e 8, com poucas notas muito baixas ou muito
+        altas. Essa forma ajuda a enxergar rapidamente onde a maioria dos
+        alunos se encontra.
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo em Tecnologia</span>
-    Na Figura 1, a maioria dos chamados de suporte foi resolvida entre
-    5 e 25 minutos, mas alguns poucos casos levaram bem mais tempo
-    (até quase uma hora), formando uma cauda longa à direita. Esse
-    formato é chamado de <strong>assimetria à direita</strong>.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo em Tecnologia</span>
+        Na Figura 1, a maioria dos chamados de suporte foi resolvida entre
+        5 e 25 minutos, mas alguns poucos casos levaram bem mais tempo
+        (até quase uma hora), formando uma cauda longa à direita. Esse
+        formato é chamado de <strong>assimetria à direita</strong>.
+      </div>
 
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Forma do histograma</th><th scope="col">O que indica</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Simétrico</td><td>Média e mediana próximas</td></tr>
-    <tr><td>Assimétrico à direita</td><td>Média maior que a mediana (poucos valores altos puxam a média)</td></tr>
-    <tr><td>Assimétrico à esquerda</td><td>Média menor que a mediana (poucos valores baixos puxam a média)</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Forma do histograma</th>
+              <th scope="col">O que indica</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Simétrico</td>
+              <td>Média e mediana próximas</td>
+            </tr>
+            <tr>
+              <td>Assimétrico à direita</td>
+              <td>Média maior que a mediana (poucos valores altos puxam a média)</td>
+            </tr>
+            <tr>
+              <td>Assimétrico à esquerda</td>
+              <td>Média menor que a mediana (poucos valores baixos puxam a média)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <div class="box box-atencao">
-    <span class="box-titulo">Atenção</span>
-    Faixas largas demais escondem padrões (poucas barras, tudo
-    misturado); faixas estreitas demais criam ruído visual (muitas
-    barrinhas, difícil ver o padrão geral). Busque um meio-termo.
-  </div>
+      <div class="box box-atencao">
+        <span class="box-titulo">Atenção</span>
+        Faixas largas demais escondem padrões (poucas barras, tudo
+        misturado); faixas estreitas demais criam ruído visual (muitas
+        barrinhas, difícil ver o padrão geral). Busque um meio-termo.
+      </div>
 
-  <div class="box box-formula">
-    <span class="box-titulo">Fórmula destacada</span>
-    <div class="formula-math">
-      <span>Largura da faixa ≈</span>
-      <span class="fracao"><span class="num">máximo − mínimo</span><span class="den">número de faixas desejado</span></span>
-    </div>
-    <span class="nota-formula">um ponto de partida razoável é escolher entre 6 e 10 faixas</span>
-  </div>
+      <div class="box box-formula">
+        <span class="box-titulo">Fórmula destacada</span>
+        <div class="formula-math">
+          <span>Largura da faixa ≈</span>
+          <span class="fracao"><span class="num">máximo − mínimo</span><span class="den">número de faixas
+              desejado</span></span>
+        </div>
+        <span class="nota-formula">um ponto de partida razoável é escolher entre 6 e 10 faixas</span>
+      </div>
 
-  <div class="box box-resumo">
-    <span class="box-titulo">Resumo da Seção 1</span>
-    O histograma mostra a forma dos dados numéricos: simétrica ou
-    assimétrica (à direita ou à esquerda), o que se relaciona
-    diretamente com a posição da média em relação à mediana.
-  </div>
+      <div class="box box-resumo">
+        <span class="box-titulo">Resumo da Seção 1</span>
+        O histograma mostra a forma dos dados numéricos: simétrica ou
+        assimétrica (à direita ou à esquerda), o que se relaciona
+        diretamente com a posição da média em relação à mediana.
+      </div>
 
-  <!-- SEÇÃO 2 -->
-  <div class="secao-titulo">
-    <div class="secao-etiqueta">SEÇÃO 2</div>
-    <h3 class="secao-nome">Boxplot: o resumo de cinco números</h3>
-  </div>
+      <!-- SEÇÃO 2 -->
+      <div class="secao-titulo">
+        <div class="secao-etiqueta">SEÇÃO 2</div>
+        <h3 class="secao-nome">Boxplot: o resumo de cinco números</h3>
+      </div>
 
-  <p>
-    O <strong>boxplot</strong> (ou diagrama de caixa) resume um
-    conjunto de dados numéricos em cinco números: o mínimo, o primeiro
-    quartil (Q1), a mediana, o terceiro quartil (Q3) e o máximo. A
-    caixa vai de Q1 até Q3 (contendo os 50% centrais dos dados), com
-    uma linha na mediana; as "hastes" (linhas finas) se estendem até
-    os valores mais extremos que não são outliers.
-  </p>
-  <p>
-    Para encontrar Q1 e Q3 sem fórmulas complicadas, use o método de
-    dividir ao meio: ordene os dados, encontre a mediana; Q1 é a
-    mediana da metade inferior dos dados, e Q3 é a mediana da metade
-    superior.
-  </p>
+      <p>
+        O <strong>boxplot</strong> (ou diagrama de caixa) resume um
+        conjunto de dados numéricos em cinco números: o mínimo, o primeiro
+        quartil (Q1), a mediana, o terceiro quartil (Q3) e o máximo. A
+        caixa vai de Q1 até Q3 (contendo os 50% centrais dos dados), com
+        uma linha na mediana; as "hastes" (linhas finas) se estendem até
+        os valores mais extremos que não são outliers.
+      </p>
+      <p>
+        Para encontrar Q1 e Q3 sem fórmulas complicadas, use o método de
+        dividir ao meio: ordene os dados, encontre a mediana; Q1 é a
+        mediana da metade inferior dos dados, e Q3 é a mediana da metade
+        superior.
+      </p>
 
-  <figure class="figura">
-    <img src="imagens/secao2-boxplot-app.jpg" alt="Boxplot do tempo de carregamento de um aplicativo em 9 testes, com um outlier destacado" loading="lazy" decoding="async">
-    <figcaption>Figura 2 – Boxplot do tempo de carregamento de um app
-    em 9 testes. O ponto laranja é um outlier: um teste com conexão
-    ruim levou 15 segundos. Fonte: elaborado pelo autor. Acesso em: 07
-    jul. 2026.</figcaption>
-  </figure>
+      <figure class="figura">
+        <img src="imagens/secao2-boxplot-app.jpg"
+          alt="Boxplot do tempo de carregamento de um aplicativo em 9 testes, com um outlier destacado" loading="lazy"
+          decoding="async">
+        <figcaption>Figura 2 – Boxplot do tempo de carregamento de um app
+          em 9 testes. O ponto laranja é um outlier: um teste com conexão
+          ruim levou 15 segundos. Fonte: elaborado pelo autor. Acesso em: 07
+          jul. 2026.</figcaption>
+      </figure>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo cotidiano</span>
-    O tempo de espera de 9 clientes em uma fila de atendimento pode
-    ser resumido em um boxplot: a caixa mostra onde ficam os 50%
-    "típicos" dos tempos de espera, e a linha da mediana mostra o
-    valor central.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo cotidiano</span>
+        O tempo de espera de 9 clientes em uma fila de atendimento pode
+        ser resumido em um boxplot: a caixa mostra onde ficam os 50%
+        "típicos" dos tempos de espera, e a linha da mediana mostra o
+        valor central.
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo em Tecnologia</span>
-    Na Figura 2, o tempo de carregamento de um app foi medido em 9
-    testes: 2, 2, 3, 3, 4, 4, 5, 6 e 15 segundos. O último teste (15s)
-    aparece isolado no gráfico porque está bem longe dos demais
-    valores: é um outlier, provavelmente causado por uma conexão de
-    internet ruim naquele teste.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo em Tecnologia</span>
+        Na Figura 2, o tempo de carregamento de um app foi medido em 9
+        testes: 2, 2, 3, 3, 4, 4, 5, 6 e 15 segundos. O último teste (15s)
+        aparece isolado no gráfico porque está bem longe dos demais
+        valores: é um outlier, provavelmente causado por uma conexão de
+        internet ruim naquele teste.
+      </div>
 
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Estatística</th><th scope="col">Valor</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Mínimo</td><td>2 s</td></tr>
-    <tr><td>Q1</td><td>2,5 s</td></tr>
-    <tr><td>Mediana</td><td>4 s</td></tr>
-    <tr><td>Q3</td><td>5,5 s</td></tr>
-    <tr><td>Máximo (sem contar o outlier)</td><td>6 s</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Estatística</th>
+              <th scope="col">Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mínimo</td>
+              <td>2 s</td>
+            </tr>
+            <tr>
+              <td>Q1</td>
+              <td>2,5 s</td>
+            </tr>
+            <tr>
+              <td>Mediana</td>
+              <td>4 s</td>
+            </tr>
+            <tr>
+              <td>Q3</td>
+              <td>5,5 s</td>
+            </tr>
+            <tr>
+              <td>Máximo (sem contar o outlier)</td>
+              <td>6 s</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <div class="box box-atencao">
-    <span class="box-titulo">Atenção</span>
-    O tamanho da caixa não indica a quantidade de dados: cada uma das
-    quatro partes do boxplot (mínimo–Q1, Q1–mediana, mediana–Q3,
-    Q3–máximo) sempre representa 25% dos dados, seja a parte visualmente
-    maior ou menor.
-  </div>
+      <div class="box box-atencao">
+        <span class="box-titulo">Atenção</span>
+        O tamanho da caixa não indica a quantidade de dados: cada uma das
+        quatro partes do boxplot (mínimo–Q1, Q1–mediana, mediana–Q3,
+        Q3–máximo) sempre representa 25% dos dados, seja a parte visualmente
+        maior ou menor.
+      </div>
 
-  <div class="box box-formula">
-    <span class="box-titulo">Fórmula destacada</span>
-    <div class="formula-math">
-      <span>IQR = Q3 − Q1</span>
-    </div>
-    <span class="nota-formula">um valor é considerado outlier quando fica acima de Q3 + 1,5 × IQR ou abaixo de Q1 − 1,5 × IQR</span>
-  </div>
+      <div class="box box-formula">
+        <span class="box-titulo">Fórmula destacada</span>
+        <div class="formula-math">
+          <span>IQR = Q3 − Q1</span>
+        </div>
+        <span class="nota-formula">um valor é considerado outlier quando fica acima de Q3 + 1,5 × IQR ou abaixo de Q1 −
+          1,5 × IQR</span>
+      </div>
 
-  <div class="box box-resumo">
-    <span class="box-titulo">Resumo da Seção 2</span>
-    O boxplot resume os dados em cinco números (mínimo, Q1, mediana,
-    Q3, máximo) e destaca outliers, sem depender da escolha de faixas
-    como no histograma.
-  </div>
+      <div class="box box-resumo">
+        <span class="box-titulo">Resumo da Seção 2</span>
+        O boxplot resume os dados em cinco números (mínimo, Q1, mediana,
+        Q3, máximo) e destaca outliers, sem depender da escolha de faixas
+        como no histograma.
+      </div>
 
-  <!-- SEÇÃO 3 -->
-  <div class="secao-titulo">
-    <div class="secao-etiqueta">SEÇÃO 3</div>
-    <h3 class="secao-nome">Gráfico de linha do tempo e cuidados com escalas</h3>
-  </div>
+      <!-- SEÇÃO 3 -->
+      <div class="secao-titulo">
+        <div class="secao-etiqueta">SEÇÃO 3</div>
+        <h3 class="secao-nome">Gráfico de linha do tempo e cuidados com escalas</h3>
+      </div>
 
-  <p>
-    O <strong>gráfico de linha do tempo</strong> (ou gráfico de linha)
-    mostra como um valor numérico muda ao longo do tempo: o eixo
-    horizontal representa o tempo (dia, mês, ano), e o eixo vertical
-    representa o valor medido. Ele é ideal para identificar
-    tendências (subindo, descendo, estável) e padrões cíclicos (que se
-    repetem, como picos toda semana).
-  </p>
+      <p>
+        O <strong>gráfico de linha do tempo</strong> (ou gráfico de linha)
+        mostra como um valor numérico muda ao longo do tempo: o eixo
+        horizontal representa o tempo (dia, mês, ano), e o eixo vertical
+        representa o valor medido. Ele é ideal para identificar
+        tendências (subindo, descendo, estável) e padrões cíclicos (que se
+        repetem, como picos toda semana).
+      </p>
 
-  <figure class="figura">
-    <img src="imagens/secao3-linha-tempo-usuarios.jpg" alt="Comparação entre um gráfico de linha do tempo com eixo cortado e um com eixo completo, para os mesmos dados de usuários ativos" loading="lazy" decoding="async">
-    <figcaption>Figura 3 – Os mesmos dados de usuários ativos diários
-    parecem ter oscilações dramáticas ou suaves, dependendo de onde o
-    eixo vertical começa e termina. Fonte: elaborado pelo autor.
-    Acesso em: 07 jul. 2026.</figcaption>
-  </figure>
+      <figure class="figura">
+        <img src="imagens/secao3-linha-tempo-usuarios.jpg"
+          alt="Comparação entre um gráfico de linha do tempo com eixo cortado e um com eixo completo, para os mesmos dados de usuários ativos"
+          loading="lazy" decoding="async">
+        <figcaption>Figura 3 – Os mesmos dados de usuários ativos diários
+          parecem ter oscilações dramáticas ou suaves, dependendo de onde o
+          eixo vertical começa e termina. Fonte: elaborado pelo autor.
+          Acesso em: 07 jul. 2026.</figcaption>
+      </figure>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo cotidiano</span>
-    Um gráfico do preço de um produto ao longo de 12 meses pode
-    revelar uma tendência de alta, uma queda recente, ou picos de
-    preço sempre no mesmo mês do ano (padrão cíclico, como no Natal).
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo cotidiano</span>
+        Um gráfico do preço de um produto ao longo de 12 meses pode
+        revelar uma tendência de alta, uma queda recente, ou picos de
+        preço sempre no mesmo mês do ano (padrão cíclico, como no Natal).
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo em Tecnologia</span>
-    Na Figura 3, o número de usuários ativos de um app sobe nos finais
-    de semana (dias 6, 7, 13 e 14) e volta a cair durante a semana,
-    além de mostrar uma leve tendência de crescimento ao longo dos 14
-    dias. O "gráfico enganoso" exagera essas variações; o "gráfico
-    correto" mostra que elas são, na verdade, moderadas.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo em Tecnologia</span>
+        Na Figura 3, o número de usuários ativos de um app sobe nos finais
+        de semana (dias 6, 7, 13 e 14) e volta a cair durante a semana,
+        além de mostrar uma leve tendência de crescimento ao longo dos 14
+        dias. O "gráfico enganoso" exagera essas variações; o "gráfico
+        correto" mostra que elas são, na verdade, moderadas.
+      </div>
 
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Sinal de alerta</th><th scope="col">Por que desconfiar</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Eixo vertical não começa em zero</td><td>Exagera oscilações pequenas</td></tr>
-    <tr><td>Escala muito esticada ou muito espremida</td><td>Distorce a impressão de tendência</td></tr>
-    <tr><td>Pontos no eixo do tempo com espaçamento desigual</td><td>Datas tratadas como rótulos, não como números reais</td></tr>
-    <tr><td>Contagem em vez de taxa</td><td>Não considera mudanças no tamanho da população ao longo do tempo</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Sinal de alerta</th>
+              <th scope="col">Por que desconfiar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Eixo vertical não começa em zero</td>
+              <td>Exagera oscilações pequenas</td>
+            </tr>
+            <tr>
+              <td>Escala muito esticada ou muito espremida</td>
+              <td>Distorce a impressão de tendência</td>
+            </tr>
+            <tr>
+              <td>Pontos no eixo do tempo com espaçamento desigual</td>
+              <td>Datas tratadas como rótulos, não como números reais</td>
+            </tr>
+            <tr>
+              <td>Contagem em vez de taxa</td>
+              <td>Não considera mudanças no tamanho da população ao longo do tempo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <div class="box box-atencao">
-    <span class="box-titulo">Atenção</span>
-    Muitos pontos de dados podem poluir um gráfico de linha do tempo.
-    Nesses casos, é comum resumir os dados em blocos de tempo maiores
-    (por exemplo, a média de cada semana) antes de plotar.
-  </div>
+      <div class="box box-atencao">
+        <span class="box-titulo">Atenção</span>
+        Muitos pontos de dados podem poluir um gráfico de linha do tempo.
+        Nesses casos, é comum resumir os dados em blocos de tempo maiores
+        (por exemplo, a média de cada semana) antes de plotar.
+      </div>
 
-  <div class="box box-formula">
-    <span class="box-titulo">Fórmula destacada</span>
-    <div class="formula-math">
-      <span>Checklist: eixo começa em 0? escala justa? tempo sem buracos? é taxa, não só contagem?</span>
-    </div>
-    <span class="nota-formula">quatro perguntas rápidas antes de confiar em qualquer gráfico de linha do tempo</span>
-  </div>
+      <div class="box box-formula">
+        <span class="box-titulo">Fórmula destacada</span>
+        <div class="formula-math">
+          <span>Checklist: eixo começa em 0? escala justa? tempo sem buracos? é taxa, não só contagem?</span>
+        </div>
+        <span class="nota-formula">quatro perguntas rápidas antes de confiar em qualquer gráfico de linha do
+          tempo</span>
+      </div>
 
-  <div class="box box-resumo">
-    <span class="box-titulo">Resumo da Seção 3</span>
-    O gráfico de linha do tempo revela tendências e padrões cíclicos,
-    mas a escala do eixo vertical pode exagerar ou disfarçar essas
-    variações.
-  </div>
+      <div class="box box-resumo">
+        <span class="box-titulo">Resumo da Seção 3</span>
+        O gráfico de linha do tempo revela tendências e padrões cíclicos,
+        mas a escala do eixo vertical pode exagerar ou disfarçar essas
+        variações.
+      </div>
 
-  <h2 class="bloco-header">Exemplo Matemático Resolvido</h2>
-  <p>
-    Usando os tempos de carregamento do app da Seção 2 (2, 2, 3, 3, 4,
-    4, 5, 6 e 15 segundos), calcule o IQR e confirme se 15 segundos é
-    um outlier.
-  </p>
-  <ol>
-    <li><strong>Dados:</strong> valores ordenados = 2, 2, 3, 3, 4, 4,
-      5, 6, 15; mediana = 4; Q1 = 2,5; Q3 = 5,5</li>
-    <li><strong>Fórmula:</strong> IQR = Q3 − Q1; limite superior =
-      Q3 + 1,5 × IQR</li>
-    <li><strong>Substituição:</strong> IQR = 5,5 − 2,5; limite
-      superior = 5,5 + 1,5 × IQR</li>
-    <li><strong>Cálculo:</strong> IQR = 3; limite superior = 5,5 + 1,5
-      × 3 = 5,5 + 4,5 = 10</li>
-    <li><strong>Interpretação:</strong> qualquer valor acima de 10
-      segundos é considerado outlier. Como 15 segundos ultrapassa esse
-      limite, ele é um outlier, confirmando o ponto isolado da Figura
-      2.</li>
-  </ol>
+      <h2 class="bloco-header">Exemplo Matemático Resolvido</h2>
+      <p>
+        Usando os tempos de carregamento do app da Seção 2 (2, 2, 3, 3, 4,
+        4, 5, 6 e 15 segundos), calcule o IQR e confirme se 15 segundos é
+        um outlier.
+      </p>
+      <ol>
+        <li><strong>Dados:</strong> valores ordenados = 2, 2, 3, 3, 4, 4,
+          5, 6, 15; mediana = 4; Q1 = 2,5; Q3 = 5,5</li>
+        <li><strong>Fórmula:</strong> IQR = Q3 − Q1; limite superior =
+          Q3 + 1,5 × IQR</li>
+        <li><strong>Substituição:</strong> IQR = 5,5 − 2,5; limite
+          superior = 5,5 + 1,5 × IQR</li>
+        <li><strong>Cálculo:</strong> IQR = 3; limite superior = 5,5 + 1,5
+          × 3 = 5,5 + 4,5 = 10</li>
+        <li><strong>Interpretação:</strong> qualquer valor acima de 10
+          segundos é considerado outlier. Como 15 segundos ultrapassa esse
+          limite, ele é um outlier, confirmando o ponto isolado da Figura
+          2.</li>
+      </ol>
 
-  <h2 class="bloco-header">Exemplo em Python</h2>
-  <p>
-    O programa abaixo calcula o resumo de cinco números dos tempos de
-    carregamento, verifica automaticamente se o maior valor é um
-    outlier (repetindo os cálculos do exemplo resolvido) e usa o
-    matplotlib para desenhar o boxplot correspondente.
-  </p>
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python"><span class="cm-kw">import</span> matplotlib.pyplot <span class="cm-kw">as</span> plt
+      <h2 class="bloco-header">Exemplo em Python</h2>
+      <p>
+        O programa abaixo calcula o resumo de cinco números dos tempos de
+        carregamento, verifica automaticamente se o maior valor é um
+        outlier (repetindo os cálculos do exemplo resolvido) e usa o
+        matplotlib para desenhar o boxplot correspondente.
+      </p>
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python"><span class="cm-kw">import</span> matplotlib.pyplot <span class="cm-kw">as</span> plt
 
 
 <span class="cm-kw">def</span> mediana(lista):
@@ -937,49 +1073,49 @@ plt.xlabel(<span class="cm-str">"Tempo de carregamento (segundos)"</span>)
 plt.title(<span class="cm-str">f"Tempo de carregamento de um app em 9 testes (n = {len(tempos)})"</span>)
 plt.savefig(<span class="cm-str">"boxplot_app.png"</span>)
 </code></pre>
-  </div>
-  <div class="explicacao-codigo">
-    <p><strong>Entrada:</strong> lista com os 9 tempos de carregamento.</p>
-    <p><strong>Processamento:</strong> a função <code>mediana</code> é
-      reaplicada às metades inferior e superior da lista ordenada para
-      obter Q1 e Q3; em seguida calcula-se o IQR e o limite superior;
-      por fim, <code>plt.boxplot</code> desenha a caixa com esses
-      valores.</p>
-    <p><strong>Saída:</strong> "Q1: 2.5s | Mediana: 4s | Q3: 5.5s",
-      "IQR: 3.0s | Limite superior: 10.0s", "15s é um outlier" e a
-      imagem da Figura 2.</p>
-    <p><strong>Interpretação:</strong> o programa confirma, de forma
-      automática, o mesmo resultado do exemplo resolvido: 15 segundos
-      está acima do limite de 10 segundos, e por isso aparece isolado
-      no boxplot.</p>
-  </div>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Entrada:</strong> lista com os 9 tempos de carregamento.</p>
+        <p><strong>Processamento:</strong> a função <code>mediana</code> é
+          reaplicada às metades inferior e superior da lista ordenada para
+          obter Q1 e Q3; em seguida calcula-se o IQR e o limite superior;
+          por fim, <code>plt.boxplot</code> desenha a caixa com esses
+          valores.</p>
+        <p><strong>Saída:</strong> "Q1: 2.5s | Mediana: 4s | Q3: 5.5s",
+          "IQR: 3.0s | Limite superior: 10.0s", "15s é um outlier" e a
+          imagem da Figura 2.</p>
+        <p><strong>Interpretação:</strong> o programa confirma, de forma
+          automática, o mesmo resultado do exemplo resolvido: 15 segundos
+          está acima do limite de 10 segundos, e por isso aparece isolado
+          no boxplot.</p>
+      </div>
 
-  <h2 class="bloco-header">Exercícios</h2>
+      <h2 class="bloco-header">Exercícios</h2>
 
-  <div class="box box-exercicio">
-    <span class="box-titulo">Exercício 1</span>
-    Uma turma registrou o tempo de estudo (em horas) de 7 alunos na
-    semana da prova: 3, 5, 5, 6, 7, 8 e 20 (um aluno estudou muito
-    mais que os demais). Escreva um programa em Python que calcule e
-    imprima o resumo de cinco números (mínimo, Q1, mediana, Q3,
-    máximo) desse conjunto de dados.
-  </div>
+      <div class="box box-exercicio">
+        <span class="box-titulo">Exercício 1</span>
+        Uma turma registrou o tempo de estudo (em horas) de 7 alunos na
+        semana da prova: 3, 5, 5, 6, 7, 8 e 20 (um aluno estudou muito
+        mais que os demais). Escreva um programa em Python que calcule e
+        imprima o resumo de cinco números (mínimo, Q1, mediana, Q3,
+        máximo) desse conjunto de dados.
+      </div>
 
-  <div class="box box-exercicio">
-    <span class="box-titulo">Exercício 2</span>
-    Uma equipe de suporte mediu o tempo de resolução (em minutos) de 8
-    chamados: 5, 6, 6, 7, 8, 9, 10 e 40. Escreva um programa em Python
-    que: (a) calcule o resumo de cinco números; (b) calcule o IQR; (c)
-    verifique e imprima se o valor 40 minutos é considerado um
-    outlier, usando a regra de 1,5 × IQR.
-  </div>
+      <div class="box box-exercicio">
+        <span class="box-titulo">Exercício 2</span>
+        Uma equipe de suporte mediu o tempo de resolução (em minutos) de 8
+        chamados: 5, 6, 6, 7, 8, 9, 10 e 40. Escreva um programa em Python
+        que: (a) calcule o resumo de cinco números; (b) calcule o IQR; (c)
+        verifique e imprima se o valor 40 minutos é considerado um
+        outlier, usando a regra de 1,5 × IQR.
+      </div>
 
-  <h2 class="bloco-header">Gabarito Comentado</h2>
+      <h2 class="bloco-header">Gabarito Comentado</h2>
 
-  <p><strong>Exercício 1</strong></p>
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python"><span class="cm-kw">def</span> mediana(lista):
+      <p><strong>Exercício 1</strong></p>
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python"><span class="cm-kw">def</span> mediana(lista):
     ordenada = <span class="cm-bi">sorted</span>(lista)
     n = <span class="cm-bi">len</span>(ordenada)
     meio = n // <span class="cm-num">2</span>
@@ -1001,20 +1137,20 @@ q3 = mediana(ordenadas[meio + <span class="cm-num">1</span>:])
 <span class="cm-bi">print</span>(<span class="cm-str">f"Q3: {q3}h"</span>)
 <span class="cm-bi">print</span>(<span class="cm-str">f"Máximo: {ordenadas[-1]}h"</span>)
 </code></pre>
-  </div>
-  <div class="explicacao-codigo">
-    <p><strong>Saída:</strong> "Mínimo: 3h", "Q1: 5h", "Mediana: 6h",
-      "Q3: 8h" e "Máximo: 20h".</p>
-    <p><strong>Comentário:</strong> aplicação direta do método de
-      dividir ao meio da Seção 2. O valor 20h fica bem longe do Q3,
-      um indício visual de outlier mesmo antes de aplicar a regra do
-      1,5 × IQR.</p>
-  </div>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Saída:</strong> "Mínimo: 3h", "Q1: 5h", "Mediana: 6h",
+          "Q3: 8h" e "Máximo: 20h".</p>
+        <p><strong>Comentário:</strong> aplicação direta do método de
+          dividir ao meio da Seção 2. O valor 20h fica bem longe do Q3,
+          um indício visual de outlier mesmo antes de aplicar a regra do
+          1,5 × IQR.</p>
+      </div>
 
-  <p><strong>Exercício 2</strong></p>
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python"><span class="cm-kw">def</span> mediana(lista):
+      <p><strong>Exercício 2</strong></p>
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python"><span class="cm-kw">def</span> mediana(lista):
     ordenada = <span class="cm-bi">sorted</span>(lista)
     n = <span class="cm-bi">len</span>(ordenada)
     meio = n // <span class="cm-num">2</span>
@@ -1040,115 +1176,139 @@ limite_superior = q3 + <span class="cm-num">1.5</span> * iqr
 <span class="cm-kw">else</span>:
     <span class="cm-bi">print</span>(<span class="cm-str">f"40 minutos não é um outlier (limite: {limite_superior})"</span>)
 </code></pre>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Saída:</strong> "Mínimo: 5 | Q1: 6.0 | Mediana: 7.5",
+          "Q3: 9.5 | Máximo: 40 | IQR: 3.5" e "40 minutos é um outlier
+          (limite: 14.75)".</p>
+        <p><strong>Comentário:</strong> como n = 8 é par, Q1 e Q3 usam as
+          metades inteiras (sem excluir a mediana). O chamado de 40
+          minutos fica bem acima do limite de 14,75, confirmando o
+          outlier.</p>
+      </div>
+
+      <h2 class="bloco-header">Retomando a Conversa Inicial</h2>
+
+      <p><strong>Seção 1, Histograma:</strong> agrupa dados numéricos em
+        faixas e revela a forma da distribuição (simétrica ou assimétrica),
+        ligada à posição da média em relação à mediana.</p>
+
+      <p><strong>Seção 2, Boxplot:</strong> resume os dados em cinco
+        números (mínimo, Q1, mediana, Q3, máximo) e identifica outliers pela
+        regra de 1,5 × IQR.</p>
+
+      <p><strong>Seção 3, Gráfico de linha do tempo:</strong> mostra
+        tendências e padrões cíclicos ao longo do tempo, mas a escala do
+        eixo vertical pode exagerar ou disfarçar essas variações.</p>
+
+      <h2 class="bloco-header">Revisão Rápida</h2>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Conceito</th>
+              <th scope="col">Fórmula</th>
+              <th scope="col">Erro comum</th>
+              <th scope="col">Dica de prova</th>
+              <th scope="col">Aplicação em Tecnologia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Histograma</td>
+              <td><span class="fracao"><span class="num">máx − mín</span><span class="den">nº de faixas</span></span>
+              </td>
+              <td>Faixas largas ou estreitas demais</td>
+              <td>Relacione a forma com média x mediana</td>
+              <td>Tempo de resposta do suporte</td>
+            </tr>
+            <tr>
+              <td>Boxplot</td>
+              <td>IQR = Q3 − Q1</td>
+              <td>Achar que caixa maior = mais dados</td>
+              <td>Cada seção do boxplot é sempre 25%</td>
+              <td>Tempo de carregamento de um app</td>
+            </tr>
+            <tr>
+              <td>Outlier</td>
+              <td>Q3 + 1,5 × IQR</td>
+              <td>Ignorar outliers ao interpretar o gráfico</td>
+              <td>Compare com o limite superior/inferior</td>
+              <td>Teste de carregamento com conexão ruim</td>
+            </tr>
+            <tr>
+              <td>Gráfico de linha do tempo</td>
+              <td>N/A</td>
+              <td>Não checar onde o eixo começa</td>
+              <td>Desconfie de eixos cortados</td>
+              <td>Usuários ativos diários de um app</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="bloco-header">Sugestões de Leituras e Sites</h2>
+      <p><strong>LEITURAS</strong></p>
+      <p>RUMSEY, Deborah J. <em>Statistics For Dummies</em>. 2. ed. Hoboken,
+        NJ: Wiley Publishing, 2011. (livro-base desta aula, recomendado para
+        aprofundamento em gráficos de dados numéricos.)</p>
+      <p><strong>SITES</strong></p>
+      <p>Khan Academy, Estatística e Probabilidade:
+        https://pt.khanacademy.org/math/statistics-probability (aulas
+        gratuitas em português sobre histogramas e boxplots.)</p>
+
+      <h2 class="bloco-header">Glossário</h2>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Termo</th>
+              <th scope="col">Definição</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Histograma</td>
+              <td>Gráfico que agrupa dados numéricos em faixas, com barras coladas representando a frequência de cada
+                faixa.</td>
+            </tr>
+            <tr>
+              <td>Assimetria à direita/esquerda</td>
+              <td>Forma de um histograma com uma cauda mais longa de um dos lados.</td>
+            </tr>
+            <tr>
+              <td>Boxplot</td>
+              <td>Gráfico que resume dados numéricos em cinco números: mínimo, Q1, mediana, Q3 e máximo.</td>
+            </tr>
+            <tr>
+              <td>Quartil (Q1, Q3)</td>
+              <td>Valores que dividem os dados ordenados em quatro partes iguais.</td>
+            </tr>
+            <tr>
+              <td>IQR (amplitude interquartil)</td>
+              <td>Diferença entre Q3 e Q1; mede a dispersão dos 50% centrais dos dados.</td>
+            </tr>
+            <tr>
+              <td>Gráfico de linha do tempo</td>
+              <td>Gráfico que mostra a variação de um valor numérico ao longo do tempo.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="bloco-header">Referências Bibliográficas</h2>
+      <p>TRIOLA, Mario F. <em>Introdução à Estatística</em>. 14. ed. Rio de
+        Janeiro: LTC, 2024. E-book. p.Capa. ISBN 9788521638780. Disponível em:
+        https://integrada.minhabiblioteca.com.br/reader/books/9788521638780/.
+        Acesso em: 01 dez. 2025.</p>
+      <p>VIEIRA, Sonia. <em>Estatística básica</em> – 2ª edição revista e
+        ampliada. 2. ed. Porto Alegre: +A Educação - Cengage Learning Brasil,
+        2018. E-book. p.Cover. ISBN 9788522128082. Disponível em:
+        https://integrada.minhabiblioteca.com.br/reader/books/9788522128082/.
+        Acesso em: 01 dez. 2025.</p>
+
+    </main>
   </div>
-  <div class="explicacao-codigo">
-    <p><strong>Saída:</strong> "Mínimo: 5 | Q1: 6.0 | Mediana: 7.5",
-      "Q3: 9.5 | Máximo: 40 | IQR: 3.5" e "40 minutos é um outlier
-      (limite: 14.75)".</p>
-    <p><strong>Comentário:</strong> como n = 8 é par, Q1 e Q3 usam as
-      metades inteiras (sem excluir a mediana). O chamado de 40
-      minutos fica bem acima do limite de 14,75, confirmando o
-      outlier.</p>
-  </div>
-
-  <h2 class="bloco-header">Retomando a Conversa Inicial</h2>
-
-  <p><strong>Seção 1, Histograma:</strong> agrupa dados numéricos em
-  faixas e revela a forma da distribuição (simétrica ou assimétrica),
-  ligada à posição da média em relação à mediana.</p>
-
-  <p><strong>Seção 2, Boxplot:</strong> resume os dados em cinco
-  números (mínimo, Q1, mediana, Q3, máximo) e identifica outliers pela
-  regra de 1,5 × IQR.</p>
-
-  <p><strong>Seção 3, Gráfico de linha do tempo:</strong> mostra
-  tendências e padrões cíclicos ao longo do tempo, mas a escala do
-  eixo vertical pode exagerar ou disfarçar essas variações.</p>
-
-  <h2 class="bloco-header">Revisão Rápida</h2>
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr>
-      <th scope="col">Conceito</th>
-      <th scope="col">Fórmula</th>
-      <th scope="col">Erro comum</th>
-      <th scope="col">Dica de prova</th>
-      <th scope="col">Aplicação em Tecnologia</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>Histograma</td>
-      <td><span class="fracao"><span class="num">máx − mín</span><span class="den">nº de faixas</span></span></td>
-      <td>Faixas largas ou estreitas demais</td>
-      <td>Relacione a forma com média x mediana</td>
-      <td>Tempo de resposta do suporte</td>
-    </tr>
-    <tr>
-      <td>Boxplot</td>
-      <td>IQR = Q3 − Q1</td>
-      <td>Achar que caixa maior = mais dados</td>
-      <td>Cada seção do boxplot é sempre 25%</td>
-      <td>Tempo de carregamento de um app</td>
-    </tr>
-    <tr>
-      <td>Outlier</td>
-      <td>Q3 + 1,5 × IQR</td>
-      <td>Ignorar outliers ao interpretar o gráfico</td>
-      <td>Compare com o limite superior/inferior</td>
-      <td>Teste de carregamento com conexão ruim</td>
-    </tr>
-    <tr>
-      <td>Gráfico de linha do tempo</td>
-      <td>N/A</td>
-      <td>Não checar onde o eixo começa</td>
-      <td>Desconfie de eixos cortados</td>
-      <td>Usuários ativos diários de um app</td>
-    </tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h2 class="bloco-header">Sugestões de Leituras e Sites</h2>
-  <p><strong>LEITURAS</strong></p>
-  <p>RUMSEY, Deborah J. <em>Statistics For Dummies</em>. 2. ed. Hoboken,
-  NJ: Wiley Publishing, 2011. (livro-base desta aula, recomendado para
-  aprofundamento em gráficos de dados numéricos.)</p>
-  <p><strong>SITES</strong></p>
-  <p>Khan Academy, Estatística e Probabilidade:
-  https://pt.khanacademy.org/math/statistics-probability (aulas
-  gratuitas em português sobre histogramas e boxplots.)</p>
-
-  <h2 class="bloco-header">Glossário</h2>
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Termo</th><th scope="col">Definição</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Histograma</td><td>Gráfico que agrupa dados numéricos em faixas, com barras coladas representando a frequência de cada faixa.</td></tr>
-    <tr><td>Assimetria à direita/esquerda</td><td>Forma de um histograma com uma cauda mais longa de um dos lados.</td></tr>
-    <tr><td>Boxplot</td><td>Gráfico que resume dados numéricos em cinco números: mínimo, Q1, mediana, Q3 e máximo.</td></tr>
-    <tr><td>Quartil (Q1, Q3)</td><td>Valores que dividem os dados ordenados em quatro partes iguais.</td></tr>
-    <tr><td>IQR (amplitude interquartil)</td><td>Diferença entre Q3 e Q1; mede a dispersão dos 50% centrais dos dados.</td></tr>
-    <tr><td>Gráfico de linha do tempo</td><td>Gráfico que mostra a variação de um valor numérico ao longo do tempo.</td></tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h2 class="bloco-header">Referências Bibliográficas</h2>
-  <p>TRIOLA, Mario F. <em>Introdução à Estatística</em>. 14. ed. Rio de
-  Janeiro: LTC, 2024. E-book. p.Capa. ISBN 9788521638780. Disponível em:
-  https://integrada.minhabiblioteca.com.br/reader/books/9788521638780/.
-  Acesso em: 01 dez. 2025.</p>
-  <p>VIEIRA, Sonia. <em>Estatística básica</em> – 2ª edição revista e
-  ampliada. 2. ed. Porto Alegre: +A Educação - Cengage Learning Brasil,
-  2018. E-book. p.Cover. ISBN 9788522128082. Disponível em:
-  https://integrada.minhabiblioteca.com.br/reader/books/9788522128082/.
-  Acesso em: 01 dez. 2025.</p>
-
-  </main>
-</div>
 </body>
+
 </html>

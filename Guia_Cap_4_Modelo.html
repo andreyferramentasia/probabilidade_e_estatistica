@@ -1,896 +1,1034 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guia de Estudos - Aula 4 - Probabilidade e Estatística (EAD)</title>
-<meta name="description" content="Guia de Estudos CEAD/UNIGRAN — Aula 4 da disciplina de Probabilidade e Estatística (EAD), com teoria, exemplos em Python e exercícios comentados.">
-<style>
-  :root {
-    --azul-escuro: #1B3A8C;
-    --ciano: #29ABE2;
-    --azul-claro: #D6E8F5;
-    --cinza-claro: #F4F4F4;
-    --cinza-texto: #333333;
-    --atencao-borda: #E0932C;
-    --atencao-fundo: #FFF4E0;
-    --branco: #FFFFFF;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia de Estudos - Aula 4 - Probabilidade e Estatística (EAD)</title>
+  <meta name="description"
+    content="Guia de Estudos CEAD/UNIGRAN — Aula 4 da disciplina de Probabilidade e Estatística (EAD), com teoria, exemplos em Python e exercícios comentados.">
+  <style>
+    :root {
+      --azul-escuro: #1B3A8C;
+      --ciano: #29ABE2;
+      --azul-claro: #D6E8F5;
+      --cinza-claro: #F4F4F4;
+      --cinza-texto: #333333;
+      --atencao-borda: #E0932C;
+      --atencao-fundo: #FFF4E0;
+      --branco: #FFFFFF;
+    }
 
-  * {
-    box-sizing: border-box;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  body {
-    font-family: Georgia, 'Times New Roman', serif;
-    color: var(--cinza-texto);
-    background: #EAEFF6;
-    margin: 0;
-    padding: 0;
-    line-height: 1.75;
-  }
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--cinza-texto);
+      background: #EAEFF6;
+      margin: 0;
+      padding: 0;
+      line-height: 1.75;
+    }
 
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    background: var(--branco);
-    padding: 48px 56px 70px 56px;
-    box-shadow: 0 0 18px rgba(0, 0, 0, 0.12);
-  }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--branco);
+      padding: 48px 56px 70px 56px;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.12);
+    }
 
-  .cabecalho-textual {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-variant: small-caps;
-    font-style: italic;
-    color: var(--azul-escuro);
-    font-size: 1.05em;
-    letter-spacing: 0.5px;
-    padding-bottom: 14px;
-    margin-bottom: 18px;
-  }
+    .cabecalho-textual {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-variant: small-caps;
+      font-style: italic;
+      color: var(--azul-escuro);
+      font-size: 1.05em;
+      letter-spacing: 0.5px;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
 
-  .cabecalho-textual .curso {
-    display: block;
-    font-style: normal;
-    font-variant: normal;
-    font-size: 0.75em;
-    color: var(--ciano);
-    font-weight: bold;
-    margin-top: 4px;
-  }
+    .cabecalho-textual .curso {
+      display: block;
+      font-style: normal;
+      font-variant: normal;
+      font-size: 0.75em;
+      color: var(--ciano);
+      font-weight: bold;
+      margin-top: 4px;
+    }
 
-  .cabecalho-textual .logo {
-    height: 48px;
-    flex-shrink: 0;
-  }
+    .cabecalho-textual .logo {
+      height: 48px;
+      flex-shrink: 0;
+    }
 
-  .capa-cabecalho {
-    display: flex;
-    align-items: flex-start;
-    margin-top: 10px;
-    margin-bottom: 40px;
-  }
+    .capa-cabecalho {
+      display: flex;
+      align-items: flex-start;
+      margin-top: 10px;
+      margin-bottom: 40px;
+    }
 
-  .capa-numero {
-    position: relative;
-    flex-shrink: 0;
-    width: 230px;
-    height: 208px;
-    background: var(--ciano);
-    color: var(--branco);
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    clip-path: polygon(0 0, 100% 0, 100% 76%, 50% 100%, 0 76%);
-    filter: drop-shadow(6px 8px 6px rgba(0, 0, 0, 0.35));
-  }
+    .capa-numero {
+      position: relative;
+      flex-shrink: 0;
+      width: 230px;
+      height: 208px;
+      background: var(--ciano);
+      color: var(--branco);
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      clip-path: polygon(0 0, 100% 0, 100% 76%, 50% 100%, 0 76%);
+      filter: drop-shadow(6px 8px 6px rgba(0, 0, 0, 0.35));
+    }
 
-  .capa-numero .num {
-    font-size: 5em;
-    line-height: 1;
-  }
+    .capa-numero .num {
+      font-size: 5em;
+      line-height: 1;
+    }
 
-  .capa-numero .ord-wrap {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 4px;
-    margin-top: -1.6em;
-  }
+    .capa-numero .ord-wrap {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: 4px;
+      margin-top: -1.6em;
+    }
 
-  .capa-numero .ord {
-    font-size: 1.8em;
-    line-height: 1;
-  }
+    .capa-numero .ord {
+      font-size: 1.8em;
+      line-height: 1;
+    }
 
-  .capa-numero .ord-linha {
-    width: 16px;
-    height: 3px;
-    background: var(--branco);
-    margin-top: 5px;
-  }
+    .capa-numero .ord-linha {
+      width: 16px;
+      height: 3px;
+      background: var(--branco);
+      margin-top: 5px;
+    }
 
-  .capa-aula-fundo {
-    flex-grow: 1;
-    height: 158px;
-    display: flex;
-    align-items: center;
-    padding-left: 40px;
-    background: linear-gradient(to right, #D9D9D9, #FAFAFA);
-    box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.18);
-  }
+    .capa-aula-fundo {
+      flex-grow: 1;
+      height: 158px;
+      display: flex;
+      align-items: center;
+      padding-left: 40px;
+      background: linear-gradient(to right, #D9D9D9, #FAFAFA);
+      box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.18);
+    }
 
-  .capa-aula-fundo span {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-style: italic;
-    font-size: 3em;
-    color: #1A1A1A;
-  }
+    .capa-aula-fundo span {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      font-style: italic;
+      font-size: 3em;
+      color: #1A1A1A;
+    }
 
-  .capa-titulo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    font-size: 1.55em;
-    line-height: 1.4;
-    color: #1A1A1A;
-    margin: 6px 0 26px;
-  }
+    .capa-titulo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 1.55em;
+      line-height: 1.4;
+      color: #1A1A1A;
+      margin: 6px 0 26px;
+    }
 
-  .capa-intro {
-    font-style: italic;
-    text-indent: 0;
-    text-align: justify;
-    hyphens: auto;
-  }
+    .capa-intro {
+      font-style: italic;
+      text-indent: 0;
+      text-align: justify;
+      hyphens: auto;
+    }
 
-  .bloco-header {
-    font-family: Arial, Helvetica, sans-serif;
-    background: var(--azul-escuro);
-    color: var(--branco);
-    text-transform: uppercase;
-    font-weight: bold;
-    padding: 13px 22px;
-    font-size: 1.02em;
-    border-radius: 3px;
-    margin-top: 42px;
-    margin-bottom: 22px;
-    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
-  }
+    .bloco-header {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--azul-escuro);
+      color: var(--branco);
+      text-transform: uppercase;
+      font-weight: bold;
+      padding: 13px 22px;
+      font-size: 1.02em;
+      border-radius: 3px;
+      margin-top: 42px;
+      margin-bottom: 22px;
+      box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+    }
 
-  .secao-titulo {
-    display: flex;
-    align-items: stretch;
-    margin-top: 48px;
-    margin-bottom: 24px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
-  }
+    .secao-titulo {
+      display: flex;
+      align-items: stretch;
+      margin-top: 48px;
+      margin-bottom: 24px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+    }
 
-  .secao-etiqueta {
-    background: var(--azul-escuro);
-    color: var(--branco);
-    padding: 10px 20px;
-    white-space: nowrap;
-    border-radius: 4px 0 0 4px;
-    font-size: 0.95em;
-  }
+    .secao-etiqueta {
+      background: var(--azul-escuro);
+      color: var(--branco);
+      padding: 10px 20px;
+      white-space: nowrap;
+      border-radius: 4px 0 0 4px;
+      font-size: 0.95em;
+    }
 
-  .secao-nome {
-    background: var(--azul-claro);
-    color: var(--azul-escuro);
-    padding: 10px 20px;
-    flex-grow: 1;
-    border-radius: 0 4px 4px 0;
-    font-size: 0.95em;
-  }
+    .secao-nome {
+      background: var(--azul-claro);
+      color: var(--azul-escuro);
+      padding: 10px 20px;
+      flex-grow: 1;
+      border-radius: 0 4px 4px 0;
+      font-size: 0.95em;
+    }
 
-  .subtitulo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: var(--azul-escuro);
-    font-size: 1.02em;
-    margin-top: 22px;
-  }
+    .subtitulo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      color: var(--azul-escuro);
+      font-size: 1.02em;
+      margin-top: 22px;
+    }
 
-  p {
-    margin: 16px 0;
-    text-indent: 1.25cm;
-    text-align: justify;
-    hyphens: auto;
-  }
+    p {
+      margin: 16px 0;
+      text-indent: 1.25cm;
+      text-align: justify;
+      hyphens: auto;
+    }
 
-  .box p,
-  .docente-box p {
-    text-indent: 0;
-    text-align: justify;
-  }
+    .box p,
+    .docente-box p {
+      text-indent: 0;
+      text-align: justify;
+    }
 
-  .box {
-    border-radius: 6px;
-    padding: 20px 24px;
-    margin: 26px 0;
-    page-break-inside: avoid;
-  }
-
-  .box-titulo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.82em;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  .box-conceito {
-    background: var(--azul-claro);
-    border-left: 5px solid var(--azul-escuro);
-  }
-  .box-conceito .box-titulo { color: var(--azul-escuro); }
-
-  .box-exemplo {
-    background: #EAF7FC;
-    border-left: 5px solid var(--ciano);
-  }
-  .box-exemplo .box-titulo { color: #1381AD; }
-
-  .box-atencao {
-    background: var(--atencao-fundo);
-    border-left: 5px solid var(--atencao-borda);
-  }
-  .box-atencao .box-titulo { color: var(--atencao-borda); }
-
-  .box-python {
-    background: #FFFFFF;
-    border: 1px solid #DADCE0;
-    border-radius: 8px;
-    padding: 0;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15);
-  }
-  .codigo-cabecalho {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #F1F3F4;
-    border-bottom: 1px solid #DADCE0;
-    color: #5F6368;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.78em;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 6px 14px;
-  }
-  .botao-play {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #1A73E8;
-    color: #FFFFFF;
-    font-size: 0.65em;
-  }
-  .box-python pre {
-    margin: 0;
-    white-space: pre;
-    overflow-x: auto;
-    padding: 14px 18px;
-    background: #F8F9FA;
-    color: #3C4043;
-    font-family: Consolas, 'Courier New', monospace;
-    font-size: 0.88em;
-  }
-  .cm-kw  { color: #1967D2; font-weight: bold; }
-  .cm-str { color: #188038; }
-  .cm-com { color: #80868B; font-style: italic; }
-  .cm-num { color: #AF00DB; }
-  .cm-bi  { color: #C5221F; }
-
-  .box-exercicio {
-    background: var(--branco);
-    border: 2px solid var(--ciano);
-  }
-  .box-exercicio .box-titulo { color: #1381AD; }
-
-  .box-resumo {
-    background: var(--azul-claro);
-    border: 1px solid var(--azul-escuro);
-    font-style: italic;
-  }
-  .box-resumo .box-titulo { color: var(--azul-escuro); font-style: normal; }
-
-  .box-formula {
-    background: var(--branco);
-    border: 2px solid var(--azul-escuro);
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.05em;
-    font-weight: bold;
-    color: var(--azul-escuro);
-    padding: 22px 18px;
-  }
-  .box-formula .box-titulo {
-    color: var(--ciano);
-    text-align: left;
-  }
-
-  .formula-math {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    font-size: 1.15em;
-    margin: 6px 0;
-  }
-  .fracao {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    vertical-align: middle;
-    line-height: 1.3;
-  }
-  .fracao .num {
-    padding: 0 8px 4px;
-    border-bottom: 2px solid var(--azul-escuro);
-  }
-  .fracao .den {
-    padding: 4px 8px 0;
-  }
-  .nota-formula {
-    display: block;
-    margin-top: 10px;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-weight: normal;
-    font-style: italic;
-    font-size: 0.75em;
-    color: #5F6368;
-  }
-
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 22px 0;
-    font-size: 0.92em;
-  }
-
-  .tabela-wrapper {
-    overflow-x: auto;
-    margin: 26px 0;
-  }
-  .tabela-wrapper table { margin: 0; }
-
-  th {
-    background: var(--azul-escuro);
-    color: var(--branco);
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: left;
-    padding: 12px 14px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
-  }
-
-  td {
-    padding: 11px 14px;
-    border-bottom: 1px solid #ccc;
-  }
-
-  tr:nth-child(even) td {
-    background: var(--cinza-claro);
-  }
-
-  .sumario-item {
-    display: flex;
-    gap: 14px;
-    margin: 14px 0;
-    align-items: baseline;
-  }
-  .sumario-aula {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: var(--ciano);
-    white-space: nowrap;
-  }
-
-  .docente-box {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    background: var(--azul-claro);
-    border-left: 5px solid var(--azul-escuro);
-    border-radius: 6px;
-    padding: 20px;
-  }
-
-  ul, ol {
-    margin: 16px 0;
-    padding-left: 28px;
-  }
-
-  li { margin: 10px 0; }
-
-  .explicacao-codigo {
-    margin: 12px 0 20px 0;
-  }
-
-  .explicacao-codigo p {
-    margin: 3px 0;
-    text-indent: 0;
-    text-align: left;
-  }
-
-  .assinatura {
-    text-align: right;
-    font-style: italic;
-    margin-top: 22px;
-    color: var(--azul-escuro);
-  }
-
-  .figura {
-    margin: 30px 0;
-    text-align: center;
-  }
-  .figura img {
-    max-width: 100%;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  }
-  .figura figcaption {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.8em;
-    color: #5F6368;
-    margin-top: 10px;
-    text-align: left;
-  }
-
-  @media print {
-    body { background: var(--branco); }
-    .container { box-shadow: none; max-width: 100%; padding: 10px; }
-    .box, table, .secao-titulo, .capa-cabecalho, .capa-titulo, .bloco-header, .figura,
-    .docente-box, .tabela-wrapper, .sumario-item {
+    .box {
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin: 26px 0;
       page-break-inside: avoid;
     }
-    .cabecalho-textual { display: none; }
-    @page { size: A4; margin: 2cm; }
-  }
 
-  .pagina-abertura {
-    position: relative;
-  }
+    .box-titulo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.82em;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: block;
+    }
 
-  .capa-cabecalho {
-    position: relative;
-    overflow: visible;
-  }
+    .box-conceito {
+      background: var(--azul-claro);
+      border-left: 5px solid var(--azul-escuro);
+    }
 
-  .curva-decorativa {
-    position: absolute;
-    right: -56px;
-    bottom: -46px;
-    width: 170px;
-    height: 130px;
-    z-index: 0;
-    pointer-events: none;
-  }
+    .box-conceito .box-titulo {
+      color: var(--azul-escuro);
+    }
 
-  .capa-cabecalho > *:not(.curva-decorativa) {
-    position: relative;
-    z-index: 1;
-  }
+    .box-exemplo {
+      background: #EAF7FC;
+      border-left: 5px solid var(--ciano);
+    }
 
-  .nav-capitulos {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 4px;
-    background: var(--azul-escuro);
-    padding: 10px 16px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.85em;
-    font-weight: bold;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  }
+    .box-exemplo .box-titulo {
+      color: #1381AD;
+    }
 
-  .nav-capitulos a {
-    color: var(--branco);
-    text-decoration: none;
-    padding: 8px 14px;
-    border-radius: 4px;
-    transition: background 0.15s;
-  }
+    .box-atencao {
+      background: var(--atencao-fundo);
+      border-left: 5px solid var(--atencao-borda);
+    }
 
-  .nav-capitulos a:hover {
-    background: rgba(255, 255, 255, 0.18);
-  }
+    .box-atencao .box-titulo {
+      color: var(--atencao-borda);
+    }
 
-  .nav-capitulos a.ativo {
-    background: var(--ciano);
-  }
+    .box-python {
+      background: #FFFFFF;
+      border: 1px solid #DADCE0;
+      border-radius: 8px;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15);
+    }
 
-  @media print {
-    .nav-capitulos { display: none; }
-  }
+    .codigo-cabecalho {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #F1F3F4;
+      border-bottom: 1px solid #DADCE0;
+      color: #5F6368;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.78em;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 6px 14px;
+    }
 
-  .skip-link {
-    position: absolute;
-    left: -9999px;
-    top: 0;
-    background: var(--branco);
-    color: var(--azul-escuro);
-    padding: 10px 16px;
-    z-index: 200;
-    border-radius: 0 0 6px 0;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  .skip-link:focus {
-    left: 0;
-  }
+    .botao-play {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #1A73E8;
+      color: #FFFFFF;
+      font-size: 0.65em;
+    }
 
-  .nav-capitulos a:focus-visible {
-    outline: 2px solid var(--branco);
-    outline-offset: 2px;
-  }
+    .box-python pre {
+      margin: 0;
+      white-space: pre;
+      overflow-x: auto;
+      padding: 14px 18px;
+      background: #F8F9FA;
+      color: #3C4043;
+      font-family: Consolas, 'Courier New', monospace;
+      font-size: 0.88em;
+    }
 
-  .secao-nome {
-    margin: 0;
-  }
+    .cm-kw {
+      color: #1967D2;
+      font-weight: bold;
+    }
 
-  .sumario-lista {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+    .cm-str {
+      color: #188038;
+    }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-</style>
+    .cm-com {
+      color: #80868B;
+      font-style: italic;
+    }
+
+    .cm-num {
+      color: #AF00DB;
+    }
+
+    .cm-bi {
+      color: #C5221F;
+    }
+
+    .box-exercicio {
+      background: var(--branco);
+      border: 2px solid var(--ciano);
+    }
+
+    .box-exercicio .box-titulo {
+      color: #1381AD;
+    }
+
+    .box-resumo {
+      background: var(--azul-claro);
+      border: 1px solid var(--azul-escuro);
+      font-style: italic;
+    }
+
+    .box-resumo .box-titulo {
+      color: var(--azul-escuro);
+      font-style: normal;
+    }
+
+    .box-formula {
+      background: var(--branco);
+      border: 2px solid var(--azul-escuro);
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.05em;
+      font-weight: bold;
+      color: var(--azul-escuro);
+      padding: 22px 18px;
+    }
+
+    .box-formula .box-titulo {
+      color: var(--ciano);
+      text-align: left;
+    }
+
+    .formula-math {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 1.15em;
+      margin: 6px 0;
+    }
+
+    .fracao {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      line-height: 1.3;
+    }
+
+    .fracao .num {
+      padding: 0 8px 4px;
+      border-bottom: 2px solid var(--azul-escuro);
+    }
+
+    .fracao .den {
+      padding: 4px 8px 0;
+    }
+
+    .nota-formula {
+      display: block;
+      margin-top: 10px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-weight: normal;
+      font-style: italic;
+      font-size: 0.75em;
+      color: #5F6368;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 22px 0;
+      font-size: 0.92em;
+    }
+
+    .tabela-wrapper {
+      overflow-x: auto;
+      margin: 26px 0;
+    }
+
+    .tabela-wrapper table {
+      margin: 0;
+    }
+
+    th {
+      background: var(--azul-escuro);
+      color: var(--branco);
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: left;
+      padding: 12px 14px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
+    }
+
+    td {
+      padding: 11px 14px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    tr:nth-child(even) td {
+      background: var(--cinza-claro);
+    }
+
+    .sumario-item {
+      display: flex;
+      gap: 14px;
+      margin: 14px 0;
+      align-items: baseline;
+    }
+
+    .sumario-aula {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      color: var(--ciano);
+      white-space: nowrap;
+    }
+
+    .docente-box {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: var(--azul-claro);
+      border-left: 5px solid var(--azul-escuro);
+      border-radius: 6px;
+      padding: 20px;
+    }
+
+    ul,
+    ol {
+      margin: 16px 0;
+      padding-left: 28px;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+
+    .explicacao-codigo {
+      margin: 12px 0 20px 0;
+    }
+
+    .explicacao-codigo p {
+      margin: 3px 0;
+      text-indent: 0;
+      text-align: left;
+    }
+
+    .assinatura {
+      text-align: right;
+      font-style: italic;
+      margin-top: 22px;
+      color: var(--azul-escuro);
+    }
+
+    .figura {
+      margin: 30px 0;
+      text-align: center;
+    }
+
+    .figura img {
+      max-width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .figura figcaption {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.8em;
+      color: #5F6368;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    @media print {
+      body {
+        background: var(--branco);
+      }
+
+      .container {
+        box-shadow: none;
+        max-width: 100%;
+        padding: 10px;
+      }
+
+      .box,
+      table,
+      .secao-titulo,
+      .capa-cabecalho,
+      .capa-titulo,
+      .bloco-header,
+      .figura,
+      .docente-box,
+      .tabela-wrapper,
+      .sumario-item {
+        page-break-inside: avoid;
+      }
+
+      .cabecalho-textual {
+        display: none;
+      }
+
+      @page {
+        size: A4;
+        margin: 2cm;
+      }
+    }
+
+    .pagina-abertura {
+      position: relative;
+    }
+
+    .capa-cabecalho {
+      position: relative;
+      overflow: visible;
+    }
+
+    .curva-decorativa {
+      position: absolute;
+      right: -56px;
+      bottom: -46px;
+      width: 170px;
+      height: 130px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .capa-cabecalho>*:not(.curva-decorativa) {
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-capitulos {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+      background: var(--azul-escuro);
+      padding: 10px 16px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.85em;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .nav-capitulos a {
+      color: var(--branco);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+
+    .nav-capitulos a:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .nav-capitulos a.ativo {
+      background: var(--ciano);
+    }
+
+    @media print {
+      .nav-capitulos {
+        display: none;
+      }
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: var(--branco);
+      color: var(--azul-escuro);
+      padding: 10px 16px;
+      z-index: 200;
+      border-radius: 0 0 6px 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      left: 0;
+    }
+
+    .nav-capitulos a:focus-visible {
+      outline: 2px solid var(--branco);
+      outline-offset: 2px;
+    }
+
+    .secao-nome {
+      margin: 0;
+    }
+
+    .sumario-lista {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
 </head>
+
 <body>
-<a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
-<nav class="nav-capitulos" aria-label="Navegação entre aulas">
-  <a href="Guia_Cap_1_Modelo.html">Aula 01</a>
-  <a href="Guia_Cap_2_Modelo.html">Aula 02</a>
-  <a href="Guia_Cap_3_Modelo.html">Aula 03</a>
-  <a href="Guia_Cap_4_Modelo.html" class="ativo" aria-current="page">Aula 04</a>
-  <a href="Guia_Cap_5_Modelo.html">Aula 05</a>
-  <a href="Guia_Cap_6_Modelo.html">Aula 06</a>
-  <a href="Guia_Cap_7_Modelo.html">Aula 07</a>
-  <a href="Guia_Cap_8_Modelo.html">Aula 08</a>
-</nav>
-<div class="container">
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
+  <nav class="nav-capitulos" aria-label="Navegação entre aulas">
+    <a href="index.html">Aula 01</a>
+    <a href="Guia_Cap_2_Modelo.html">Aula 02</a>
+    <a href="Guia_Cap_3_Modelo.html">Aula 03</a>
+    <a href="Guia_Cap_4_Modelo.html" class="ativo" aria-current="page">Aula 04</a>
+    <a href="Guia_Cap_5_Modelo.html">Aula 05</a>
+    <a href="Guia_Cap_6_Modelo.html">Aula 06</a>
+    <a href="Guia_Cap_7_Modelo.html">Aula 07</a>
+    <a href="Guia_Cap_8_Modelo.html">Aula 08</a>
+  </nav>
+  <div class="container">
 
-  <header class="cabecalho-textual">
-    <div>
-      CEAD/UNIGRAN · Guia de Estudos
-      <span class="curso">PROBABILIDADE E ESTATÍSTICA (EAD)</span>
-    </div>
-    <img class="logo" src="imagens/logo-unigran.png" alt="Logo UNIGRAN CEAD">
-  </header>
-  <main id="conteudo-principal">
+    <header class="cabecalho-textual">
+      <div>
+        CEAD/UNIGRAN · Guia de Estudos
+        <span class="curso">PROBABILIDADE E ESTATÍSTICA (EAD)</span>
+      </div>
+      <img class="logo" src="imagens/logo-unigran.png" alt="Logo UNIGRAN CEAD">
+    </header>
+    <main id="conteudo-principal">
 
-  <div class="pagina-abertura">
-    <div class="capa-cabecalho">
-      <div class="capa-numero"><span class="num">4</span><span class="ord-wrap"><span class="ord">a</span><span class="ord-linha"></span></span></div>
-      <div class="capa-aula-fundo"><span>Aula</span></div>
-      <svg class="curva-decorativa" viewBox="0 0 170 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <path d="M170,130 L170,20 C110,5 75,55 90,85 C102,110 55,130 0,120 L0,130 Z" fill="#29ABE2"/>
-        <path d="M170,130 L170,50 C130,40 105,75 118,95 C128,112 85,130 40,130 Z" fill="#1B3A8C" opacity="0.55"/>
-      </svg>
-    </div>
+      <div class="pagina-abertura">
+        <div class="capa-cabecalho">
+          <div class="capa-numero"><span class="num">4</span><span class="ord-wrap"><span class="ord">a</span><span
+                class="ord-linha"></span></span></div>
+          <div class="capa-aula-fundo"><span>Aula</span></div>
+          <svg class="curva-decorativa" viewBox="0 0 170 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+            focusable="false">
+            <path d="M170,130 L170,20 C110,5 75,55 90,85 C102,110 55,130 0,120 L0,130 Z" fill="#29ABE2" />
+            <path d="M170,130 L170,50 C130,40 105,75 118,95 C128,112 85,130 40,130 Z" fill="#1B3A8C" opacity="0.55" />
+          </svg>
+        </div>
 
-    <h1 class="capa-titulo">Como ler gráficos de pizza e de barras?</h1>
+        <h1 class="capa-titulo">Como ler gráficos de pizza e de barras?</h1>
 
-    <p class="capa-intro">
-      Já vimos como resumir dados com números (média, mediana, desvio
-      padrão). Agora vamos resumir dados com imagens. Gráficos estão em
-      toda parte, de reportagens a aplicativos, mas nem sempre são
-      construídos (ou lidos) da forma correta. Nesta aula você vai
-      aprender a ler e a construir os dois gráficos mais usados para
-      dados categóricos: o gráfico de pizza e o gráfico de barras, e a
-      desconfiar de gráficos que distorcem a realidade.
-    </p>
-    <div class="assinatura">Grande abraço, Prof. Andrey</div>
-  </div>
+        <p class="capa-intro">
+          Já vimos como resumir dados com números (média, mediana, desvio
+          padrão). Agora vamos resumir dados com imagens. Gráficos estão em
+          toda parte, de reportagens a aplicativos, mas nem sempre são
+          construídos (ou lidos) da forma correta. Nesta aula você vai
+          aprender a ler e a construir os dois gráficos mais usados para
+          dados categóricos: o gráfico de pizza e o gráfico de barras, e a
+          desconfiar de gráficos que distorcem a realidade.
+        </p>
+        <div class="assinatura">Grande abraço, Prof. Andrey</div>
+      </div>
 
-  <h2 class="bloco-header">Objetivos de Aprendizagem</h2>
-  <p>Ao término desta aula, vocês serão capazes de:</p>
-  <ul>
-    <li>Interpretar um gráfico de pizza e calcular o tamanho de uma fatia;</li>
-    <li>Interpretar um gráfico de barras, distinguindo frequência de
-      frequência relativa (percentual);</li>
-    <li>Reconhecer situações em que um gráfico de pizza não deveria ser
-      usado;</li>
-    <li>Identificar técnicas comuns de gráficos enganosos, como eixos
-      cortados ou esticados;</li>
-    <li>Construir gráficos de pizza e de barras simples em Python a
-      partir de dados categóricos.</li>
-  </ul>
+      <h2 class="bloco-header">Objetivos de Aprendizagem</h2>
+      <p>Ao término desta aula, vocês serão capazes de:</p>
+      <ul>
+        <li>Interpretar um gráfico de pizza e calcular o tamanho de uma fatia;</li>
+        <li>Interpretar um gráfico de barras, distinguindo frequência de
+          frequência relativa (percentual);</li>
+        <li>Reconhecer situações em que um gráfico de pizza não deveria ser
+          usado;</li>
+        <li>Identificar técnicas comuns de gráficos enganosos, como eixos
+          cortados ou esticados;</li>
+        <li>Construir gráficos de pizza e de barras simples em Python a
+          partir de dados categóricos.</li>
+      </ul>
 
-  <h2 class="bloco-header">Seções de Estudo</h2>
-  <ol class="sumario-lista">
-  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 1</span> Gráfico de pizza: proporções em fatias</li>
-  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 2</span> Gráfico de barras: comparando categorias</li>
-  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 3</span> Lendo gráficos com espírito crítico</li>
-  </ol>
+      <h2 class="bloco-header">Seções de Estudo</h2>
+      <ol class="sumario-lista">
+        <li class="sumario-item"><span class="sumario-aula">SEÇÃO 1</span> Gráfico de pizza: proporções em fatias</li>
+        <li class="sumario-item"><span class="sumario-aula">SEÇÃO 2</span> Gráfico de barras: comparando categorias</li>
+        <li class="sumario-item"><span class="sumario-aula">SEÇÃO 3</span> Lendo gráficos com espírito crítico</li>
+      </ol>
 
-  <!-- SEÇÃO 1 -->
-  <div class="secao-titulo">
-    <div class="secao-etiqueta">SEÇÃO 1</div>
-    <h3 class="secao-nome">Gráfico de pizza: proporções em fatias</h3>
-  </div>
+      <!-- SEÇÃO 1 -->
+      <div class="secao-titulo">
+        <div class="secao-etiqueta">SEÇÃO 1</div>
+        <h3 class="secao-nome">Gráfico de pizza: proporções em fatias</h3>
+      </div>
 
-  <p>
-    O <strong>gráfico de pizza</strong> (ou gráfico de setores) mostra
-    como um total se divide em categorias, representando cada uma como
-    uma fatia de um círculo. Como cada indivíduo pertence a uma única
-    categoria, a soma de todas as fatias deve fechar em 100% (a menos
-    de um pequeno arredondamento).
-  </p>
+      <p>
+        O <strong>gráfico de pizza</strong> (ou gráfico de setores) mostra
+        como um total se divide em categorias, representando cada uma como
+        uma fatia de um círculo. Como cada indivíduo pertence a uma única
+        categoria, a soma de todas as fatias deve fechar em 100% (a menos
+        de um pequeno arredondamento).
+      </p>
 
-  <figure class="figura">
-    <img src="imagens/secao1-pizza-transporte.jpg" alt="Gráfico de pizza mostrando como os alunos de uma turma chegam à faculdade" loading="lazy" decoding="async">
-    <figcaption>Figura 1 – Gráfico de pizza com o meio de transporte
-    usado por 40 alunos de uma turma para chegar à faculdade. Fonte:
-    elaborado pelo autor. Acesso em: 07 jul. 2026.</figcaption>
-  </figure>
+      <figure class="figura">
+        <img src="imagens/secao1-pizza-transporte.jpg"
+          alt="Gráfico de pizza mostrando como os alunos de uma turma chegam à faculdade" loading="lazy"
+          decoding="async">
+        <figcaption>Figura 1 – Gráfico de pizza com o meio de transporte
+          usado por 40 alunos de uma turma para chegar à faculdade. Fonte:
+          elaborado pelo autor. Acesso em: 07 jul. 2026.</figcaption>
+      </figure>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo cotidiano</span>
-    Na Figura 1, a fatia "Carro" ocupa 40% do círculo porque 16 dos 40
-    alunos (40%) vão de carro. Repare que o gráfico não diz quantos
-    alunos existem ao todo; por isso é essencial informar o tamanho da
-    amostra, indicado aqui como "n = 40".
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo cotidiano</span>
+        Na Figura 1, a fatia "Carro" ocupa 40% do círculo porque 16 dos 40
+        alunos (40%) vão de carro. Repare que o gráfico não diz quantos
+        alunos existem ao todo; por isso é essencial informar o tamanho da
+        amostra, indicado aqui como "n = 40".
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo em Tecnologia</span>
-    Um relatório de uso de tempo de tela pode mostrar que 35% do tempo
-    em um smartphone vai para redes sociais, 25% para streaming de
-    vídeo, 20% para jogos, 12% para mensagens e 8% para outros
-    aplicativos. Sem saber o total de horas por dia, porém, não dá
-    para saber se isso representa 1 hora ou 8 horas de uso.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo em Tecnologia</span>
+        Um relatório de uso de tempo de tela pode mostrar que 35% do tempo
+        em um smartphone vai para redes sociais, 25% para streaming de
+        vídeo, 20% para jogos, 12% para mensagens e 8% para outros
+        aplicativos. Sem saber o total de horas por dia, porém, não dá
+        para saber se isso representa 1 hora ou 8 horas de uso.
+      </div>
 
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Meio de transporte</th><th scope="col">Alunos</th><th scope="col">Percentual</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Carro</td><td>16</td><td>40%</td></tr>
-    <tr><td>Ônibus</td><td>12</td><td>30%</td></tr>
-    <tr><td>A pé</td><td>6</td><td>15%</td></tr>
-    <tr><td>Bicicleta</td><td>4</td><td>10%</td></tr>
-    <tr><td>Outro</td><td>2</td><td>5%</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Meio de transporte</th>
+              <th scope="col">Alunos</th>
+              <th scope="col">Percentual</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Carro</td>
+              <td>16</td>
+              <td>40%</td>
+            </tr>
+            <tr>
+              <td>Ônibus</td>
+              <td>12</td>
+              <td>30%</td>
+            </tr>
+            <tr>
+              <td>A pé</td>
+              <td>6</td>
+              <td>15%</td>
+            </tr>
+            <tr>
+              <td>Bicicleta</td>
+              <td>4</td>
+              <td>10%</td>
+            </tr>
+            <tr>
+              <td>Outro</td>
+              <td>2</td>
+              <td>5%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <div class="box box-atencao">
-    <span class="box-titulo">Atenção</span>
-    Um gráfico de pizza só diz proporções, nunca o total. Sempre
-    procure o tamanho da amostra (o "n") antes de confiar nas
-    porcentagens mostradas.
-  </div>
+      <div class="box box-atencao">
+        <span class="box-titulo">Atenção</span>
+        Um gráfico de pizza só diz proporções, nunca o total. Sempre
+        procure o tamanho da amostra (o "n") antes de confiar nas
+        porcentagens mostradas.
+      </div>
 
-  <div class="box box-formula">
-    <span class="box-titulo">Fórmula destacada</span>
-    <div class="formula-math">
-      <span>Fatia (%) =</span>
-      <span class="fracao"><span class="num">quantidade da categoria</span><span class="den">total</span></span>
-      <span>× 100</span>
-    </div>
-    <span class="nota-formula">o ângulo da fatia, em graus, é o percentual multiplicado por 3,6° (pois
-    <span class="fracao"><span class="num">360°</span><span class="den">100%</span></span>
-    = 3,6°)</span>
-  </div>
+      <div class="box box-formula">
+        <span class="box-titulo">Fórmula destacada</span>
+        <div class="formula-math">
+          <span>Fatia (%) =</span>
+          <span class="fracao"><span class="num">quantidade da categoria</span><span class="den">total</span></span>
+          <span>× 100</span>
+        </div>
+        <span class="nota-formula">o ângulo da fatia, em graus, é o percentual multiplicado por 3,6° (pois
+          <span class="fracao"><span class="num">360°</span><span class="den">100%</span></span>
+          = 3,6°)</span>
+      </div>
 
-  <div class="box box-resumo">
-    <span class="box-titulo">Resumo da Seção 1</span>
-    O gráfico de pizza mostra proporções (fatias que somam 100%), mas
-    nunca revela o total. Sempre cheque o tamanho da amostra.
-  </div>
+      <div class="box box-resumo">
+        <span class="box-titulo">Resumo da Seção 1</span>
+        O gráfico de pizza mostra proporções (fatias que somam 100%), mas
+        nunca revela o total. Sempre cheque o tamanho da amostra.
+      </div>
 
-  <!-- SEÇÃO 2 -->
-  <div class="secao-titulo">
-    <div class="secao-etiqueta">SEÇÃO 2</div>
-    <h3 class="secao-nome">Gráfico de barras: comparando categorias</h3>
-  </div>
+      <!-- SEÇÃO 2 -->
+      <div class="secao-titulo">
+        <div class="secao-etiqueta">SEÇÃO 2</div>
+        <h3 class="secao-nome">Gráfico de barras: comparando categorias</h3>
+      </div>
 
-  <p>
-    O <strong>gráfico de barras</strong> também representa dados
-    categóricos, mas usa o comprimento das barras em vez de fatias.
-    Cada barra pode mostrar a <strong>frequência</strong> (a contagem
-    de indivíduos na categoria) ou a <strong>frequência relativa</strong>
-    (o percentual). Diferente do gráfico de pizza, as barras não
-    precisam somar 100%, o que o torna ideal para pesquisas em que
-    cada pessoa pode escolher mais de uma resposta.
-  </p>
+      <p>
+        O <strong>gráfico de barras</strong> também representa dados
+        categóricos, mas usa o comprimento das barras em vez de fatias.
+        Cada barra pode mostrar a <strong>frequência</strong> (a contagem
+        de indivíduos na categoria) ou a <strong>frequência relativa</strong>
+        (o percentual). Diferente do gráfico de pizza, as barras não
+        precisam somar 100%, o que o torna ideal para pesquisas em que
+        cada pessoa pode escolher mais de uma resposta.
+      </p>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo cotidiano</span>
-    Uma clínica registrou o número de pacientes atendidos por
-    especialidade em um mês: Clínico geral (120), Pediatria (80),
-    Ortopedia (55) e Dermatologia (30). Um gráfico de barras compara
-    facilmente essas quantidades lado a lado.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo cotidiano</span>
+        Uma clínica registrou o número de pacientes atendidos por
+        especialidade em um mês: Clínico geral (120), Pediatria (80),
+        Ortopedia (55) e Dermatologia (30). Um gráfico de barras compara
+        facilmente essas quantidades lado a lado.
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo em Tecnologia</span>
-    Uma pesquisa com 200 usuários de um aplicativo de transporte
-    perguntou quais são seus maiores incômodos, permitindo mais de uma
-    resposta por pessoa. Por isso os percentuais (Figura 3, mais
-    adiante) não somam 100%: um gráfico de pizza não conseguiria
-    representar esses dados corretamente.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo em Tecnologia</span>
+        Uma pesquisa com 200 usuários de um aplicativo de transporte
+        perguntou quais são seus maiores incômodos, permitindo mais de uma
+        resposta por pessoa. Por isso os percentuais (Figura 3, mais
+        adiante) não somam 100%: um gráfico de pizza não conseguiria
+        representar esses dados corretamente.
+      </div>
 
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">O que a barra mostra</th><th scope="col">O que significa</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Frequência</td><td>Número de indivíduos na categoria (contagem bruta)</td></tr>
-    <tr><td>Frequência relativa</td><td>Percentual de indivíduos na categoria</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">O que a barra mostra</th>
+              <th scope="col">O que significa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Frequência</td>
+              <td>Número de indivíduos na categoria (contagem bruta)</td>
+            </tr>
+            <tr>
+              <td>Frequência relativa</td>
+              <td>Percentual de indivíduos na categoria</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <div class="box box-atencao">
-    <span class="box-titulo">Atenção</span>
-    Se as barras de um gráfico não somam 100%, isso não é erro: pode
-    significar que a pesquisa permitia mais de uma resposta por
-    pessoa. Verifique sempre o que está sendo somado.
-  </div>
+      <div class="box box-atencao">
+        <span class="box-titulo">Atenção</span>
+        Se as barras de um gráfico não somam 100%, isso não é erro: pode
+        significar que a pesquisa permitia mais de uma resposta por
+        pessoa. Verifique sempre o que está sendo somado.
+      </div>
 
-  <div class="box box-formula">
-    <span class="box-titulo">Fórmula destacada</span>
-    <div class="formula-math">
-      <span>Frequência relativa (%) =</span>
-      <span class="fracao"><span class="num">contagem da categoria</span><span class="den">total de respostas</span></span>
-      <span>× 100</span>
-    </div>
-    <span class="nota-formula">se houver respostas múltiplas, o total de respostas pode ser maior que o número de pessoas</span>
-  </div>
+      <div class="box box-formula">
+        <span class="box-titulo">Fórmula destacada</span>
+        <div class="formula-math">
+          <span>Frequência relativa (%) =</span>
+          <span class="fracao"><span class="num">contagem da categoria</span><span class="den">total de
+              respostas</span></span>
+          <span>× 100</span>
+        </div>
+        <span class="nota-formula">se houver respostas múltiplas, o total de respostas pode ser maior que o número de
+          pessoas</span>
+      </div>
 
-  <div class="box box-resumo">
-    <span class="box-titulo">Resumo da Seção 2</span>
-    Barras podem mostrar contagem (frequência) ou percentual
-    (frequência relativa) e, ao contrário da pizza, não precisam somar
-    100%, o que permite representar respostas múltiplas.
-  </div>
+      <div class="box box-resumo">
+        <span class="box-titulo">Resumo da Seção 2</span>
+        Barras podem mostrar contagem (frequência) ou percentual
+        (frequência relativa) e, ao contrário da pizza, não precisam somar
+        100%, o que permite representar respostas múltiplas.
+      </div>
 
-  <!-- SEÇÃO 3 -->
-  <div class="secao-titulo">
-    <div class="secao-etiqueta">SEÇÃO 3</div>
-    <h3 class="secao-nome">Lendo gráficos com espírito crítico</h3>
-  </div>
+      <!-- SEÇÃO 3 -->
+      <div class="secao-titulo">
+        <div class="secao-etiqueta">SEÇÃO 3</div>
+        <h3 class="secao-nome">Lendo gráficos com espírito crítico</h3>
+      </div>
 
-  <p>
-    Gráficos podem ser construídos de forma a exagerar ou disfarçar
-    diferenças reais nos dados. A técnica mais comum é mudar onde o
-    eixo começa: cortar a base do eixo faz pequenas diferenças
-    parecerem enormes, enquanto "esticar" a escala faz diferenças reais
-    parecerem insignificantes.
-  </p>
+      <p>
+        Gráficos podem ser construídos de forma a exagerar ou disfarçar
+        diferenças reais nos dados. A técnica mais comum é mudar onde o
+        eixo começa: cortar a base do eixo faz pequenas diferenças
+        parecerem enormes, enquanto "esticar" a escala faz diferenças reais
+        parecerem insignificantes.
+      </p>
 
-  <figure class="figura">
-    <img src="imagens/secao3-eixo-enganoso.jpg" alt="Comparação entre um gráfico de barras com eixo cortado e um gráfico com eixo começando em zero, para os mesmos dados" loading="lazy" decoding="async">
-    <figcaption>Figura 2 – Os mesmos dados (89% e 91% de aprovação)
-    parecem contar histórias diferentes conforme o eixo vertical
-    começa em 85 ou em 0. Fonte: elaborado pelo autor. Acesso em: 07
-    jul. 2026.</figcaption>
-  </figure>
+      <figure class="figura">
+        <img src="imagens/secao3-eixo-enganoso.jpg"
+          alt="Comparação entre um gráfico de barras com eixo cortado e um gráfico com eixo começando em zero, para os mesmos dados"
+          loading="lazy" decoding="async">
+        <figcaption>Figura 2 – Os mesmos dados (89% e 91% de aprovação)
+          parecem contar histórias diferentes conforme o eixo vertical
+          começa em 85 ou em 0. Fonte: elaborado pelo autor. Acesso em: 07
+          jul. 2026.</figcaption>
+      </figure>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo cotidiano</span>
-    Na Figura 2, o "gráfico enganoso" faz parecer que a aprovação de
-    uma gestão municipal disparou de janeiro para março. O "gráfico
-    correto", com o eixo começando em 0, mostra que a diferença real
-    (89% para 91%) é bem pequena.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo cotidiano</span>
+        Na Figura 2, o "gráfico enganoso" faz parecer que a aprovação de
+        uma gestão municipal disparou de janeiro para março. O "gráfico
+        correto", com o eixo começando em 0, mostra que a diferença real
+        (89% para 91%) é bem pequena.
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo em Tecnologia</span>
-    Uma loja de aplicativos poderia comparar dois apps concorrentes com
-    notas 4,1 e 4,3 usando um gráfico cujo eixo começa em 4,0. A
-    diferença pareceria enorme, quando na escala completa (de 0 a 5)
-    ela é bem pequena.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo em Tecnologia</span>
+        Uma loja de aplicativos poderia comparar dois apps concorrentes com
+        notas 4,1 e 4,3 usando um gráfico cujo eixo começa em 4,0. A
+        diferença pareceria enorme, quando na escala completa (de 0 a 5)
+        ela é bem pequena.
+      </div>
 
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Sinal de alerta</th><th scope="col">Por que desconfiar</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Eixo não começa em zero</td><td>Exagera diferenças pequenas</td></tr>
-    <tr><td>Gráfico de pizza em 3D</td><td>Distorce o tamanho real das fatias</td></tr>
-    <tr><td>Fatia "outros" muito grande</td><td>Esconde informação que poderia ser detalhada</td></tr>
-    <tr><td>Sem informar o total (n)</td><td>Impede avaliar se a amostra é confiável</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Sinal de alerta</th>
+              <th scope="col">Por que desconfiar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Eixo não começa em zero</td>
+              <td>Exagera diferenças pequenas</td>
+            </tr>
+            <tr>
+              <td>Gráfico de pizza em 3D</td>
+              <td>Distorce o tamanho real das fatias</td>
+            </tr>
+            <tr>
+              <td>Fatia "outros" muito grande</td>
+              <td>Esconde informação que poderia ser detalhada</td>
+            </tr>
+            <tr>
+              <td>Sem informar o total (n)</td>
+              <td>Impede avaliar se a amostra é confiável</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <div class="box box-atencao">
-    <span class="box-titulo">Atenção</span>
-    Gráficos de pizza não sofrem com eixo cortado (afinal, um círculo é
-    sempre um círculo), mas sofrem com a versão 3D, que distorce a
-    proporção visual das fatias mais próximas da "câmera".
-  </div>
+      <div class="box box-atencao">
+        <span class="box-titulo">Atenção</span>
+        Gráficos de pizza não sofrem com eixo cortado (afinal, um círculo é
+        sempre um círculo), mas sofrem com a versão 3D, que distorce a
+        proporção visual das fatias mais próximas da "câmera".
+      </div>
 
-  <div class="box box-formula">
-    <span class="box-titulo">Fórmula destacada</span>
-    <div class="formula-math">
-      <span>Checklist: eixo começa em 0? Tem "n ="? Não é 3D? "Outros" é pequeno?</span>
-    </div>
-    <span class="nota-formula">quatro perguntas rápidas antes de confiar em qualquer gráfico</span>
-  </div>
+      <div class="box box-formula">
+        <span class="box-titulo">Fórmula destacada</span>
+        <div class="formula-math">
+          <span>Checklist: eixo começa em 0? Tem "n ="? Não é 3D? "Outros" é pequeno?</span>
+        </div>
+        <span class="nota-formula">quatro perguntas rápidas antes de confiar em qualquer gráfico</span>
+      </div>
 
-  <div class="box box-resumo">
-    <span class="box-titulo">Resumo da Seção 3</span>
-    Eixos cortados, gráficos 3D, fatias "outros" grandes e amostras
-    não informadas são as formas mais comuns de um gráfico enganar
-    quem olha rápido demais.
-  </div>
+      <div class="box box-resumo">
+        <span class="box-titulo">Resumo da Seção 3</span>
+        Eixos cortados, gráficos 3D, fatias "outros" grandes e amostras
+        não informadas são as formas mais comuns de um gráfico enganar
+        quem olha rápido demais.
+      </div>
 
-  <h2 class="bloco-header">Exemplo Matemático Resolvido</h2>
-  <p>
-    Uma pesquisa com 250 usuários perguntou qual rede social eles mais
-    usam. 100 responderam Instagram. Qual é o tamanho da fatia do
-    Instagram em um gráfico de pizza, em percentual e em graus?
-  </p>
-  <ol>
-    <li><strong>Dados:</strong> quantidade = 100; total = 250</li>
-    <li><strong>Fórmula:</strong> Fatia (%) =
-      <span class="fracao"><span class="num">quantidade</span><span class="den">total</span></span>
-      × 100</li>
-    <li><strong>Substituição:</strong> Fatia (%) =
-      <span class="fracao"><span class="num">100</span><span class="den">250</span></span>
-      × 100</li>
-    <li><strong>Cálculo:</strong>
-      <span class="fracao"><span class="num">100</span><span class="den">250</span></span>
-      = 0,4; 0,4 × 100 = 40%; em graus, 40% × 3,6° = 144°</li>
-    <li><strong>Interpretação:</strong> a fatia do Instagram ocupa 40%
-      do gráfico de pizza, o que corresponde a 144° dos 360° do
-      círculo completo.</li>
-  </ol>
+      <h2 class="bloco-header">Exemplo Matemático Resolvido</h2>
+      <p>
+        Uma pesquisa com 250 usuários perguntou qual rede social eles mais
+        usam. 100 responderam Instagram. Qual é o tamanho da fatia do
+        Instagram em um gráfico de pizza, em percentual e em graus?
+      </p>
+      <ol>
+        <li><strong>Dados:</strong> quantidade = 100; total = 250</li>
+        <li><strong>Fórmula:</strong> Fatia (%) =
+          <span class="fracao"><span class="num">quantidade</span><span class="den">total</span></span>
+          × 100
+        </li>
+        <li><strong>Substituição:</strong> Fatia (%) =
+          <span class="fracao"><span class="num">100</span><span class="den">250</span></span>
+          × 100
+        </li>
+        <li><strong>Cálculo:</strong>
+          <span class="fracao"><span class="num">100</span><span class="den">250</span></span>
+          = 0,4; 0,4 × 100 = 40%; em graus, 40% × 3,6° = 144°
+        </li>
+        <li><strong>Interpretação:</strong> a fatia do Instagram ocupa 40%
+          do gráfico de pizza, o que corresponde a 144° dos 360° do
+          círculo completo.</li>
+      </ol>
 
-  <h2 class="bloco-header">Exemplo em Python</h2>
-  <p>
-    A seguir, dois programas com <code>matplotlib</code>: um gráfico de
-    pizza com os dados de transporte da Seção 1, e um gráfico de barras
-    horizontais com os dados de incômodos da Seção 2.
-  </p>
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python"><span class="cm-kw">import</span> matplotlib.pyplot <span class="cm-kw">as</span> plt
+      <h2 class="bloco-header">Exemplo em Python</h2>
+      <p>
+        A seguir, dois programas com <code>matplotlib</code>: um gráfico de
+        pizza com os dados de transporte da Seção 1, e um gráfico de barras
+        horizontais com os dados de incômodos da Seção 2.
+      </p>
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python"><span class="cm-kw">import</span> matplotlib.pyplot <span class="cm-kw">as</span> plt
 
 transporte = {
     <span class="cm-str">"Carro"</span>: <span class="cm-num">16</span>,
@@ -909,23 +1047,23 @@ plt.pie(
 plt.title(<span class="cm-str">f"Como os alunos chegam à faculdade (n = {total})"</span>)
 plt.savefig(<span class="cm-str">"transporte.png"</span>)
 </code></pre>
-  </div>
-  <div class="explicacao-codigo">
-    <p><strong>Entrada:</strong> dicionário com o meio de transporte e a
-      quantidade de alunos em cada um.</p>
-    <p><strong>Processamento:</strong> <code>plt.pie</code> desenha uma
-      fatia para cada meio de transporte, com <code>autopct</code>
-      escrevendo o percentual dentro da própria fatia.</p>
-    <p><strong>Saída:</strong> a mesma imagem da Figura 1, com "Carro"
-      ocupando a maior fatia (40%).</p>
-    <p><strong>Interpretação:</strong> como cada aluno tem um único meio
-      de transporte, as fatias somam 100%, exatamente como discutido na
-      Seção 1.</p>
-  </div>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Entrada:</strong> dicionário com o meio de transporte e a
+          quantidade de alunos em cada um.</p>
+        <p><strong>Processamento:</strong> <code>plt.pie</code> desenha uma
+          fatia para cada meio de transporte, com <code>autopct</code>
+          escrevendo o percentual dentro da própria fatia.</p>
+        <p><strong>Saída:</strong> a mesma imagem da Figura 1, com "Carro"
+          ocupando a maior fatia (40%).</p>
+        <p><strong>Interpretação:</strong> como cada aluno tem um único meio
+          de transporte, as fatias somam 100%, exatamente como discutido na
+          Seção 1.</p>
+      </div>
 
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python"><span class="cm-kw">import</span> matplotlib.pyplot <span class="cm-kw">as</span> plt
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python"><span class="cm-kw">import</span> matplotlib.pyplot <span class="cm-kw">as</span> plt
 
 incomodos = [<span class="cm-str">"Demora do motorista"</span>, <span class="cm-str">"Preço"</span>,
              <span class="cm-str">"Falhas do app"</span>, <span class="cm-str">"Educação do motorista"</span>,
@@ -938,54 +1076,55 @@ plt.title(<span class="cm-str">"Maiores incômodos ao usar um app de transporte 
 plt.tight_layout()
 plt.savefig(<span class="cm-str">"incomodos.png"</span>)
 </code></pre>
-  </div>
-  <div class="explicacao-codigo">
-    <p><strong>Entrada:</strong> lista de incômodos e lista de percentuais correspondentes.</p>
-    <p><strong>Processamento:</strong> <code>plt.barh</code> desenha
-      uma barra horizontal para cada incômodo, com comprimento
-      proporcional ao seu percentual.</p>
-    <p><strong>Saída:</strong> a imagem da Figura 3, com "Demora do
-      motorista" (45%) na barra mais longa.</p>
-    <p><strong>Interpretação:</strong> como a pesquisa permitia mais de
-      uma resposta, os percentuais não somam 100%, exatamente como
-      discutido na Seção 2.</p>
-  </div>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Entrada:</strong> lista de incômodos e lista de percentuais correspondentes.</p>
+        <p><strong>Processamento:</strong> <code>plt.barh</code> desenha
+          uma barra horizontal para cada incômodo, com comprimento
+          proporcional ao seu percentual.</p>
+        <p><strong>Saída:</strong> a imagem da Figura 3, com "Demora do
+          motorista" (45%) na barra mais longa.</p>
+        <p><strong>Interpretação:</strong> como a pesquisa permitia mais de
+          uma resposta, os percentuais não somam 100%, exatamente como
+          discutido na Seção 2.</p>
+      </div>
 
-  <figure class="figura">
-    <img src="imagens/python-incomodos-app.jpg" alt="Gráfico de barras horizontais com os maiores incômodos ao usar um app de transporte">
-    <figcaption>Figura 3 – Saída do programa em Python: maiores
-    incômodos relatados por 200 usuários de um app de transporte.
-    Fonte: elaborado pelo autor. Acesso em: 07 jul. 2026.</figcaption>
-  </figure>
+      <figure class="figura">
+        <img src="imagens/python-incomodos-app.jpg"
+          alt="Gráfico de barras horizontais com os maiores incômodos ao usar um app de transporte">
+        <figcaption>Figura 3 – Saída do programa em Python: maiores
+          incômodos relatados por 200 usuários de um app de transporte.
+          Fonte: elaborado pelo autor. Acesso em: 07 jul. 2026.</figcaption>
+      </figure>
 
-  <h2 class="bloco-header">Exercícios</h2>
+      <h2 class="bloco-header">Exercícios</h2>
 
-  <div class="box box-exercicio">
-    <span class="box-titulo">Exercício 1</span>
-    Uma pesquisa perguntou a 80 pessoas qual é o seu gênero de filme
-    favorito, com uma única resposta por pessoa: Ação (32), Comédia
-    (24), Drama (16) e Terror (8). Escreva um programa em Python que:
-    (a) calcule e imprima o percentual de cada gênero, arredondado a
-    uma casa decimal; (b) use o matplotlib para desenhar um gráfico de
-    pizza com esses percentuais.
-  </div>
+      <div class="box box-exercicio">
+        <span class="box-titulo">Exercício 1</span>
+        Uma pesquisa perguntou a 80 pessoas qual é o seu gênero de filme
+        favorito, com uma única resposta por pessoa: Ação (32), Comédia
+        (24), Drama (16) e Terror (8). Escreva um programa em Python que:
+        (a) calcule e imprima o percentual de cada gênero, arredondado a
+        uma casa decimal; (b) use o matplotlib para desenhar um gráfico de
+        pizza com esses percentuais.
+      </div>
 
-  <div class="box box-exercicio">
-    <span class="box-titulo">Exercício 2</span>
-    Uma loja de aplicativos mostra que, entre 150 avaliações de um app
-    de edição de fotos, 90 são de 5 estrelas, 30 de 4 estrelas, 20 de 3
-    estrelas, 7 de 2 estrelas e 3 de 1 estrela. Escreva um programa em
-    Python que: (a) calcule o percentual de cada nota; (b) use o
-    matplotlib para desenhar um gráfico de barras dessas notas; (c)
-    inclua o total de avaliações (n) no título do gráfico.
-  </div>
+      <div class="box box-exercicio">
+        <span class="box-titulo">Exercício 2</span>
+        Uma loja de aplicativos mostra que, entre 150 avaliações de um app
+        de edição de fotos, 90 são de 5 estrelas, 30 de 4 estrelas, 20 de 3
+        estrelas, 7 de 2 estrelas e 3 de 1 estrela. Escreva um programa em
+        Python que: (a) calcule o percentual de cada nota; (b) use o
+        matplotlib para desenhar um gráfico de barras dessas notas; (c)
+        inclua o total de avaliações (n) no título do gráfico.
+      </div>
 
-  <h2 class="bloco-header">Gabarito Comentado</h2>
+      <h2 class="bloco-header">Gabarito Comentado</h2>
 
-  <p><strong>Exercício 1</strong></p>
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python"><span class="cm-kw">import</span> matplotlib.pyplot <span class="cm-kw">as</span> plt
+      <p><strong>Exercício 1</strong></p>
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python"><span class="cm-kw">import</span> matplotlib.pyplot <span class="cm-kw">as</span> plt
 
 generos = {
     <span class="cm-str">"Ação"</span>: <span class="cm-num">32</span>,
@@ -1007,20 +1146,20 @@ plt.pie(
 plt.title(<span class="cm-str">f"Gênero de filme favorito (n = {total})"</span>)
 plt.savefig(<span class="cm-str">"generos.png"</span>)
 </code></pre>
-  </div>
-  <div class="explicacao-codigo">
-    <p><strong>Saída:</strong> "Ação: 40.0%", "Comédia: 30.0%", "Drama: 20.0%" e "Terror: 10.0%", além
-      do gráfico de pizza com as quatro fatias.</p>
-    <p><strong>Comentário:</strong> aplicação direta da fórmula da
-      Seção 1. Como cada pessoa deu uma única resposta, os percentuais
-      somam exatamente 100%, por isso o gráfico de pizza é apropriado
-      aqui (diferente do Exercício 2, com respostas por nota).</p>
-  </div>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Saída:</strong> "Ação: 40.0%", "Comédia: 30.0%", "Drama: 20.0%" e "Terror: 10.0%", além
+          do gráfico de pizza com as quatro fatias.</p>
+        <p><strong>Comentário:</strong> aplicação direta da fórmula da
+          Seção 1. Como cada pessoa deu uma única resposta, os percentuais
+          somam exatamente 100%, por isso o gráfico de pizza é apropriado
+          aqui (diferente do Exercício 2, com respostas por nota).</p>
+      </div>
 
-  <p><strong>Exercício 2</strong></p>
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python"><span class="cm-kw">import</span> matplotlib.pyplot <span class="cm-kw">as</span> plt
+      <p><strong>Exercício 2</strong></p>
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python"><span class="cm-kw">import</span> matplotlib.pyplot <span class="cm-kw">as</span> plt
 
 notas = {
     <span class="cm-str">"5 estrelas"</span>: <span class="cm-num">90</span>,
@@ -1041,115 +1180,140 @@ plt.title(<span class="cm-str">f"Avaliações do aplicativo (n = {total})"</span
 plt.tight_layout()
 plt.savefig(<span class="cm-str">"avaliacoes.png"</span>)
 </code></pre>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Saída:</strong> "5 estrelas: 60.0%", "4 estrelas: 20.0%",
+          "3 estrelas: 13.3%", "2 estrelas: 4.7%" e "1 estrela: 2.0%", além
+          do gráfico de barras com "n = 150" no título.</p>
+        <p><strong>Comentário:</strong> incluir o "n" no título evita o
+          problema visto na Seção 1 e na Seção 3: um gráfico sem o tamanho
+          da amostra não permite avaliar sua confiabilidade.</p>
+      </div>
+
+      <h2 class="bloco-header">Retomando a Conversa Inicial</h2>
+
+      <p><strong>Seção 1, Gráfico de pizza:</strong> as fatias mostram
+        proporções que somam 100%, mas nunca revelam o total; sempre procure
+        o "n" da amostra.</p>
+
+      <p><strong>Seção 2, Gráfico de barras:</strong> as barras podem
+        mostrar frequência ou frequência relativa e não precisam somar
+        100%, o que permite representar respostas múltiplas.</p>
+
+      <p><strong>Seção 3, Lendo gráficos com espírito crítico:</strong>
+        eixos cortados, gráficos 3D e fatias "outros" exageradas são as
+        formas mais comuns de um gráfico distorcer a realidade.</p>
+
+      <h2 class="bloco-header">Revisão Rápida</h2>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Conceito</th>
+              <th scope="col">Fórmula</th>
+              <th scope="col">Erro comum</th>
+              <th scope="col">Dica de prova</th>
+              <th scope="col">Aplicação em Tecnologia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Gráfico de pizza</td>
+              <td><span class="fracao"><span class="num">categoria</span><span class="den">total</span></span> × 100
+              </td>
+              <td>Não checar o total (n)</td>
+              <td>Fatias somam 100%</td>
+              <td>Uso do tempo de tela por tipo de app</td>
+            </tr>
+            <tr>
+              <td>Gráfico de barras</td>
+              <td><span class="fracao"><span class="num">contagem</span><span class="den">total</span></span> × 100</td>
+              <td>Confundir frequência com percentual</td>
+              <td>Não precisa somar 100%</td>
+              <td>Reclamações sobre um app</td>
+            </tr>
+            <tr>
+              <td>Eixo enganoso</td>
+              <td>N/A</td>
+              <td>Não notar onde o eixo começa</td>
+              <td>Desconfie de eixos cortados</td>
+              <td>Comparar notas entre apps concorrentes</td>
+            </tr>
+            <tr>
+              <td>Fatia "outros"</td>
+              <td>N/A</td>
+              <td>Fatia "outros" maior que as demais</td>
+              <td>Verifique se poderia ser detalhada</td>
+              <td>Categoria "outros apps" escondendo dados</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="bloco-header">Sugestões de Leituras e Sites</h2>
+      <p><strong>LEITURAS</strong></p>
+      <p>RUMSEY, Deborah J. <em>Statistics For Dummies</em>. 2. ed. Hoboken,
+        NJ: Wiley Publishing, 2011. (livro-base desta aula, recomendado para
+        aprofundamento em gráficos de dados categóricos.)</p>
+      <p><strong>SITES</strong></p>
+      <p>Khan Academy, Estatística e Probabilidade:
+        https://pt.khanacademy.org/math/statistics-probability (aulas
+        gratuitas em português sobre gráficos de dados categóricos.)</p>
+
+      <h2 class="bloco-header">Glossário</h2>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Termo</th>
+              <th scope="col">Definição</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Gráfico de pizza</td>
+              <td>Gráfico circular que representa categorias como fatias proporcionais ao total.</td>
+            </tr>
+            <tr>
+              <td>Gráfico de barras</td>
+              <td>Gráfico que representa categorias por meio de barras, mostrando frequência ou frequência relativa.
+              </td>
+            </tr>
+            <tr>
+              <td>Frequência</td>
+              <td>Número (contagem) de indivíduos em uma categoria.</td>
+            </tr>
+            <tr>
+              <td>Frequência relativa</td>
+              <td>Percentual de indivíduos em uma categoria em relação ao total.</td>
+            </tr>
+            <tr>
+              <td>Eixo cortado/esticado</td>
+              <td>Escala de um gráfico que não começa em zero, exagerando ou disfarçando diferenças.</td>
+            </tr>
+            <tr>
+              <td>Resposta múltipla</td>
+              <td>Pesquisa em que cada pessoa pode escolher mais de uma categoria, fazendo os percentuais não somarem
+                100%.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="bloco-header">Referências Bibliográficas</h2>
+      <p>VIEIRA, Sonia. <em>Estatística básica</em> – 2ª edição revista e
+        ampliada. 2. ed. Porto Alegre: +A Educação - Cengage Learning Brasil,
+        2018. E-book. p.Cover. ISBN 9788522128082. Disponível em:
+        https://integrada.minhabiblioteca.com.br/reader/books/9788522128082/.
+        Acesso em: 01 dez. 2025.</p>
+      <p>MORETTIN, Pedro A. <em>Estatística básica</em>. 10. ed. Rio de
+        Janeiro: Saraiva Uni, 2023. E-book. p.i. ISBN 9788571441484.
+        Disponível em:
+        https://integrada.minhabiblioteca.com.br/reader/books/9788571441484/.
+        Acesso em: 01 dez. 2025.</p>
+
+    </main>
   </div>
-  <div class="explicacao-codigo">
-    <p><strong>Saída:</strong> "5 estrelas: 60.0%", "4 estrelas: 20.0%",
-      "3 estrelas: 13.3%", "2 estrelas: 4.7%" e "1 estrela: 2.0%", além
-      do gráfico de barras com "n = 150" no título.</p>
-    <p><strong>Comentário:</strong> incluir o "n" no título evita o
-      problema visto na Seção 1 e na Seção 3: um gráfico sem o tamanho
-      da amostra não permite avaliar sua confiabilidade.</p>
-  </div>
-
-  <h2 class="bloco-header">Retomando a Conversa Inicial</h2>
-
-  <p><strong>Seção 1, Gráfico de pizza:</strong> as fatias mostram
-  proporções que somam 100%, mas nunca revelam o total; sempre procure
-  o "n" da amostra.</p>
-
-  <p><strong>Seção 2, Gráfico de barras:</strong> as barras podem
-  mostrar frequência ou frequência relativa e não precisam somar
-  100%, o que permite representar respostas múltiplas.</p>
-
-  <p><strong>Seção 3, Lendo gráficos com espírito crítico:</strong>
-  eixos cortados, gráficos 3D e fatias "outros" exageradas são as
-  formas mais comuns de um gráfico distorcer a realidade.</p>
-
-  <h2 class="bloco-header">Revisão Rápida</h2>
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr>
-      <th scope="col">Conceito</th>
-      <th scope="col">Fórmula</th>
-      <th scope="col">Erro comum</th>
-      <th scope="col">Dica de prova</th>
-      <th scope="col">Aplicação em Tecnologia</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>Gráfico de pizza</td>
-      <td><span class="fracao"><span class="num">categoria</span><span class="den">total</span></span> × 100</td>
-      <td>Não checar o total (n)</td>
-      <td>Fatias somam 100%</td>
-      <td>Uso do tempo de tela por tipo de app</td>
-    </tr>
-    <tr>
-      <td>Gráfico de barras</td>
-      <td><span class="fracao"><span class="num">contagem</span><span class="den">total</span></span> × 100</td>
-      <td>Confundir frequência com percentual</td>
-      <td>Não precisa somar 100%</td>
-      <td>Reclamações sobre um app</td>
-    </tr>
-    <tr>
-      <td>Eixo enganoso</td>
-      <td>N/A</td>
-      <td>Não notar onde o eixo começa</td>
-      <td>Desconfie de eixos cortados</td>
-      <td>Comparar notas entre apps concorrentes</td>
-    </tr>
-    <tr>
-      <td>Fatia "outros"</td>
-      <td>N/A</td>
-      <td>Fatia "outros" maior que as demais</td>
-      <td>Verifique se poderia ser detalhada</td>
-      <td>Categoria "outros apps" escondendo dados</td>
-    </tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h2 class="bloco-header">Sugestões de Leituras e Sites</h2>
-  <p><strong>LEITURAS</strong></p>
-  <p>RUMSEY, Deborah J. <em>Statistics For Dummies</em>. 2. ed. Hoboken,
-  NJ: Wiley Publishing, 2011. (livro-base desta aula, recomendado para
-  aprofundamento em gráficos de dados categóricos.)</p>
-  <p><strong>SITES</strong></p>
-  <p>Khan Academy, Estatística e Probabilidade:
-  https://pt.khanacademy.org/math/statistics-probability (aulas
-  gratuitas em português sobre gráficos de dados categóricos.)</p>
-
-  <h2 class="bloco-header">Glossário</h2>
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Termo</th><th scope="col">Definição</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Gráfico de pizza</td><td>Gráfico circular que representa categorias como fatias proporcionais ao total.</td></tr>
-    <tr><td>Gráfico de barras</td><td>Gráfico que representa categorias por meio de barras, mostrando frequência ou frequência relativa.</td></tr>
-    <tr><td>Frequência</td><td>Número (contagem) de indivíduos em uma categoria.</td></tr>
-    <tr><td>Frequência relativa</td><td>Percentual de indivíduos em uma categoria em relação ao total.</td></tr>
-    <tr><td>Eixo cortado/esticado</td><td>Escala de um gráfico que não começa em zero, exagerando ou disfarçando diferenças.</td></tr>
-    <tr><td>Resposta múltipla</td><td>Pesquisa em que cada pessoa pode escolher mais de uma categoria, fazendo os percentuais não somarem 100%.</td></tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h2 class="bloco-header">Referências Bibliográficas</h2>
-  <p>VIEIRA, Sonia. <em>Estatística básica</em> – 2ª edição revista e
-  ampliada. 2. ed. Porto Alegre: +A Educação - Cengage Learning Brasil,
-  2018. E-book. p.Cover. ISBN 9788522128082. Disponível em:
-  https://integrada.minhabiblioteca.com.br/reader/books/9788522128082/.
-  Acesso em: 01 dez. 2025.</p>
-  <p>MORETTIN, Pedro A. <em>Estatística básica</em>. 10. ed. Rio de
-  Janeiro: Saraiva Uni, 2023. E-book. p.i. ISBN 9788571441484.
-  Disponível em:
-  https://integrada.minhabiblioteca.com.br/reader/books/9788571441484/.
-  Acesso em: 01 dez. 2025.</p>
-
-  </main>
-</div>
 </body>
+
 </html>

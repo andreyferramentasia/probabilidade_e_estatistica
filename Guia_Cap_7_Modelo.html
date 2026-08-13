@@ -1,922 +1,1073 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guia de Estudos - Aula 7 - Probabilidade e Estatística (EAD)</title>
-<meta name="description" content="Guia de Estudos CEAD/UNIGRAN — Aula 7 da disciplina de Probabilidade e Estatística (EAD), com teoria, exemplos em Python e exercícios comentados.">
-<style>
-  :root {
-    --azul-escuro: #1B3A8C;
-    --ciano: #29ABE2;
-    --azul-claro: #D6E8F5;
-    --cinza-claro: #F4F4F4;
-    --cinza-texto: #333333;
-    --atencao-borda: #E0932C;
-    --atencao-fundo: #FFF4E0;
-    --branco: #FFFFFF;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia de Estudos - Aula 7 - Probabilidade e Estatística (EAD)</title>
+  <meta name="description"
+    content="Guia de Estudos CEAD/UNIGRAN — Aula 7 da disciplina de Probabilidade e Estatística (EAD), com teoria, exemplos em Python e exercícios comentados.">
+  <style>
+    :root {
+      --azul-escuro: #1B3A8C;
+      --ciano: #29ABE2;
+      --azul-claro: #D6E8F5;
+      --cinza-claro: #F4F4F4;
+      --cinza-texto: #333333;
+      --atencao-borda: #E0932C;
+      --atencao-fundo: #FFF4E0;
+      --branco: #FFFFFF;
+    }
 
-  * {
-    box-sizing: border-box;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  body {
-    font-family: Georgia, 'Times New Roman', serif;
-    color: var(--cinza-texto);
-    background: #EAEFF6;
-    margin: 0;
-    padding: 0;
-    line-height: 1.75;
-  }
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--cinza-texto);
+      background: #EAEFF6;
+      margin: 0;
+      padding: 0;
+      line-height: 1.75;
+    }
 
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    background: var(--branco);
-    padding: 48px 56px 70px 56px;
-    box-shadow: 0 0 18px rgba(0, 0, 0, 0.12);
-  }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--branco);
+      padding: 48px 56px 70px 56px;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.12);
+    }
 
-  .cabecalho-textual {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-variant: small-caps;
-    font-style: italic;
-    color: var(--azul-escuro);
-    font-size: 1.05em;
-    letter-spacing: 0.5px;
-    padding-bottom: 14px;
-    margin-bottom: 18px;
-  }
+    .cabecalho-textual {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-variant: small-caps;
+      font-style: italic;
+      color: var(--azul-escuro);
+      font-size: 1.05em;
+      letter-spacing: 0.5px;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
 
-  .cabecalho-textual .curso {
-    display: block;
-    font-style: normal;
-    font-variant: normal;
-    font-size: 0.75em;
-    color: var(--ciano);
-    font-weight: bold;
-    margin-top: 4px;
-  }
+    .cabecalho-textual .curso {
+      display: block;
+      font-style: normal;
+      font-variant: normal;
+      font-size: 0.75em;
+      color: var(--ciano);
+      font-weight: bold;
+      margin-top: 4px;
+    }
 
-  .cabecalho-textual .logo {
-    height: 48px;
-    flex-shrink: 0;
-  }
+    .cabecalho-textual .logo {
+      height: 48px;
+      flex-shrink: 0;
+    }
 
-  .capa-cabecalho {
-    display: flex;
-    align-items: flex-start;
-    margin-top: 10px;
-    margin-bottom: 40px;
-  }
+    .capa-cabecalho {
+      display: flex;
+      align-items: flex-start;
+      margin-top: 10px;
+      margin-bottom: 40px;
+    }
 
-  .capa-numero {
-    position: relative;
-    flex-shrink: 0;
-    width: 230px;
-    height: 208px;
-    background: var(--ciano);
-    color: var(--branco);
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    clip-path: polygon(0 0, 100% 0, 100% 76%, 50% 100%, 0 76%);
-    filter: drop-shadow(6px 8px 6px rgba(0, 0, 0, 0.35));
-  }
+    .capa-numero {
+      position: relative;
+      flex-shrink: 0;
+      width: 230px;
+      height: 208px;
+      background: var(--ciano);
+      color: var(--branco);
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      clip-path: polygon(0 0, 100% 0, 100% 76%, 50% 100%, 0 76%);
+      filter: drop-shadow(6px 8px 6px rgba(0, 0, 0, 0.35));
+    }
 
-  .capa-numero .num {
-    font-size: 5em;
-    line-height: 1;
-  }
+    .capa-numero .num {
+      font-size: 5em;
+      line-height: 1;
+    }
 
-  .capa-numero .ord-wrap {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 4px;
-    margin-top: -1.6em;
-  }
+    .capa-numero .ord-wrap {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: 4px;
+      margin-top: -1.6em;
+    }
 
-  .capa-numero .ord {
-    font-size: 1.8em;
-    line-height: 1;
-  }
+    .capa-numero .ord {
+      font-size: 1.8em;
+      line-height: 1;
+    }
 
-  .capa-numero .ord-linha {
-    width: 16px;
-    height: 3px;
-    background: var(--branco);
-    margin-top: 5px;
-  }
+    .capa-numero .ord-linha {
+      width: 16px;
+      height: 3px;
+      background: var(--branco);
+      margin-top: 5px;
+    }
 
-  .capa-aula-fundo {
-    flex-grow: 1;
-    height: 158px;
-    display: flex;
-    align-items: center;
-    padding-left: 40px;
-    background: linear-gradient(to right, #D9D9D9, #FAFAFA);
-    box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.18);
-  }
+    .capa-aula-fundo {
+      flex-grow: 1;
+      height: 158px;
+      display: flex;
+      align-items: center;
+      padding-left: 40px;
+      background: linear-gradient(to right, #D9D9D9, #FAFAFA);
+      box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.18);
+    }
 
-  .capa-aula-fundo span {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-style: italic;
-    font-size: 3em;
-    color: #1A1A1A;
-  }
+    .capa-aula-fundo span {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      font-style: italic;
+      font-size: 3em;
+      color: #1A1A1A;
+    }
 
-  .capa-titulo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    font-size: 1.55em;
-    line-height: 1.4;
-    color: #1A1A1A;
-    margin: 6px 0 26px;
-  }
+    .capa-titulo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 1.55em;
+      line-height: 1.4;
+      color: #1A1A1A;
+      margin: 6px 0 26px;
+    }
 
-  .capa-intro {
-    font-style: italic;
-    text-indent: 0;
-    text-align: justify;
-    hyphens: auto;
-  }
+    .capa-intro {
+      font-style: italic;
+      text-indent: 0;
+      text-align: justify;
+      hyphens: auto;
+    }
 
-  .bloco-header {
-    font-family: Arial, Helvetica, sans-serif;
-    background: var(--azul-escuro);
-    color: var(--branco);
-    text-transform: uppercase;
-    font-weight: bold;
-    padding: 13px 22px;
-    font-size: 1.02em;
-    border-radius: 3px;
-    margin-top: 42px;
-    margin-bottom: 22px;
-    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
-  }
+    .bloco-header {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--azul-escuro);
+      color: var(--branco);
+      text-transform: uppercase;
+      font-weight: bold;
+      padding: 13px 22px;
+      font-size: 1.02em;
+      border-radius: 3px;
+      margin-top: 42px;
+      margin-bottom: 22px;
+      box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+    }
 
-  .secao-titulo {
-    display: flex;
-    align-items: stretch;
-    margin-top: 48px;
-    margin-bottom: 24px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
-  }
+    .secao-titulo {
+      display: flex;
+      align-items: stretch;
+      margin-top: 48px;
+      margin-bottom: 24px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+    }
 
-  .secao-etiqueta {
-    background: var(--azul-escuro);
-    color: var(--branco);
-    padding: 10px 20px;
-    white-space: nowrap;
-    border-radius: 4px 0 0 4px;
-    font-size: 0.95em;
-  }
+    .secao-etiqueta {
+      background: var(--azul-escuro);
+      color: var(--branco);
+      padding: 10px 20px;
+      white-space: nowrap;
+      border-radius: 4px 0 0 4px;
+      font-size: 0.95em;
+    }
 
-  .secao-nome {
-    background: var(--azul-claro);
-    color: var(--azul-escuro);
-    padding: 10px 20px;
-    flex-grow: 1;
-    border-radius: 0 4px 4px 0;
-    font-size: 0.95em;
-  }
+    .secao-nome {
+      background: var(--azul-claro);
+      color: var(--azul-escuro);
+      padding: 10px 20px;
+      flex-grow: 1;
+      border-radius: 0 4px 4px 0;
+      font-size: 0.95em;
+    }
 
-  .subtitulo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: var(--azul-escuro);
-    font-size: 1.02em;
-    margin-top: 22px;
-  }
+    .subtitulo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      color: var(--azul-escuro);
+      font-size: 1.02em;
+      margin-top: 22px;
+    }
 
-  p {
-    margin: 16px 0;
-    text-indent: 1.25cm;
-    text-align: justify;
-    hyphens: auto;
-  }
+    p {
+      margin: 16px 0;
+      text-indent: 1.25cm;
+      text-align: justify;
+      hyphens: auto;
+    }
 
-  .box p,
-  .docente-box p {
-    text-indent: 0;
-    text-align: justify;
-  }
+    .box p,
+    .docente-box p {
+      text-indent: 0;
+      text-align: justify;
+    }
 
-  .box {
-    border-radius: 6px;
-    padding: 20px 24px;
-    margin: 26px 0;
-    page-break-inside: avoid;
-  }
-
-  .box-titulo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.82em;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  .box-conceito {
-    background: var(--azul-claro);
-    border-left: 5px solid var(--azul-escuro);
-  }
-  .box-conceito .box-titulo { color: var(--azul-escuro); }
-
-  .box-exemplo {
-    background: #EAF7FC;
-    border-left: 5px solid var(--ciano);
-  }
-  .box-exemplo .box-titulo { color: #1381AD; }
-
-  .box-atencao {
-    background: var(--atencao-fundo);
-    border-left: 5px solid var(--atencao-borda);
-  }
-  .box-atencao .box-titulo { color: var(--atencao-borda); }
-
-  .box-python {
-    background: #FFFFFF;
-    border: 1px solid #DADCE0;
-    border-radius: 8px;
-    padding: 0;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15);
-  }
-  .codigo-cabecalho {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #F1F3F4;
-    border-bottom: 1px solid #DADCE0;
-    color: #5F6368;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.78em;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 6px 14px;
-  }
-  .botao-play {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #1A73E8;
-    color: #FFFFFF;
-    font-size: 0.65em;
-  }
-  .box-python pre {
-    margin: 0;
-    white-space: pre;
-    overflow-x: auto;
-    padding: 14px 18px;
-    background: #F8F9FA;
-    color: #3C4043;
-    font-family: Consolas, 'Courier New', monospace;
-    font-size: 0.88em;
-  }
-  .cm-kw  { color: #1967D2; font-weight: bold; }
-  .cm-str { color: #188038; }
-  .cm-com { color: #80868B; font-style: italic; }
-  .cm-num { color: #AF00DB; }
-  .cm-bi  { color: #C5221F; }
-
-  .box-exercicio {
-    background: var(--branco);
-    border: 2px solid var(--ciano);
-  }
-  .box-exercicio .box-titulo { color: #1381AD; }
-
-  .box-resumo {
-    background: var(--azul-claro);
-    border: 1px solid var(--azul-escuro);
-    font-style: italic;
-  }
-  .box-resumo .box-titulo { color: var(--azul-escuro); font-style: normal; }
-
-  .box-formula {
-    background: var(--branco);
-    border: 2px solid var(--azul-escuro);
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.05em;
-    font-weight: bold;
-    color: var(--azul-escuro);
-    padding: 22px 18px;
-  }
-  .box-formula .box-titulo {
-    color: var(--ciano);
-    text-align: left;
-  }
-
-  .formula-math {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    font-size: 1.15em;
-    margin: 6px 0;
-  }
-  .fracao {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    vertical-align: middle;
-    line-height: 1.3;
-  }
-  .fracao .num {
-    padding: 0 8px 4px;
-    border-bottom: 2px solid var(--azul-escuro);
-  }
-  .fracao .den {
-    padding: 4px 8px 0;
-  }
-  .nota-formula {
-    display: block;
-    margin-top: 10px;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-weight: normal;
-    font-style: italic;
-    font-size: 0.75em;
-    color: #5F6368;
-  }
-
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 22px 0;
-    font-size: 0.92em;
-  }
-
-  .tabela-wrapper {
-    overflow-x: auto;
-    margin: 26px 0;
-  }
-  .tabela-wrapper table { margin: 0; }
-
-  th {
-    background: var(--azul-escuro);
-    color: var(--branco);
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: left;
-    padding: 12px 14px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
-  }
-
-  td {
-    padding: 11px 14px;
-    border-bottom: 1px solid #ccc;
-  }
-
-  tr:nth-child(even) td {
-    background: var(--cinza-claro);
-  }
-
-  .sumario-item {
-    display: flex;
-    gap: 14px;
-    margin: 14px 0;
-    align-items: baseline;
-  }
-  .sumario-aula {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: var(--ciano);
-    white-space: nowrap;
-  }
-
-  .docente-box {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    background: var(--azul-claro);
-    border-left: 5px solid var(--azul-escuro);
-    border-radius: 6px;
-    padding: 20px;
-  }
-
-  ul, ol {
-    margin: 16px 0;
-    padding-left: 28px;
-  }
-
-  li { margin: 10px 0; }
-
-  .explicacao-codigo {
-    margin: 12px 0 20px 0;
-  }
-
-  .explicacao-codigo p {
-    margin: 3px 0;
-    text-indent: 0;
-    text-align: left;
-  }
-
-  .assinatura {
-    text-align: right;
-    font-style: italic;
-    margin-top: 22px;
-    color: var(--azul-escuro);
-  }
-
-  .figura {
-    margin: 30px 0;
-    text-align: center;
-  }
-  .figura img {
-    max-width: 100%;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  }
-  .figura figcaption {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.8em;
-    color: #5F6368;
-    margin-top: 10px;
-    text-align: left;
-  }
-
-  @media print {
-    body { background: var(--branco); }
-    .container { box-shadow: none; max-width: 100%; padding: 10px; }
-    .box, table, .secao-titulo, .capa-cabecalho, .capa-titulo, .bloco-header, .figura,
-    .docente-box, .tabela-wrapper, .sumario-item {
+    .box {
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin: 26px 0;
       page-break-inside: avoid;
     }
-    .cabecalho-textual { display: none; }
-    @page { size: A4; margin: 2cm; }
-  }
 
-  .pagina-abertura {
-    position: relative;
-  }
+    .box-titulo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.82em;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: block;
+    }
 
-  .capa-cabecalho {
-    position: relative;
-    overflow: visible;
-  }
+    .box-conceito {
+      background: var(--azul-claro);
+      border-left: 5px solid var(--azul-escuro);
+    }
 
-  .curva-decorativa {
-    position: absolute;
-    right: -56px;
-    bottom: -46px;
-    width: 170px;
-    height: 130px;
-    z-index: 0;
-    pointer-events: none;
-  }
+    .box-conceito .box-titulo {
+      color: var(--azul-escuro);
+    }
 
-  .capa-cabecalho > *:not(.curva-decorativa) {
-    position: relative;
-    z-index: 1;
-  }
+    .box-exemplo {
+      background: #EAF7FC;
+      border-left: 5px solid var(--ciano);
+    }
 
-  .nav-capitulos {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 4px;
-    background: var(--azul-escuro);
-    padding: 10px 16px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.85em;
-    font-weight: bold;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  }
+    .box-exemplo .box-titulo {
+      color: #1381AD;
+    }
 
-  .nav-capitulos a {
-    color: var(--branco);
-    text-decoration: none;
-    padding: 8px 14px;
-    border-radius: 4px;
-    transition: background 0.15s;
-  }
+    .box-atencao {
+      background: var(--atencao-fundo);
+      border-left: 5px solid var(--atencao-borda);
+    }
 
-  .nav-capitulos a:hover {
-    background: rgba(255, 255, 255, 0.18);
-  }
+    .box-atencao .box-titulo {
+      color: var(--atencao-borda);
+    }
 
-  .nav-capitulos a.ativo {
-    background: var(--ciano);
-  }
+    .box-python {
+      background: #FFFFFF;
+      border: 1px solid #DADCE0;
+      border-radius: 8px;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15);
+    }
 
-  @media print {
-    .nav-capitulos { display: none; }
-  }
+    .codigo-cabecalho {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #F1F3F4;
+      border-bottom: 1px solid #DADCE0;
+      color: #5F6368;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.78em;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 6px 14px;
+    }
 
-  .skip-link {
-    position: absolute;
-    left: -9999px;
-    top: 0;
-    background: var(--branco);
-    color: var(--azul-escuro);
-    padding: 10px 16px;
-    z-index: 200;
-    border-radius: 0 0 6px 0;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  .skip-link:focus {
-    left: 0;
-  }
+    .botao-play {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #1A73E8;
+      color: #FFFFFF;
+      font-size: 0.65em;
+    }
 
-  .nav-capitulos a:focus-visible {
-    outline: 2px solid var(--branco);
-    outline-offset: 2px;
-  }
+    .box-python pre {
+      margin: 0;
+      white-space: pre;
+      overflow-x: auto;
+      padding: 14px 18px;
+      background: #F8F9FA;
+      color: #3C4043;
+      font-family: Consolas, 'Courier New', monospace;
+      font-size: 0.88em;
+    }
 
-  .secao-nome {
-    margin: 0;
-  }
+    .cm-kw {
+      color: #1967D2;
+      font-weight: bold;
+    }
 
-  .sumario-lista {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+    .cm-str {
+      color: #188038;
+    }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-</style>
+    .cm-com {
+      color: #80868B;
+      font-style: italic;
+    }
+
+    .cm-num {
+      color: #AF00DB;
+    }
+
+    .cm-bi {
+      color: #C5221F;
+    }
+
+    .box-exercicio {
+      background: var(--branco);
+      border: 2px solid var(--ciano);
+    }
+
+    .box-exercicio .box-titulo {
+      color: #1381AD;
+    }
+
+    .box-resumo {
+      background: var(--azul-claro);
+      border: 1px solid var(--azul-escuro);
+      font-style: italic;
+    }
+
+    .box-resumo .box-titulo {
+      color: var(--azul-escuro);
+      font-style: normal;
+    }
+
+    .box-formula {
+      background: var(--branco);
+      border: 2px solid var(--azul-escuro);
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.05em;
+      font-weight: bold;
+      color: var(--azul-escuro);
+      padding: 22px 18px;
+    }
+
+    .box-formula .box-titulo {
+      color: var(--ciano);
+      text-align: left;
+    }
+
+    .formula-math {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 1.15em;
+      margin: 6px 0;
+    }
+
+    .fracao {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      line-height: 1.3;
+    }
+
+    .fracao .num {
+      padding: 0 8px 4px;
+      border-bottom: 2px solid var(--azul-escuro);
+    }
+
+    .fracao .den {
+      padding: 4px 8px 0;
+    }
+
+    .nota-formula {
+      display: block;
+      margin-top: 10px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-weight: normal;
+      font-style: italic;
+      font-size: 0.75em;
+      color: #5F6368;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 22px 0;
+      font-size: 0.92em;
+    }
+
+    .tabela-wrapper {
+      overflow-x: auto;
+      margin: 26px 0;
+    }
+
+    .tabela-wrapper table {
+      margin: 0;
+    }
+
+    th {
+      background: var(--azul-escuro);
+      color: var(--branco);
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: left;
+      padding: 12px 14px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
+    }
+
+    td {
+      padding: 11px 14px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    tr:nth-child(even) td {
+      background: var(--cinza-claro);
+    }
+
+    .sumario-item {
+      display: flex;
+      gap: 14px;
+      margin: 14px 0;
+      align-items: baseline;
+    }
+
+    .sumario-aula {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      color: var(--ciano);
+      white-space: nowrap;
+    }
+
+    .docente-box {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: var(--azul-claro);
+      border-left: 5px solid var(--azul-escuro);
+      border-radius: 6px;
+      padding: 20px;
+    }
+
+    ul,
+    ol {
+      margin: 16px 0;
+      padding-left: 28px;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+
+    .explicacao-codigo {
+      margin: 12px 0 20px 0;
+    }
+
+    .explicacao-codigo p {
+      margin: 3px 0;
+      text-indent: 0;
+      text-align: left;
+    }
+
+    .assinatura {
+      text-align: right;
+      font-style: italic;
+      margin-top: 22px;
+      color: var(--azul-escuro);
+    }
+
+    .figura {
+      margin: 30px 0;
+      text-align: center;
+    }
+
+    .figura img {
+      max-width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .figura figcaption {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.8em;
+      color: #5F6368;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    @media print {
+      body {
+        background: var(--branco);
+      }
+
+      .container {
+        box-shadow: none;
+        max-width: 100%;
+        padding: 10px;
+      }
+
+      .box,
+      table,
+      .secao-titulo,
+      .capa-cabecalho,
+      .capa-titulo,
+      .bloco-header,
+      .figura,
+      .docente-box,
+      .tabela-wrapper,
+      .sumario-item {
+        page-break-inside: avoid;
+      }
+
+      .cabecalho-textual {
+        display: none;
+      }
+
+      @page {
+        size: A4;
+        margin: 2cm;
+      }
+    }
+
+    .pagina-abertura {
+      position: relative;
+    }
+
+    .capa-cabecalho {
+      position: relative;
+      overflow: visible;
+    }
+
+    .curva-decorativa {
+      position: absolute;
+      right: -56px;
+      bottom: -46px;
+      width: 170px;
+      height: 130px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .capa-cabecalho>*:not(.curva-decorativa) {
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-capitulos {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+      background: var(--azul-escuro);
+      padding: 10px 16px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.85em;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .nav-capitulos a {
+      color: var(--branco);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+
+    .nav-capitulos a:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .nav-capitulos a.ativo {
+      background: var(--ciano);
+    }
+
+    @media print {
+      .nav-capitulos {
+        display: none;
+      }
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: var(--branco);
+      color: var(--azul-escuro);
+      padding: 10px 16px;
+      z-index: 200;
+      border-radius: 0 0 6px 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      left: 0;
+    }
+
+    .nav-capitulos a:focus-visible {
+      outline: 2px solid var(--branco);
+      outline-offset: 2px;
+    }
+
+    .secao-nome {
+      margin: 0;
+    }
+
+    .sumario-lista {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
 </head>
+
 <body>
-<a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
-<nav class="nav-capitulos" aria-label="Navegação entre aulas">
-  <a href="Guia_Cap_1_Modelo.html">Aula 01</a>
-  <a href="Guia_Cap_2_Modelo.html">Aula 02</a>
-  <a href="Guia_Cap_3_Modelo.html">Aula 03</a>
-  <a href="Guia_Cap_4_Modelo.html">Aula 04</a>
-  <a href="Guia_Cap_5_Modelo.html">Aula 05</a>
-  <a href="Guia_Cap_6_Modelo.html">Aula 06</a>
-  <a href="Guia_Cap_7_Modelo.html" class="ativo" aria-current="page">Aula 07</a>
-  <a href="Guia_Cap_8_Modelo.html">Aula 08</a>
-</nav>
-<div class="container">
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
+  <nav class="nav-capitulos" aria-label="Navegação entre aulas">
+    <a href="index.html">Aula 01</a>
+    <a href="Guia_Cap_2_Modelo.html">Aula 02</a>
+    <a href="Guia_Cap_3_Modelo.html">Aula 03</a>
+    <a href="Guia_Cap_4_Modelo.html">Aula 04</a>
+    <a href="Guia_Cap_5_Modelo.html">Aula 05</a>
+    <a href="Guia_Cap_6_Modelo.html">Aula 06</a>
+    <a href="Guia_Cap_7_Modelo.html" class="ativo" aria-current="page">Aula 07</a>
+    <a href="Guia_Cap_8_Modelo.html">Aula 08</a>
+  </nav>
+  <div class="container">
 
-  <header class="cabecalho-textual">
-    <div>
-      CEAD/UNIGRAN · Guia de Estudos
-      <span class="curso">PROBABILIDADE E ESTATÍSTICA (EAD)</span>
-    </div>
-    <img class="logo" src="imagens/logo-unigran.png" alt="Logo UNIGRAN CEAD">
-  </header>
-  <main id="conteudo-principal">
+    <header class="cabecalho-textual">
+      <div>
+        CEAD/UNIGRAN · Guia de Estudos
+        <span class="curso">PROBABILIDADE E ESTATÍSTICA (EAD)</span>
+      </div>
+      <img class="logo" src="imagens/logo-unigran.png" alt="Logo UNIGRAN CEAD">
+    </header>
+    <main id="conteudo-principal">
 
-  <div class="pagina-abertura">
-    <div class="capa-cabecalho">
-      <div class="capa-numero"><span class="num">7</span><span class="ord-wrap"><span class="ord">a</span><span class="ord-linha"></span></span></div>
-      <div class="capa-aula-fundo"><span>Aula</span></div>
-      <svg class="curva-decorativa" viewBox="0 0 170 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <path d="M170,130 L170,20 C110,5 75,55 90,85 C102,110 55,130 0,120 L0,130 Z" fill="#29ABE2"/>
-        <path d="M170,130 L170,50 C130,40 105,75 118,95 C128,112 85,130 40,130 Z" fill="#1B3A8C" opacity="0.55"/>
-      </svg>
-    </div>
+      <div class="pagina-abertura">
+        <div class="capa-cabecalho">
+          <div class="capa-numero"><span class="num">7</span><span class="ord-wrap"><span class="ord">a</span><span
+                class="ord-linha"></span></span></div>
+          <div class="capa-aula-fundo"><span>Aula</span></div>
+          <svg class="curva-decorativa" viewBox="0 0 170 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+            focusable="false">
+            <path d="M170,130 L170,20 C110,5 75,55 90,85 C102,110 55,130 0,120 L0,130 Z" fill="#29ABE2" />
+            <path d="M170,130 L170,50 C130,40 105,75 118,95 C128,112 85,130 40,130 Z" fill="#1B3A8C" opacity="0.55" />
+          </svg>
+        </div>
 
-    <h1 class="capa-titulo">Correlação é o mesmo que causalidade?</h1>
+        <h1 class="capa-titulo">Correlação é o mesmo que causalidade?</h1>
 
-    <p class="capa-intro">
-      Até agora estudamos uma variável de cada vez: um histograma, uma
-      média, uma distribuição. Nesta aula olhamos para duas variáveis ao
-      mesmo tempo e perguntamos: elas caminham juntas? Vamos aprender a
-      enxergar essa relação em um gráfico, medi-la com um número (a
-      correlação) e, principalmente, entender por que "estar
-      relacionado" não é o mesmo que "ser a causa".
-    </p>
-    <div class="assinatura">Grande abraço, Prof. Andrey</div>
-  </div>
+        <p class="capa-intro">
+          Até agora estudamos uma variável de cada vez: um histograma, uma
+          média, uma distribuição. Nesta aula olhamos para duas variáveis ao
+          mesmo tempo e perguntamos: elas caminham juntas? Vamos aprender a
+          enxergar essa relação em um gráfico, medi-la com um número (a
+          correlação) e, principalmente, entender por que "estar
+          relacionado" não é o mesmo que "ser a causa".
+        </p>
+        <div class="assinatura">Grande abraço, Prof. Andrey</div>
+      </div>
 
-  <h2 class="bloco-header">Objetivos de Aprendizagem</h2>
-  <p>Ao término desta aula, vocês serão capazes de:</p>
-  <ul>
-    <li>Interpretar um diagrama de dispersão, identificando relações
-      positivas, negativas ou inexistentes entre duas variáveis;</li>
-    <li>Reconhecer quando uma relação entre variáveis é aproximadamente
-      linear;</li>
-    <li>Calcular o coeficiente de correlação (r) para um conjunto
-      pequeno de dados;</li>
-    <li>Interpretar a força e a direção de uma correlação usando a
-      escala de -1 a +1;</li>
-    <li>Diferenciar correlação de causalidade, reconhecendo variáveis
-      de confusão.</li>
-  </ul>
+      <h2 class="bloco-header">Objetivos de Aprendizagem</h2>
+      <p>Ao término desta aula, vocês serão capazes de:</p>
+      <ul>
+        <li>Interpretar um diagrama de dispersão, identificando relações
+          positivas, negativas ou inexistentes entre duas variáveis;</li>
+        <li>Reconhecer quando uma relação entre variáveis é aproximadamente
+          linear;</li>
+        <li>Calcular o coeficiente de correlação (r) para um conjunto
+          pequeno de dados;</li>
+        <li>Interpretar a força e a direção de uma correlação usando a
+          escala de -1 a +1;</li>
+        <li>Diferenciar correlação de causalidade, reconhecendo variáveis
+          de confusão.</li>
+      </ul>
 
-  <h2 class="bloco-header">Seções de Estudo</h2>
-  <ol class="sumario-lista">
-  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 1</span> Diagrama de dispersão: visualizando a relação entre duas variáveis</li>
-  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 2</span> Correlação: medindo a força e a direção da relação</li>
-  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 3</span> Propriedades da correlação e o cuidado com causa e efeito</li>
-  </ol>
+      <h2 class="bloco-header">Seções de Estudo</h2>
+      <ol class="sumario-lista">
+        <li class="sumario-item"><span class="sumario-aula">SEÇÃO 1</span> Diagrama de dispersão: visualizando a relação
+          entre duas variáveis</li>
+        <li class="sumario-item"><span class="sumario-aula">SEÇÃO 2</span> Correlação: medindo a força e a direção da
+          relação</li>
+        <li class="sumario-item"><span class="sumario-aula">SEÇÃO 3</span> Propriedades da correlação e o cuidado com
+          causa e efeito</li>
+      </ol>
 
-  <!-- SEÇÃO 1 -->
-  <div class="secao-titulo">
-    <div class="secao-etiqueta">SEÇÃO 1</div>
-    <h3 class="secao-nome">Diagrama de dispersão: visualizando a relação entre duas variáveis</h3>
-  </div>
+      <!-- SEÇÃO 1 -->
+      <div class="secao-titulo">
+        <div class="secao-etiqueta">SEÇÃO 1</div>
+        <h3 class="secao-nome">Diagrama de dispersão: visualizando a relação entre duas variáveis</h3>
+      </div>
 
-  <p>
-    Quando cada observação traz duas informações numéricas ao mesmo
-    tempo (um par x e y), chamamos isso de <strong>dado bivariado</strong>.
-    O <strong>diagrama de dispersão</strong> (ou gráfico de dispersão) é
-    a forma mais simples de visualizar esse tipo de dado: cada par (x,
-    y) vira um ponto no gráfico, posicionado pela coordenada x (eixo
-    horizontal) e pela coordenada y (eixo vertical).
-  </p>
-  <p>
-    Ao observar os pontos da esquerda para a direita, três padrões são
-    possíveis: uma tendência de <strong>subida</strong> (relação
-    positiva: quando x aumenta, y também aumenta), uma tendência de
-    <strong>descida</strong> (relação negativa: quando x aumenta, y
-    diminui), ou nenhum padrão visível (não há relação entre as
-    variáveis).
-  </p>
+      <p>
+        Quando cada observação traz duas informações numéricas ao mesmo
+        tempo (um par x e y), chamamos isso de <strong>dado bivariado</strong>.
+        O <strong>diagrama de dispersão</strong> (ou gráfico de dispersão) é
+        a forma mais simples de visualizar esse tipo de dado: cada par (x,
+        y) vira um ponto no gráfico, posicionado pela coordenada x (eixo
+        horizontal) e pela coordenada y (eixo vertical).
+      </p>
+      <p>
+        Ao observar os pontos da esquerda para a direita, três padrões são
+        possíveis: uma tendência de <strong>subida</strong> (relação
+        positiva: quando x aumenta, y também aumenta), uma tendência de
+        <strong>descida</strong> (relação negativa: quando x aumenta, y
+        diminui), ou nenhum padrão visível (não há relação entre as
+        variáveis).
+      </p>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo cotidiano</span>
-    Um gráfico com "horas de estudo" no eixo x e "nota da prova" no
-    eixo y costuma mostrar uma tendência de subida: quanto mais horas
-    de estudo, maior a nota.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo cotidiano</span>
+        Um gráfico com "horas de estudo" no eixo x e "nota da prova" no
+        eixo y costuma mostrar uma tendência de subida: quanto mais horas
+        de estudo, maior a nota.
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo em Tecnologia</span>
-    Uma pesquisa comparou o número de seguidores (em milhares) de
-    várias contas de rede social com a média de curtidas por
-    publicação. O diagrama de dispersão mostrou uma tendência clara de
-    subida: contas com mais seguidores tendem a ter mais curtidas por
-    post.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo em Tecnologia</span>
+        Uma pesquisa comparou o número de seguidores (em milhares) de
+        várias contas de rede social com a média de curtidas por
+        publicação. O diagrama de dispersão mostrou uma tendência clara de
+        subida: contas com mais seguidores tendem a ter mais curtidas por
+        post.
+      </div>
 
-  <figure class="figura">
-    <img src="imagens/secao1-dispersao-seguidores.jpg" alt="Diagrama de dispersão relacionando o número de seguidores de contas de rede social com a média de curtidas por publicação, mostrando tendência de subida" loading="lazy" decoding="async">
-    <figcaption>Figura 1 – Diagrama de dispersão: seguidores (em
-    milhares) e curtidas médias por publicação de 10 contas de rede
-    social. Fonte: elaborado pelo autor. Acesso em: 07 jul.
-    2026.</figcaption>
-  </figure>
+      <figure class="figura">
+        <img src="imagens/secao1-dispersao-seguidores.jpg"
+          alt="Diagrama de dispersão relacionando o número de seguidores de contas de rede social com a média de curtidas por publicação, mostrando tendência de subida"
+          loading="lazy" decoding="async">
+        <figcaption>Figura 1 – Diagrama de dispersão: seguidores (em
+          milhares) e curtidas médias por publicação de 10 contas de rede
+          social. Fonte: elaborado pelo autor. Acesso em: 07 jul.
+          2026.</figcaption>
+      </figure>
 
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">O que você vê no gráfico</th><th scope="col">O que significa</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Pontos subindo da esquerda para a direita</td><td>Relação positiva</td></tr>
-    <tr><td>Pontos descendo da esquerda para a direita</td><td>Relação negativa</td></tr>
-    <tr><td>Pontos espalhados, sem padrão</td><td>Nenhuma relação (linear)</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">O que você vê no gráfico</th>
+              <th scope="col">O que significa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Pontos subindo da esquerda para a direita</td>
+              <td>Relação positiva</td>
+            </tr>
+            <tr>
+              <td>Pontos descendo da esquerda para a direita</td>
+              <td>Relação negativa</td>
+            </tr>
+            <tr>
+              <td>Pontos espalhados, sem padrão</td>
+              <td>Nenhuma relação (linear)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <div class="box box-atencao">
-    <span class="box-titulo">Atenção</span>
-    O diagrama de dispersão também pode mostrar padrões curvos, não
-    apenas retas. Nesta aula tratamos apenas de relações
-    <strong>lineares</strong> (que lembram uma reta subindo ou
-    descendo); outros tipos de padrão fogem do escopo deste guia.
-  </div>
+      <div class="box box-atencao">
+        <span class="box-titulo">Atenção</span>
+        O diagrama de dispersão também pode mostrar padrões curvos, não
+        apenas retas. Nesta aula tratamos apenas de relações
+        <strong>lineares</strong> (que lembram uma reta subindo ou
+        descendo); outros tipos de padrão fogem do escopo deste guia.
+      </div>
 
-  <div class="box box-formula">
-    <span class="box-titulo">Fórmula destacada</span>
-    <div class="formula-math">
-      <span>Cada observação é um par (x, y)</span>
-    </div>
-    <span class="nota-formula">x define a posição no eixo horizontal; y, a posição no eixo vertical</span>
-  </div>
+      <div class="box box-formula">
+        <span class="box-titulo">Fórmula destacada</span>
+        <div class="formula-math">
+          <span>Cada observação é um par (x, y)</span>
+        </div>
+        <span class="nota-formula">x define a posição no eixo horizontal; y, a posição no eixo vertical</span>
+      </div>
 
-  <div class="box box-resumo">
-    <span class="box-titulo">Resumo da Seção 1</span>
-    O diagrama de dispersão organiza dados bivariados em pontos (x, y),
-    revelando se existe uma tendência de subida, de descida ou nenhum
-    padrão entre as duas variáveis.
-  </div>
+      <div class="box box-resumo">
+        <span class="box-titulo">Resumo da Seção 1</span>
+        O diagrama de dispersão organiza dados bivariados em pontos (x, y),
+        revelando se existe uma tendência de subida, de descida ou nenhum
+        padrão entre as duas variáveis.
+      </div>
 
-  <!-- SEÇÃO 2 -->
-  <div class="secao-titulo">
-    <div class="secao-etiqueta">SEÇÃO 2</div>
-    <h3 class="secao-nome">Correlação: medindo a força e a direção da relação</h3>
-  </div>
+      <!-- SEÇÃO 2 -->
+      <div class="secao-titulo">
+        <div class="secao-etiqueta">SEÇÃO 2</div>
+        <h3 class="secao-nome">Correlação: medindo a força e a direção da relação</h3>
+      </div>
 
-  <p>
-    O diagrama de dispersão mostra a relação, mas não diz o quão forte
-    ela é. Para isso existe o <strong>coeficiente de correlação</strong>,
-    representado pela letra <strong>r</strong>: um único número, entre
-    -1 e +1, que resume a força e a direção de uma relação linear entre
-    duas variáveis numéricas.
-  </p>
-  <p>
-    Quanto mais perto de +1 ou -1, mais forte é a relação linear (os
-    pontos ficam mais próximos de uma reta); quanto mais perto de 0,
-    mais fraca ela é (os pontos ficam mais espalhados). O sinal indica
-    a direção: positivo para relação de subida, negativo para relação
-    de descida.
-  </p>
+      <p>
+        O diagrama de dispersão mostra a relação, mas não diz o quão forte
+        ela é. Para isso existe o <strong>coeficiente de correlação</strong>,
+        representado pela letra <strong>r</strong>: um único número, entre
+        -1 e +1, que resume a força e a direção de uma relação linear entre
+        duas variáveis numéricas.
+      </p>
+      <p>
+        Quanto mais perto de +1 ou -1, mais forte é a relação linear (os
+        pontos ficam mais próximos de uma reta); quanto mais perto de 0,
+        mais fraca ela é (os pontos ficam mais espalhados). O sinal indica
+        a direção: positivo para relação de subida, negativo para relação
+        de descida.
+      </p>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo cotidiano</span>
-    A correlação entre "horas de estudo" e "nota da prova" costuma ser
-    forte e positiva (por exemplo, r = 0,80): quem estuda mais tende a
-    tirar notas mais altas, de forma bastante consistente.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo cotidiano</span>
+        A correlação entre "horas de estudo" e "nota da prova" costuma ser
+        forte e positiva (por exemplo, r = 0,80): quem estuda mais tende a
+        tirar notas mais altas, de forma bastante consistente.
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo em Tecnologia</span>
-    Na Figura 1, a correlação entre número de seguidores e curtidas
-    médias por publicação é de aproximadamente r = 0,90: uma relação
-    linear forte e positiva, indicando que contas maiores realmente
-    tendem a ter mais curtidas por post.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo em Tecnologia</span>
+        Na Figura 1, a correlação entre número de seguidores e curtidas
+        médias por publicação é de aproximadamente r = 0,90: uma relação
+        linear forte e positiva, indicando que contas maiores realmente
+        tendem a ter mais curtidas por post.
+      </div>
 
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Valor aproximado de r</th><th scope="col">Interpretação</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>-1</td><td>relação negativa perfeita</td></tr>
-    <tr><td>-0,70</td><td>relação negativa forte</td></tr>
-    <tr><td>-0,50</td><td>relação negativa moderada</td></tr>
-    <tr><td>-0,30</td><td>relação negativa fraca</td></tr>
-    <tr><td>0</td><td>nenhuma relação linear</td></tr>
-    <tr><td>+0,30</td><td>relação positiva fraca</td></tr>
-    <tr><td>+0,50</td><td>relação positiva moderada</td></tr>
-    <tr><td>+0,70</td><td>relação positiva forte</td></tr>
-    <tr><td>+1</td><td>relação positiva perfeita</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Valor aproximado de r</th>
+              <th scope="col">Interpretação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>-1</td>
+              <td>relação negativa perfeita</td>
+            </tr>
+            <tr>
+              <td>-0,70</td>
+              <td>relação negativa forte</td>
+            </tr>
+            <tr>
+              <td>-0,50</td>
+              <td>relação negativa moderada</td>
+            </tr>
+            <tr>
+              <td>-0,30</td>
+              <td>relação negativa fraca</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>nenhuma relação linear</td>
+            </tr>
+            <tr>
+              <td>+0,30</td>
+              <td>relação positiva fraca</td>
+            </tr>
+            <tr>
+              <td>+0,50</td>
+              <td>relação positiva moderada</td>
+            </tr>
+            <tr>
+              <td>+0,70</td>
+              <td>relação positiva forte</td>
+            </tr>
+            <tr>
+              <td>+1</td>
+              <td>relação positiva perfeita</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <figure class="figura">
-    <img src="imagens/secao2-forcas-correlacao.jpg" alt="Quatro diagramas de dispersão mostrando diferentes forças e direções de correlação: +1,00, -0,50, +0,85 e +0,15" loading="lazy" decoding="async">
-    <figcaption>Figura 2 – Diagramas de dispersão com diferentes
-    correlações: quanto mais próximos de uma reta, mais forte a
-    correlação. Fonte: elaborado pelo autor. Acesso em: 07 jul.
-    2026.</figcaption>
-  </figure>
+      <figure class="figura">
+        <img src="imagens/secao2-forcas-correlacao.jpg"
+          alt="Quatro diagramas de dispersão mostrando diferentes forças e direções de correlação: +1,00, -0,50, +0,85 e +0,15"
+          loading="lazy" decoding="async">
+        <figcaption>Figura 2 – Diagramas de dispersão com diferentes
+          correlações: quanto mais próximos de uma reta, mais forte a
+          correlação. Fonte: elaborado pelo autor. Acesso em: 07 jul.
+          2026.</figcaption>
+      </figure>
 
-  <div class="box box-atencao">
-    <span class="box-titulo">Atenção</span>
-    Calcular a correlação só faz sentido depois de olhar o diagrama de
-    dispersão e confirmar que a relação é, ao menos aproximadamente,
-    linear. Uma correlação alta pode enganar se os dados, na verdade,
-    seguem uma curva.
-  </div>
+      <div class="box box-atencao">
+        <span class="box-titulo">Atenção</span>
+        Calcular a correlação só faz sentido depois de olhar o diagrama de
+        dispersão e confirmar que a relação é, ao menos aproximadamente,
+        linear. Uma correlação alta pode enganar se os dados, na verdade,
+        seguem uma curva.
+      </div>
 
-  <div class="box box-formula">
-    <span class="box-titulo">Fórmula destacada</span>
-    <div class="formula-math">
-      <span>r =</span>
-      <span class="fracao"><span class="num">Σ(x − x̄)(y − ȳ)</span><span class="den">(n − 1) · sx · sy</span></span>
-    </div>
-    <span class="nota-formula">x̄ e ȳ são as médias de x e y; sx e sy são os desvios-padrão de x e y; n é o número de pares</span>
-  </div>
+      <div class="box box-formula">
+        <span class="box-titulo">Fórmula destacada</span>
+        <div class="formula-math">
+          <span>r =</span>
+          <span class="fracao"><span class="num">Σ(x − x̄)(y − ȳ)</span><span class="den">(n − 1) · sx ·
+              sy</span></span>
+        </div>
+        <span class="nota-formula">x̄ e ȳ são as médias de x e y; sx e sy são os desvios-padrão de x e y; n é o número
+          de pares</span>
+      </div>
 
-  <div class="box box-resumo">
-    <span class="box-titulo">Resumo da Seção 2</span>
-    A correlação (r) resume a força e a direção de uma relação linear
-    em um único número entre -1 e +1: quanto mais perto dos extremos,
-    mais forte a relação.
-  </div>
+      <div class="box box-resumo">
+        <span class="box-titulo">Resumo da Seção 2</span>
+        A correlação (r) resume a força e a direção de uma relação linear
+        em um único número entre -1 e +1: quanto mais perto dos extremos,
+        mais forte a relação.
+      </div>
 
-  <!-- SEÇÃO 3 -->
-  <div class="secao-titulo">
-    <div class="secao-etiqueta">SEÇÃO 3</div>
-    <h3 class="secao-nome">Propriedades da correlação e o cuidado com causa e efeito</h3>
-  </div>
+      <!-- SEÇÃO 3 -->
+      <div class="secao-titulo">
+        <div class="secao-etiqueta">SEÇÃO 3</div>
+        <h3 class="secao-nome">Propriedades da correlação e o cuidado com causa e efeito</h3>
+      </div>
 
-  <p>
-    A correlação tem algumas propriedades úteis de conhecer: ela é
-    sempre um número entre -1 e +1; não depende da unidade de medida
-    (trocar metros por centímetros não muda o valor de r); e não
-    depende de qual variável é x e qual é y (trocar as duas de lugar
-    não muda o valor de r).
-  </p>
-  <p>
-    A propriedade mais importante, porém, é uma limitação:
-    <strong>correlação não é causalidade</strong>. Duas variáveis
-    podem estar fortemente correlacionadas sem que uma cause a outra.
-    Muitas vezes existe uma terceira variável, chamada
-    <strong>variável de confusão</strong>, que influencia as duas ao
-    mesmo tempo.
-  </p>
+      <p>
+        A correlação tem algumas propriedades úteis de conhecer: ela é
+        sempre um número entre -1 e +1; não depende da unidade de medida
+        (trocar metros por centímetros não muda o valor de r); e não
+        depende de qual variável é x e qual é y (trocar as duas de lugar
+        não muda o valor de r).
+      </p>
+      <p>
+        A propriedade mais importante, porém, é uma limitação:
+        <strong>correlação não é causalidade</strong>. Duas variáveis
+        podem estar fortemente correlacionadas sem que uma cause a outra.
+        Muitas vezes existe uma terceira variável, chamada
+        <strong>variável de confusão</strong>, que influencia as duas ao
+        mesmo tempo.
+      </p>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo cotidiano</span>
-    As vendas de sorvete e o número de afogamentos em praias sobem
-    juntos durante o verão, uma correlação forte e positiva. Mas
-    sorvete não causa afogamento: o calor (variável de confusão) leva
-    mais gente a comprar sorvete e, ao mesmo tempo, a nadar mais.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo cotidiano</span>
+        As vendas de sorvete e o número de afogamentos em praias sobem
+        juntos durante o verão, uma correlação forte e positiva. Mas
+        sorvete não causa afogamento: o calor (variável de confusão) leva
+        mais gente a comprar sorvete e, ao mesmo tempo, a nadar mais.
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo em Tecnologia</span>
-    Usuários que recebem mais notificações de um aplicativo também
-    costumam passar mais tempo nele, uma correlação positiva. Isso não
-    prova que as notificações causam o uso: pode ser que usuários já
-    mais engajados simplesmente gerem mais notificações (comentários,
-    curtidas) e também usem mais o app por conta própria.
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo em Tecnologia</span>
+        Usuários que recebem mais notificações de um aplicativo também
+        costumam passar mais tempo nele, uma correlação positiva. Isso não
+        prova que as notificações causam o uso: pode ser que usuários já
+        mais engajados simplesmente gerem mais notificações (comentários,
+        curtidas) e também usem mais o app por conta própria.
+      </div>
 
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Propriedade</th><th scope="col">O que significa</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>-1 ≤ r ≤ 1</td><td>A correlação nunca sai desse intervalo</td></tr>
-    <tr><td>Não tem unidade</td><td>Trocar a unidade de x ou y não muda r</td></tr>
-    <tr><td>X e Y podem trocar de lugar</td><td>A correlação entre x e y é igual à entre y e x</td></tr>
-    <tr><td>Correlação ≠ causalidade</td><td>Uma relação forte não prova que uma variável causa a outra</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Propriedade</th>
+              <th scope="col">O que significa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>-1 ≤ r ≤ 1</td>
+              <td>A correlação nunca sai desse intervalo</td>
+            </tr>
+            <tr>
+              <td>Não tem unidade</td>
+              <td>Trocar a unidade de x ou y não muda r</td>
+            </tr>
+            <tr>
+              <td>X e Y podem trocar de lugar</td>
+              <td>A correlação entre x e y é igual à entre y e x</td>
+            </tr>
+            <tr>
+              <td>Correlação ≠ causalidade</td>
+              <td>Uma relação forte não prova que uma variável causa a outra</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <div class="box box-atencao">
-    <span class="box-titulo">Atenção</span>
-    Antes de aceitar uma manchete do tipo "estudo encontra relação
-    entre X e Y", pergunte: existe uma variável de confusão plausível
-    que explique as duas coisas ao mesmo tempo? Essa pergunta evita
-    boa parte das conclusões apressadas sobre causa e efeito.
-  </div>
+      <div class="box box-atencao">
+        <span class="box-titulo">Atenção</span>
+        Antes de aceitar uma manchete do tipo "estudo encontra relação
+        entre X e Y", pergunte: existe uma variável de confusão plausível
+        que explique as duas coisas ao mesmo tempo? Essa pergunta evita
+        boa parte das conclusões apressadas sobre causa e efeito.
+      </div>
 
-  <div class="box box-formula">
-    <span class="box-titulo">Fórmula destacada</span>
-    <div class="formula-math">
-      <span>-1 ≤ r ≤ 1</span>
-    </div>
-    <span class="nota-formula">quanto mais perto de -1 ou +1, mais forte a relação linear; perto de 0, mais fraca</span>
-  </div>
+      <div class="box box-formula">
+        <span class="box-titulo">Fórmula destacada</span>
+        <div class="formula-math">
+          <span>-1 ≤ r ≤ 1</span>
+        </div>
+        <span class="nota-formula">quanto mais perto de -1 ou +1, mais forte a relação linear; perto de 0, mais
+          fraca</span>
+      </div>
 
-  <div class="box box-resumo">
-    <span class="box-titulo">Resumo da Seção 3</span>
-    A correlação é simétrica e independente de unidade, mas nunca prova
-    causalidade: uma variável de confusão pode explicar por que duas
-    variáveis se movem juntas.
-  </div>
+      <div class="box box-resumo">
+        <span class="box-titulo">Resumo da Seção 3</span>
+        A correlação é simétrica e independente de unidade, mas nunca prova
+        causalidade: uma variável de confusão pode explicar por que duas
+        variáveis se movem juntas.
+      </div>
 
-  <h2 class="bloco-header">Exemplo Matemático Resolvido</h2>
-  <p>
-    Um usuário registrou, por 3 dias, quantos stories publicou (x) e
-    quantas respostas recebeu (y): dia 1 (2, 3), dia 2 (4, 5), dia 3
-    (6, 4). Calcule a correlação entre essas duas variáveis.
-  </p>
-  <ol>
-    <li><strong>Dados:</strong> x = 2, 4, 6; y = 3, 5, 4; n = 3;
-      x̄ = 4; ȳ = 4</li>
-    <li><strong>Fórmula:</strong> r =
-      <span class="fracao"><span class="num">Σ(x − x̄)(y − ȳ)</span><span class="den">(n − 1) · sx · sy</span></span></li>
-    <li><strong>Substituição:</strong> desvios de x: -2, 0, 2; desvios
-      de y: -1, 1, 0; produtos: (-2)(-1) = 2, (0)(1) = 0, (2)(0) = 0;
-      soma dos produtos = 2; sx = 2; sy = 1</li>
-    <li><strong>Cálculo:</strong> r =
-      <span class="fracao"><span class="num">2</span><span class="den">2 · 2 · 1</span></span>
-      = 0,50</li>
-    <li><strong>Interpretação:</strong> r = 0,50 indica uma correlação
-      positiva moderada: dias com mais stories tendem a ter um pouco
-      mais de respostas, mas a relação não é muito forte.</li>
-  </ol>
+      <h2 class="bloco-header">Exemplo Matemático Resolvido</h2>
+      <p>
+        Um usuário registrou, por 3 dias, quantos stories publicou (x) e
+        quantas respostas recebeu (y): dia 1 (2, 3), dia 2 (4, 5), dia 3
+        (6, 4). Calcule a correlação entre essas duas variáveis.
+      </p>
+      <ol>
+        <li><strong>Dados:</strong> x = 2, 4, 6; y = 3, 5, 4; n = 3;
+          x̄ = 4; ȳ = 4</li>
+        <li><strong>Fórmula:</strong> r =
+          <span class="fracao"><span class="num">Σ(x − x̄)(y − ȳ)</span><span class="den">(n − 1) · sx ·
+              sy</span></span>
+        </li>
+        <li><strong>Substituição:</strong> desvios de x: -2, 0, 2; desvios
+          de y: -1, 1, 0; produtos: (-2)(-1) = 2, (0)(1) = 0, (2)(0) = 0;
+          soma dos produtos = 2; sx = 2; sy = 1</li>
+        <li><strong>Cálculo:</strong> r =
+          <span class="fracao"><span class="num">2</span><span class="den">2 · 2 · 1</span></span>
+          = 0,50
+        </li>
+        <li><strong>Interpretação:</strong> r = 0,50 indica uma correlação
+          positiva moderada: dias com mais stories tendem a ter um pouco
+          mais de respostas, mas a relação não é muito forte.</li>
+      </ol>
 
-  <h2 class="bloco-header">Exemplo em Python</h2>
-  <p>
-    Desde a versão 3.10, o módulo <code>statistics</code> tem a função
-    <code>correlation</code>, que calcula o coeficiente de correlação
-    de Pearson diretamente. O programa abaixo repete o cálculo do
-    exemplo resolvido e classifica a força da relação.
-  </p>
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python"><span class="cm-kw">import</span> statistics
+      <h2 class="bloco-header">Exemplo em Python</h2>
+      <p>
+        Desde a versão 3.10, o módulo <code>statistics</code> tem a função
+        <code>correlation</code>, que calcula o coeficiente de correlação
+        de Pearson diretamente. O programa abaixo repete o cálculo do
+        exemplo resolvido e classifica a força da relação.
+      </p>
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python"><span class="cm-kw">import</span> statistics
 
 stories = [<span class="cm-num">2</span>, <span class="cm-num">4</span>, <span class="cm-num">6</span>]
 respostas = [<span class="cm-num">3</span>, <span class="cm-num">5</span>, <span class="cm-num">4</span>]
@@ -937,49 +1088,49 @@ direcao = <span class="cm-str">"positiva"</span> <span class="cm-kw">if</span> r
 <span class="cm-bi">print</span>(<span class="cm-str">f"Correlação: {r:.2f}"</span>)
 <span class="cm-bi">print</span>(<span class="cm-str">f"Relação {direcao} e {forca}"</span>)
 </code></pre>
-  </div>
-  <div class="explicacao-codigo">
-    <p><strong>Entrada:</strong> listas com o número de stories e de
-      respostas em 3 dias.</p>
-    <p><strong>Processamento:</strong> <code>statistics.correlation</code>
-      calcula r; uma cadeia de <code>if/elif/else</code> classifica a
-      força pela distância até zero, e o sinal de r define a
-      direção.</p>
-    <p><strong>Saída:</strong> "Correlação: 0.50" e "Relação positiva e
-      moderada".</p>
-    <p><strong>Interpretação:</strong> o resultado confirma o cálculo
-      manual: uma relação positiva, mas apenas moderada, entre stories
-      publicados e respostas recebidas.</p>
-  </div>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Entrada:</strong> listas com o número de stories e de
+          respostas em 3 dias.</p>
+        <p><strong>Processamento:</strong> <code>statistics.correlation</code>
+          calcula r; uma cadeia de <code>if/elif/else</code> classifica a
+          força pela distância até zero, e o sinal de r define a
+          direção.</p>
+        <p><strong>Saída:</strong> "Correlação: 0.50" e "Relação positiva e
+          moderada".</p>
+        <p><strong>Interpretação:</strong> o resultado confirma o cálculo
+          manual: uma relação positiva, mas apenas moderada, entre stories
+          publicados e respostas recebidas.</p>
+      </div>
 
-  <h2 class="bloco-header">Exercícios</h2>
+      <h2 class="bloco-header">Exercícios</h2>
 
-  <div class="box box-exercicio">
-    <span class="box-titulo">Exercício 1</span>
-    Um usuário registrou, por 5 dias, quantas horas usou o celular (x)
-    e quantas notificações abriu (y): x = [2, 3, 4, 5, 6] horas; y =
-    [10, 12, 15, 14, 20] notificações. Escreva um programa em Python,
-    usando <code>statistics.correlation</code>, que calcule e imprima
-    o coeficiente de correlação entre essas duas variáveis.
-  </div>
+      <div class="box box-exercicio">
+        <span class="box-titulo">Exercício 1</span>
+        Um usuário registrou, por 5 dias, quantas horas usou o celular (x)
+        e quantas notificações abriu (y): x = [2, 3, 4, 5, 6] horas; y =
+        [10, 12, 15, 14, 20] notificações. Escreva um programa em Python,
+        usando <code>statistics.correlation</code>, que calcule e imprima
+        o coeficiente de correlação entre essas duas variáveis.
+      </div>
 
-  <div class="box box-exercicio">
-    <span class="box-titulo">Exercício 2</span>
-    Uma pessoa testou 5 redes Wi-Fi diferentes, anotando a velocidade
-    de conexão em Mbps (x) e o tempo de carregamento de um vídeo em
-    segundos (y): x = [10, 20, 30, 50, 80]; y = [25, 18, 14, 9, 5].
-    Escreva um programa em Python que: (a) calcule a correlação entre
-    x e y; (b) calcule também a correlação entre y e x, para confirmar
-    que trocar a ordem não muda o resultado; (c) imprima se a relação
-    é positiva ou negativa, e se é fraca, moderada ou forte.
-  </div>
+      <div class="box box-exercicio">
+        <span class="box-titulo">Exercício 2</span>
+        Uma pessoa testou 5 redes Wi-Fi diferentes, anotando a velocidade
+        de conexão em Mbps (x) e o tempo de carregamento de um vídeo em
+        segundos (y): x = [10, 20, 30, 50, 80]; y = [25, 18, 14, 9, 5].
+        Escreva um programa em Python que: (a) calcule a correlação entre
+        x e y; (b) calcule também a correlação entre y e x, para confirmar
+        que trocar a ordem não muda o resultado; (c) imprima se a relação
+        é positiva ou negativa, e se é fraca, moderada ou forte.
+      </div>
 
-  <h2 class="bloco-header">Gabarito Comentado</h2>
+      <h2 class="bloco-header">Gabarito Comentado</h2>
 
-  <p><strong>Exercício 1</strong></p>
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python"><span class="cm-kw">import</span> statistics
+      <p><strong>Exercício 1</strong></p>
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python"><span class="cm-kw">import</span> statistics
 
 horas = [<span class="cm-num">2</span>, <span class="cm-num">3</span>, <span class="cm-num">4</span>, <span class="cm-num">5</span>, <span class="cm-num">6</span>]
 notificacoes = [<span class="cm-num">10</span>, <span class="cm-num">12</span>, <span class="cm-num">15</span>, <span class="cm-num">14</span>, <span class="cm-num">20</span>]
@@ -988,18 +1139,18 @@ r = statistics.correlation(horas, notificacoes)
 
 <span class="cm-bi">print</span>(<span class="cm-str">f"Correlação: {r:.4f}"</span>)
 </code></pre>
-  </div>
-  <div class="explicacao-codigo">
-    <p><strong>Saída:</strong> "Correlação: 0.9231".</p>
-    <p><strong>Comentário:</strong> r ≈ 0,92 é uma correlação positiva
-      forte, bem próxima de +1: quanto mais horas de uso, mais
-      notificações abertas, de forma bastante consistente.</p>
-  </div>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Saída:</strong> "Correlação: 0.9231".</p>
+        <p><strong>Comentário:</strong> r ≈ 0,92 é uma correlação positiva
+          forte, bem próxima de +1: quanto mais horas de uso, mais
+          notificações abertas, de forma bastante consistente.</p>
+      </div>
 
-  <p><strong>Exercício 2</strong></p>
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python"><span class="cm-kw">import</span> statistics
+      <p><strong>Exercício 2</strong></p>
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python"><span class="cm-kw">import</span> statistics
 
 velocidade = [<span class="cm-num">10</span>, <span class="cm-num">20</span>, <span class="cm-num">30</span>, <span class="cm-num">50</span>, <span class="cm-num">80</span>]
 tempo_carregamento = [<span class="cm-num">25</span>, <span class="cm-num">18</span>, <span class="cm-num">14</span>, <span class="cm-num">9</span>, <span class="cm-num">5</span>]
@@ -1019,113 +1170,134 @@ direcao = <span class="cm-str">"positiva"</span> <span class="cm-kw">if</span> r
 <span class="cm-bi">print</span>(<span class="cm-str">f"r(x,y): {r_xy:.4f} | r(y,x): {r_yx:.4f}"</span>)
 <span class="cm-bi">print</span>(<span class="cm-str">f"Relação {direcao} e {forca}"</span>)
 </code></pre>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Saída:</strong> "r(x,y): -0.9459 | r(y,x): -0.9459" e
+          "Relação negativa e forte".</p>
+        <p><strong>Comentário:</strong> trocar a ordem das variáveis não
+          muda o valor de r, confirmando a propriedade da Seção 3. O sinal
+          negativo mostra que velocidades maiores de Wi-Fi estão associadas
+          a tempos de carregamento menores.</p>
+      </div>
+
+      <h2 class="bloco-header">Retomando a Conversa Inicial</h2>
+
+      <p><strong>Seção 1, Diagrama de dispersão:</strong> organiza dados
+        bivariados em pontos (x, y), revelando tendências de subida, de
+        descida ou nenhum padrão.</p>
+
+      <p><strong>Seção 2, Correlação:</strong> resume a força e a direção
+        de uma relação linear em um único número, r, entre -1 e +1.</p>
+
+      <p><strong>Seção 3, Propriedades:</strong> a correlação não tem
+        unidade e é simétrica entre x e y, mas nunca prova causalidade;
+        desconfie de variáveis de confusão.</p>
+
+      <h2 class="bloco-header">Revisão Rápida</h2>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Conceito</th>
+              <th scope="col">Fórmula</th>
+              <th scope="col">Erro comum</th>
+              <th scope="col">Dica de prova</th>
+              <th scope="col">Aplicação em Tecnologia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Diagrama de dispersão</td>
+              <td>par (x, y)</td>
+              <td>Confundir tendência com relação de causa</td>
+              <td>Subida = positiva; descida = negativa</td>
+              <td>Seguidores x curtidas médias</td>
+            </tr>
+            <tr>
+              <td>Correlação (r)</td>
+              <td><span class="fracao"><span class="num">Σ(x − x̄)(y − ȳ)</span><span class="den">(n − 1) · sx ·
+                    sy</span></span></td>
+              <td>Calcular r sem checar se a relação é linear</td>
+              <td>r vai de -1 a +1</td>
+              <td>Stories publicados x respostas</td>
+            </tr>
+            <tr>
+              <td>Interpretação de r</td>
+              <td>-1 a +1 (escala de força)</td>
+              <td>Achar que r = -1 é "ruim"</td>
+              <td>Perto de -1 ou +1 = relação forte</td>
+              <td>Uso do app x notificações</td>
+            </tr>
+            <tr>
+              <td>Correlação x causalidade</td>
+              <td>N/A</td>
+              <td>Achar que correlação prova causa</td>
+              <td>Pense em variáveis de confusão</td>
+              <td>Wi-Fi mais rápido x menos tempo de espera</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="bloco-header">Sugestões de Leituras e Sites</h2>
+      <p><strong>LEITURAS</strong></p>
+      <p>RUMSEY, Deborah J. <em>Statistics For Dummies</em>. 2. ed. Hoboken,
+        NJ: Wiley Publishing, 2011. (livro-base desta aula, recomendado para
+        aprofundamento em correlação.)</p>
+      <p><strong>SITES</strong></p>
+      <p>Khan Academy, Estatística e Probabilidade:
+        https://pt.khanacademy.org/math/statistics-probability (aulas
+        gratuitas em português sobre diagramas de dispersão e
+        correlação.)</p>
+
+      <h2 class="bloco-header">Glossário</h2>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Termo</th>
+              <th scope="col">Definição</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Dado bivariado</td>
+              <td>Observação composta por duas variáveis numéricas, formando um par (x, y).</td>
+            </tr>
+            <tr>
+              <td>Diagrama de dispersão</td>
+              <td>Gráfico que representa pares (x, y) como pontos, revelando padrões entre duas variáveis.</td>
+            </tr>
+            <tr>
+              <td>Correlação (r)</td>
+              <td>Número entre -1 e +1 que mede a força e a direção de uma relação linear entre duas variáveis.</td>
+            </tr>
+            <tr>
+              <td>Relação positiva/negativa</td>
+              <td>Quando x aumenta, y também aumenta (positiva) ou diminui (negativa).</td>
+            </tr>
+            <tr>
+              <td>Variável de confusão</td>
+              <td>Terceira variável que influencia duas outras ao mesmo tempo, criando uma correlação sem causa direta
+                entre elas.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="bloco-header">Referências Bibliográficas</h2>
+      <p>MORETTIN, Pedro A. <em>Estatística básica</em>. 10. ed. Rio de
+        Janeiro: Saraiva Uni, 2023. E-book. p.i. ISBN 9788571441484.
+        Disponível em:
+        https://integrada.minhabiblioteca.com.br/reader/books/9788571441484/.
+        Acesso em: 01 dez. 2025.</p>
+      <p>TRIOLA, Mario F. <em>Introdução à Estatística</em>. 14. ed. Rio de
+        Janeiro: LTC, 2024. E-book. p.Capa. ISBN 9788521638780. Disponível em:
+        https://integrada.minhabiblioteca.com.br/reader/books/9788521638780/.
+        Acesso em: 01 dez. 2025.</p>
+
+    </main>
   </div>
-  <div class="explicacao-codigo">
-    <p><strong>Saída:</strong> "r(x,y): -0.9459 | r(y,x): -0.9459" e
-      "Relação negativa e forte".</p>
-    <p><strong>Comentário:</strong> trocar a ordem das variáveis não
-      muda o valor de r, confirmando a propriedade da Seção 3. O sinal
-      negativo mostra que velocidades maiores de Wi-Fi estão associadas
-      a tempos de carregamento menores.</p>
-  </div>
-
-  <h2 class="bloco-header">Retomando a Conversa Inicial</h2>
-
-  <p><strong>Seção 1, Diagrama de dispersão:</strong> organiza dados
-  bivariados em pontos (x, y), revelando tendências de subida, de
-  descida ou nenhum padrão.</p>
-
-  <p><strong>Seção 2, Correlação:</strong> resume a força e a direção
-  de uma relação linear em um único número, r, entre -1 e +1.</p>
-
-  <p><strong>Seção 3, Propriedades:</strong> a correlação não tem
-  unidade e é simétrica entre x e y, mas nunca prova causalidade;
-  desconfie de variáveis de confusão.</p>
-
-  <h2 class="bloco-header">Revisão Rápida</h2>
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr>
-      <th scope="col">Conceito</th>
-      <th scope="col">Fórmula</th>
-      <th scope="col">Erro comum</th>
-      <th scope="col">Dica de prova</th>
-      <th scope="col">Aplicação em Tecnologia</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>Diagrama de dispersão</td>
-      <td>par (x, y)</td>
-      <td>Confundir tendência com relação de causa</td>
-      <td>Subida = positiva; descida = negativa</td>
-      <td>Seguidores x curtidas médias</td>
-    </tr>
-    <tr>
-      <td>Correlação (r)</td>
-      <td><span class="fracao"><span class="num">Σ(x − x̄)(y − ȳ)</span><span class="den">(n − 1) · sx · sy</span></span></td>
-      <td>Calcular r sem checar se a relação é linear</td>
-      <td>r vai de -1 a +1</td>
-      <td>Stories publicados x respostas</td>
-    </tr>
-    <tr>
-      <td>Interpretação de r</td>
-      <td>-1 a +1 (escala de força)</td>
-      <td>Achar que r = -1 é "ruim"</td>
-      <td>Perto de -1 ou +1 = relação forte</td>
-      <td>Uso do app x notificações</td>
-    </tr>
-    <tr>
-      <td>Correlação x causalidade</td>
-      <td>N/A</td>
-      <td>Achar que correlação prova causa</td>
-      <td>Pense em variáveis de confusão</td>
-      <td>Wi-Fi mais rápido x menos tempo de espera</td>
-    </tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h2 class="bloco-header">Sugestões de Leituras e Sites</h2>
-  <p><strong>LEITURAS</strong></p>
-  <p>RUMSEY, Deborah J. <em>Statistics For Dummies</em>. 2. ed. Hoboken,
-  NJ: Wiley Publishing, 2011. (livro-base desta aula, recomendado para
-  aprofundamento em correlação.)</p>
-  <p><strong>SITES</strong></p>
-  <p>Khan Academy, Estatística e Probabilidade:
-  https://pt.khanacademy.org/math/statistics-probability (aulas
-  gratuitas em português sobre diagramas de dispersão e
-  correlação.)</p>
-
-  <h2 class="bloco-header">Glossário</h2>
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Termo</th><th scope="col">Definição</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Dado bivariado</td><td>Observação composta por duas variáveis numéricas, formando um par (x, y).</td></tr>
-    <tr><td>Diagrama de dispersão</td><td>Gráfico que representa pares (x, y) como pontos, revelando padrões entre duas variáveis.</td></tr>
-    <tr><td>Correlação (r)</td><td>Número entre -1 e +1 que mede a força e a direção de uma relação linear entre duas variáveis.</td></tr>
-    <tr><td>Relação positiva/negativa</td><td>Quando x aumenta, y também aumenta (positiva) ou diminui (negativa).</td></tr>
-    <tr><td>Variável de confusão</td><td>Terceira variável que influencia duas outras ao mesmo tempo, criando uma correlação sem causa direta entre elas.</td></tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h2 class="bloco-header">Referências Bibliográficas</h2>
-  <p>MORETTIN, Pedro A. <em>Estatística básica</em>. 10. ed. Rio de
-  Janeiro: Saraiva Uni, 2023. E-book. p.i. ISBN 9788571441484.
-  Disponível em:
-  https://integrada.minhabiblioteca.com.br/reader/books/9788571441484/.
-  Acesso em: 01 dez. 2025.</p>
-  <p>TRIOLA, Mario F. <em>Introdução à Estatística</em>. 14. ed. Rio de
-  Janeiro: LTC, 2024. E-book. p.Capa. ISBN 9788521638780. Disponível em:
-  https://integrada.minhabiblioteca.com.br/reader/books/9788521638780/.
-  Acesso em: 01 dez. 2025.</p>
-
-  </main>
-</div>
 </body>
+
 </html>

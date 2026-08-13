@@ -1,944 +1,1073 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guia de Estudos - Aula 1 - Probabilidade e Estatística (EAD)</title>
-<meta name="description" content="Guia de Estudos CEAD/UNIGRAN — Aula 1 da disciplina de Probabilidade e Estatística (EAD), com teoria, exemplos em Python e exercícios comentados.">
-<style>
-  :root {
-    --azul-escuro: #1B3A8C;
-    --ciano: #29ABE2;
-    --azul-claro: #D6E8F5;
-    --cinza-claro: #F4F4F4;
-    --cinza-texto: #333333;
-    --atencao-borda: #E0932C;
-    --atencao-fundo: #FFF4E0;
-    --branco: #FFFFFF;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia de Estudos - Aula 1 - Probabilidade e Estatística (EAD)</title>
+  <meta name="description"
+    content="Guia de Estudos CEAD/UNIGRAN — Aula 1 da disciplina de Probabilidade e Estatística (EAD), com teoria, exemplos em Python e exercícios comentados.">
+  <style>
+    :root {
+      --azul-escuro: #1B3A8C;
+      --ciano: #29ABE2;
+      --azul-claro: #D6E8F5;
+      --cinza-claro: #F4F4F4;
+      --cinza-texto: #333333;
+      --atencao-borda: #E0932C;
+      --atencao-fundo: #FFF4E0;
+      --branco: #FFFFFF;
+    }
 
-  * {
-    box-sizing: border-box;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  body {
-    font-family: Georgia, 'Times New Roman', serif;
-    color: var(--cinza-texto);
-    background: #EAEFF6;
-    margin: 0;
-    padding: 0;
-    line-height: 1.75;
-  }
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--cinza-texto);
+      background: #EAEFF6;
+      margin: 0;
+      padding: 0;
+      line-height: 1.75;
+    }
 
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    background: var(--branco);
-    padding: 48px 56px 70px 56px;
-    box-shadow: 0 0 18px rgba(0, 0, 0, 0.12);
-  }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--branco);
+      padding: 48px 56px 70px 56px;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.12);
+    }
 
-  .cabecalho-textual {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-variant: small-caps;
-    font-style: italic;
-    color: var(--azul-escuro);
-    font-size: 1.05em;
-    letter-spacing: 0.5px;
-    padding-bottom: 14px;
-    margin-bottom: 18px;
-  }
+    .cabecalho-textual {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-variant: small-caps;
+      font-style: italic;
+      color: var(--azul-escuro);
+      font-size: 1.05em;
+      letter-spacing: 0.5px;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
 
-  .cabecalho-textual .curso {
-    display: block;
-    font-style: normal;
-    font-variant: normal;
-    font-size: 0.75em;
-    color: var(--ciano);
-    font-weight: bold;
-    margin-top: 4px;
-  }
+    .cabecalho-textual .curso {
+      display: block;
+      font-style: normal;
+      font-variant: normal;
+      font-size: 0.75em;
+      color: var(--ciano);
+      font-weight: bold;
+      margin-top: 4px;
+    }
 
-  .cabecalho-textual .logo {
-    height: 48px;
-    flex-shrink: 0;
-  }
+    .cabecalho-textual .logo {
+      height: 48px;
+      flex-shrink: 0;
+    }
 
-  .capa-cabecalho {
-    display: flex;
-    align-items: flex-start;
-    margin-top: 10px;
-    margin-bottom: 40px;
-  }
+    .capa-cabecalho {
+      display: flex;
+      align-items: flex-start;
+      margin-top: 10px;
+      margin-bottom: 40px;
+    }
 
-  .capa-numero {
-    position: relative;
-    flex-shrink: 0;
-    width: 230px;
-    height: 208px;
-    background: var(--ciano);
-    color: var(--branco);
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    clip-path: polygon(0 0, 100% 0, 100% 76%, 50% 100%, 0 76%);
-    filter: drop-shadow(6px 8px 6px rgba(0, 0, 0, 0.35));
-  }
+    .capa-numero {
+      position: relative;
+      flex-shrink: 0;
+      width: 230px;
+      height: 208px;
+      background: var(--ciano);
+      color: var(--branco);
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      clip-path: polygon(0 0, 100% 0, 100% 76%, 50% 100%, 0 76%);
+      filter: drop-shadow(6px 8px 6px rgba(0, 0, 0, 0.35));
+    }
 
-  .capa-numero .num {
-    font-size: 5em;
-    line-height: 1;
-  }
+    .capa-numero .num {
+      font-size: 5em;
+      line-height: 1;
+    }
 
-  .capa-numero .ord-wrap {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 4px;
-    margin-top: -1.6em;
-  }
+    .capa-numero .ord-wrap {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: 4px;
+      margin-top: -1.6em;
+    }
 
-  .capa-numero .ord {
-    font-size: 1.8em;
-    line-height: 1;
-  }
+    .capa-numero .ord {
+      font-size: 1.8em;
+      line-height: 1;
+    }
 
-  .capa-numero .ord-linha {
-    width: 16px;
-    height: 3px;
-    background: var(--branco);
-    margin-top: 5px;
-  }
+    .capa-numero .ord-linha {
+      width: 16px;
+      height: 3px;
+      background: var(--branco);
+      margin-top: 5px;
+    }
 
-  .capa-aula-fundo {
-    flex-grow: 1;
-    height: 158px;
-    display: flex;
-    align-items: center;
-    padding-left: 40px;
-    background: linear-gradient(to right, #D9D9D9, #FAFAFA);
-    box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.18);
-  }
+    .capa-aula-fundo {
+      flex-grow: 1;
+      height: 158px;
+      display: flex;
+      align-items: center;
+      padding-left: 40px;
+      background: linear-gradient(to right, #D9D9D9, #FAFAFA);
+      box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.18);
+    }
 
-  .capa-aula-fundo span {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-style: italic;
-    font-size: 3em;
-    color: #1A1A1A;
-  }
+    .capa-aula-fundo span {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      font-style: italic;
+      font-size: 3em;
+      color: #1A1A1A;
+    }
 
-  .capa-titulo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    font-size: 1.55em;
-    line-height: 1.4;
-    color: #1A1A1A;
-    margin: 6px 0 26px;
-  }
+    .capa-titulo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 1.55em;
+      line-height: 1.4;
+      color: #1A1A1A;
+      margin: 6px 0 26px;
+    }
 
-  .capa-intro {
-    font-style: italic;
-    text-indent: 0;
-    text-align: justify;
-    hyphens: auto;
-  }
+    .capa-intro {
+      font-style: italic;
+      text-indent: 0;
+      text-align: justify;
+      hyphens: auto;
+    }
 
-  .bloco-header {
-    font-family: Arial, Helvetica, sans-serif;
-    background: var(--azul-escuro);
-    color: var(--branco);
-    text-transform: uppercase;
-    font-weight: bold;
-    padding: 13px 22px;
-    font-size: 1.02em;
-    border-radius: 3px;
-    margin-top: 42px;
-    margin-bottom: 22px;
-    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
-  }
+    .bloco-header {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--azul-escuro);
+      color: var(--branco);
+      text-transform: uppercase;
+      font-weight: bold;
+      padding: 13px 22px;
+      font-size: 1.02em;
+      border-radius: 3px;
+      margin-top: 42px;
+      margin-bottom: 22px;
+      box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+    }
 
-  .secao-titulo {
-    display: flex;
-    align-items: stretch;
-    margin-top: 48px;
-    margin-bottom: 24px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
-  }
+    .secao-titulo {
+      display: flex;
+      align-items: stretch;
+      margin-top: 48px;
+      margin-bottom: 24px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+    }
 
-  .secao-etiqueta {
-    background: var(--azul-escuro);
-    color: var(--branco);
-    padding: 10px 20px;
-    white-space: nowrap;
-    border-radius: 4px 0 0 4px;
-    font-size: 0.95em;
-  }
+    .secao-etiqueta {
+      background: var(--azul-escuro);
+      color: var(--branco);
+      padding: 10px 20px;
+      white-space: nowrap;
+      border-radius: 4px 0 0 4px;
+      font-size: 0.95em;
+    }
 
-  .secao-nome {
-    background: var(--azul-claro);
-    color: var(--azul-escuro);
-    padding: 10px 20px;
-    flex-grow: 1;
-    border-radius: 0 4px 4px 0;
-    font-size: 0.95em;
-  }
+    .secao-nome {
+      background: var(--azul-claro);
+      color: var(--azul-escuro);
+      padding: 10px 20px;
+      flex-grow: 1;
+      border-radius: 0 4px 4px 0;
+      font-size: 0.95em;
+    }
 
-  .subtitulo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: var(--azul-escuro);
-    font-size: 1.02em;
-    margin-top: 22px;
-  }
+    .subtitulo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      color: var(--azul-escuro);
+      font-size: 1.02em;
+      margin-top: 22px;
+    }
 
-  p {
-    margin: 16px 0;
-    text-indent: 1.25cm;
-    text-align: justify;
-    hyphens: auto;
-  }
+    p {
+      margin: 16px 0;
+      text-indent: 1.25cm;
+      text-align: justify;
+      hyphens: auto;
+    }
 
-  .box p,
-  .docente-box p {
-    text-indent: 0;
-    text-align: justify;
-  }
+    .box p,
+    .docente-box p {
+      text-indent: 0;
+      text-align: justify;
+    }
 
-  .box {
-    border-radius: 6px;
-    padding: 20px 24px;
-    margin: 26px 0;
-    page-break-inside: avoid;
-  }
-
-  .box-titulo {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.82em;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  .box-conceito {
-    background: var(--azul-claro);
-    border-left: 5px solid var(--azul-escuro);
-  }
-  .box-conceito .box-titulo { color: var(--azul-escuro); }
-
-  .box-exemplo {
-    background: #EAF7FC;
-    border-left: 5px solid var(--ciano);
-  }
-  .box-exemplo .box-titulo { color: #1381AD; }
-
-  .box-atencao {
-    background: var(--atencao-fundo);
-    border-left: 5px solid var(--atencao-borda);
-  }
-  .box-atencao .box-titulo { color: var(--atencao-borda); }
-
-  .box-python {
-    background: #FFFFFF;
-    border: 1px solid #DADCE0;
-    border-radius: 8px;
-    padding: 0;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15);
-  }
-  .codigo-cabecalho {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #F1F3F4;
-    border-bottom: 1px solid #DADCE0;
-    color: #5F6368;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.78em;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 6px 14px;
-  }
-  .botao-play {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #1A73E8;
-    color: #FFFFFF;
-    font-size: 0.65em;
-  }
-  .box-python pre {
-    margin: 0;
-    white-space: pre;
-    overflow-x: auto;
-    padding: 14px 18px;
-    background: #F8F9FA;
-    color: #3C4043;
-    font-family: Consolas, 'Courier New', monospace;
-    font-size: 0.88em;
-  }
-  .cm-kw  { color: #1967D2; font-weight: bold; }
-  .cm-str { color: #188038; }
-  .cm-com { color: #80868B; font-style: italic; }
-  .cm-num { color: #AF00DB; }
-  .cm-bi  { color: #C5221F; }
-
-  .box-exercicio {
-    background: var(--branco);
-    border: 2px solid var(--ciano);
-  }
-  .box-exercicio .box-titulo { color: #1381AD; }
-
-  .box-resumo {
-    background: var(--azul-claro);
-    border: 1px solid var(--azul-escuro);
-    font-style: italic;
-  }
-  .box-resumo .box-titulo { color: var(--azul-escuro); font-style: normal; }
-
-  .box-formula {
-    background: var(--branco);
-    border: 2px solid var(--azul-escuro);
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.05em;
-    font-weight: bold;
-    color: var(--azul-escuro);
-    padding: 22px 18px;
-  }
-  .box-formula .box-titulo {
-    color: var(--ciano);
-    text-align: left;
-  }
-
-  .formula-math {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    font-size: 1.15em;
-    margin: 6px 0;
-  }
-  .fracao {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    vertical-align: middle;
-    line-height: 1.3;
-  }
-  .fracao .num {
-    padding: 0 8px 4px;
-    border-bottom: 2px solid var(--azul-escuro);
-  }
-  .fracao .den {
-    padding: 4px 8px 0;
-  }
-  .nota-formula {
-    display: block;
-    margin-top: 10px;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-weight: normal;
-    font-style: italic;
-    font-size: 0.75em;
-    color: #5F6368;
-  }
-
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 22px 0;
-    font-size: 0.92em;
-  }
-
-  .tabela-wrapper {
-    overflow-x: auto;
-    margin: 26px 0;
-  }
-  .tabela-wrapper table { margin: 0; }
-
-  th {
-    background: var(--azul-escuro);
-    color: var(--branco);
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: left;
-    padding: 12px 14px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
-  }
-
-  td {
-    padding: 11px 14px;
-    border-bottom: 1px solid #ccc;
-  }
-
-  tr:nth-child(even) td {
-    background: var(--cinza-claro);
-  }
-
-  .sumario-item {
-    display: flex;
-    gap: 8px;
-    margin: 14px 0;
-    align-items: baseline;
-  }
-  .sumario-aula {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: var(--ciano);
-    white-space: nowrap;
-  }
-  .sumario-pontilhado {
-    flex: 1;
-    border-bottom: 2px dotted #999;
-    margin-bottom: 4px;
-  }
-  .sumario-pagina {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: var(--azul-escuro);
-    white-space: nowrap;
-  }
-
-  .docente-box {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    background: var(--azul-claro);
-    border-left: 5px solid var(--azul-escuro);
-    border-radius: 6px;
-    padding: 20px;
-  }
-
-  ul, ol {
-    margin: 16px 0;
-    padding-left: 28px;
-  }
-
-  li { margin: 10px 0; }
-
-  .explicacao-codigo {
-    margin: 12px 0 20px 0;
-  }
-
-  .explicacao-codigo p {
-    margin: 3px 0;
-    text-indent: 0;
-    text-align: left;
-  }
-
-  .assinatura {
-    text-align: right;
-    font-style: italic;
-    margin-top: 22px;
-    color: var(--azul-escuro);
-  }
-
-  .figura {
-    margin: 30px 0;
-    text-align: center;
-  }
-  .figura img {
-    max-width: 100%;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  }
-  .figura figcaption {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.8em;
-    color: #5F6368;
-    margin-top: 10px;
-    text-align: left;
-  }
-
-  @media print {
-    body { background: var(--branco); }
-    .container { box-shadow: none; max-width: 100%; padding: 10px; }
-    .box, table, .secao-titulo, .capa-cabecalho, .capa-titulo, .bloco-header, .figura,
-    .docente-box, .tabela-wrapper, .sumario-item {
+    .box {
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin: 26px 0;
       page-break-inside: avoid;
     }
-    .cabecalho-textual { display: none; }
-    @page { size: A4; margin: 2cm; }
-  }
 
-  .pagina-abertura {
-    position: relative;
-  }
+    .box-titulo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.82em;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: block;
+    }
 
-  .capa-cabecalho {
-    position: relative;
-    overflow: visible;
-  }
+    .box-conceito {
+      background: var(--azul-claro);
+      border-left: 5px solid var(--azul-escuro);
+    }
 
-  .curva-decorativa {
-    position: absolute;
-    right: -56px;
-    bottom: -46px;
-    width: 170px;
-    height: 130px;
-    z-index: 0;
-    pointer-events: none;
-  }
+    .box-conceito .box-titulo {
+      color: var(--azul-escuro);
+    }
 
-  .capa-cabecalho > *:not(.curva-decorativa) {
-    position: relative;
-    z-index: 1;
-  }
+    .box-exemplo {
+      background: #EAF7FC;
+      border-left: 5px solid var(--ciano);
+    }
 
-  .nav-capitulos {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 4px;
-    background: var(--azul-escuro);
-    padding: 10px 16px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.85em;
-    font-weight: bold;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  }
+    .box-exemplo .box-titulo {
+      color: #1381AD;
+    }
 
-  .nav-capitulos a {
-    color: var(--branco);
-    text-decoration: none;
-    padding: 8px 14px;
-    border-radius: 4px;
-    transition: background 0.15s;
-  }
+    .box-atencao {
+      background: var(--atencao-fundo);
+      border-left: 5px solid var(--atencao-borda);
+    }
 
-  .nav-capitulos a:hover {
-    background: rgba(255, 255, 255, 0.18);
-  }
+    .box-atencao .box-titulo {
+      color: var(--atencao-borda);
+    }
 
-  .nav-capitulos a.ativo {
-    background: var(--ciano);
-  }
+    .box-python {
+      background: #FFFFFF;
+      border: 1px solid #DADCE0;
+      border-radius: 8px;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15);
+    }
 
-  @media print {
-    .nav-capitulos { display: none; }
-  }
+    .codigo-cabecalho {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #F1F3F4;
+      border-bottom: 1px solid #DADCE0;
+      color: #5F6368;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.78em;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 6px 14px;
+    }
 
-  .skip-link {
-    position: absolute;
-    left: -9999px;
-    top: 0;
-    background: var(--branco);
-    color: var(--azul-escuro);
-    padding: 10px 16px;
-    z-index: 200;
-    border-radius: 0 0 6px 0;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  .skip-link:focus {
-    left: 0;
-  }
+    .botao-play {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #1A73E8;
+      color: #FFFFFF;
+      font-size: 0.65em;
+    }
 
-  .nav-capitulos a:focus-visible {
-    outline: 2px solid var(--branco);
-    outline-offset: 2px;
-  }
+    .box-python pre {
+      margin: 0;
+      white-space: pre;
+      overflow-x: auto;
+      padding: 14px 18px;
+      background: #F8F9FA;
+      color: #3C4043;
+      font-family: Consolas, 'Courier New', monospace;
+      font-size: 0.88em;
+    }
 
-  .secao-nome {
-    margin: 0;
-  }
+    .cm-kw {
+      color: #1967D2;
+      font-weight: bold;
+    }
 
-  .sumario-lista {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+    .cm-str {
+      color: #188038;
+    }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-</style>
+    .cm-com {
+      color: #80868B;
+      font-style: italic;
+    }
+
+    .cm-num {
+      color: #AF00DB;
+    }
+
+    .cm-bi {
+      color: #C5221F;
+    }
+
+    .box-exercicio {
+      background: var(--branco);
+      border: 2px solid var(--ciano);
+    }
+
+    .box-exercicio .box-titulo {
+      color: #1381AD;
+    }
+
+    .box-resumo {
+      background: var(--azul-claro);
+      border: 1px solid var(--azul-escuro);
+      font-style: italic;
+    }
+
+    .box-resumo .box-titulo {
+      color: var(--azul-escuro);
+      font-style: normal;
+    }
+
+    .box-formula {
+      background: var(--branco);
+      border: 2px solid var(--azul-escuro);
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.05em;
+      font-weight: bold;
+      color: var(--azul-escuro);
+      padding: 22px 18px;
+    }
+
+    .box-formula .box-titulo {
+      color: var(--ciano);
+      text-align: left;
+    }
+
+    .formula-math {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 1.15em;
+      margin: 6px 0;
+    }
+
+    .fracao {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      line-height: 1.3;
+    }
+
+    .fracao .num {
+      padding: 0 8px 4px;
+      border-bottom: 2px solid var(--azul-escuro);
+    }
+
+    .fracao .den {
+      padding: 4px 8px 0;
+    }
+
+    .nota-formula {
+      display: block;
+      margin-top: 10px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-weight: normal;
+      font-style: italic;
+      font-size: 0.75em;
+      color: #5F6368;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 22px 0;
+      font-size: 0.92em;
+    }
+
+    .tabela-wrapper {
+      overflow-x: auto;
+      margin: 26px 0;
+    }
+
+    .tabela-wrapper table {
+      margin: 0;
+    }
+
+    th {
+      background: var(--azul-escuro);
+      color: var(--branco);
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: left;
+      padding: 12px 14px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
+    }
+
+    td {
+      padding: 11px 14px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    tr:nth-child(even) td {
+      background: var(--cinza-claro);
+    }
+
+    .sumario-item {
+      display: flex;
+      gap: 8px;
+      margin: 14px 0;
+      align-items: baseline;
+    }
+
+    .sumario-aula {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      color: var(--ciano);
+      white-space: nowrap;
+    }
+
+    .sumario-pontilhado {
+      flex: 1;
+      border-bottom: 2px dotted #999;
+      margin-bottom: 4px;
+    }
+
+    .sumario-pagina {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      color: var(--azul-escuro);
+      white-space: nowrap;
+    }
+
+    .docente-box {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: var(--azul-claro);
+      border-left: 5px solid var(--azul-escuro);
+      border-radius: 6px;
+      padding: 20px;
+    }
+
+    ul,
+    ol {
+      margin: 16px 0;
+      padding-left: 28px;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+
+    .explicacao-codigo {
+      margin: 12px 0 20px 0;
+    }
+
+    .explicacao-codigo p {
+      margin: 3px 0;
+      text-indent: 0;
+      text-align: left;
+    }
+
+    .assinatura {
+      text-align: right;
+      font-style: italic;
+      margin-top: 22px;
+      color: var(--azul-escuro);
+    }
+
+    .figura {
+      margin: 30px 0;
+      text-align: center;
+    }
+
+    .figura img {
+      max-width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .figura figcaption {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.8em;
+      color: #5F6368;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    @media print {
+      body {
+        background: var(--branco);
+      }
+
+      .container {
+        box-shadow: none;
+        max-width: 100%;
+        padding: 10px;
+      }
+
+      .box,
+      table,
+      .secao-titulo,
+      .capa-cabecalho,
+      .capa-titulo,
+      .bloco-header,
+      .figura,
+      .docente-box,
+      .tabela-wrapper,
+      .sumario-item {
+        page-break-inside: avoid;
+      }
+
+      .cabecalho-textual {
+        display: none;
+      }
+
+      @page {
+        size: A4;
+        margin: 2cm;
+      }
+    }
+
+    .pagina-abertura {
+      position: relative;
+    }
+
+    .capa-cabecalho {
+      position: relative;
+      overflow: visible;
+    }
+
+    .curva-decorativa {
+      position: absolute;
+      right: -56px;
+      bottom: -46px;
+      width: 170px;
+      height: 130px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .capa-cabecalho>*:not(.curva-decorativa) {
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-capitulos {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+      background: var(--azul-escuro);
+      padding: 10px 16px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.85em;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .nav-capitulos a {
+      color: var(--branco);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+
+    .nav-capitulos a:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .nav-capitulos a.ativo {
+      background: var(--ciano);
+    }
+
+    @media print {
+      .nav-capitulos {
+        display: none;
+      }
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: var(--branco);
+      color: var(--azul-escuro);
+      padding: 10px 16px;
+      z-index: 200;
+      border-radius: 0 0 6px 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      left: 0;
+    }
+
+    .nav-capitulos a:focus-visible {
+      outline: 2px solid var(--branco);
+      outline-offset: 2px;
+    }
+
+    .secao-nome {
+      margin: 0;
+    }
+
+    .sumario-lista {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
 </head>
+
 <body>
-<a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
-<nav class="nav-capitulos" aria-label="Navegação entre aulas">
-  <a href="Guia_Cap_1_Modelo.html" class="ativo" aria-current="page">Aula 01</a>
-  <a href="Guia_Cap_2_Modelo.html">Aula 02</a>
-  <a href="Guia_Cap_3_Modelo.html">Aula 03</a>
-  <a href="Guia_Cap_4_Modelo.html">Aula 04</a>
-  <a href="Guia_Cap_5_Modelo.html">Aula 05</a>
-  <a href="Guia_Cap_6_Modelo.html">Aula 06</a>
-  <a href="Guia_Cap_7_Modelo.html">Aula 07</a>
-  <a href="Guia_Cap_8_Modelo.html">Aula 08</a>
-</nav>
-<div class="container">
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
+  <nav class="nav-capitulos" aria-label="Navegação entre aulas">
+    <a href="index.html" class="ativo" aria-current="page">Aula 01</a>
+    <a href="Guia_Cap_2_Modelo.html">Aula 02</a>
+    <a href="Guia_Cap_3_Modelo.html">Aula 03</a>
+    <a href="Guia_Cap_4_Modelo.html">Aula 04</a>
+    <a href="Guia_Cap_5_Modelo.html">Aula 05</a>
+    <a href="Guia_Cap_6_Modelo.html">Aula 06</a>
+    <a href="Guia_Cap_7_Modelo.html">Aula 07</a>
+    <a href="Guia_Cap_8_Modelo.html">Aula 08</a>
+  </nav>
+  <div class="container">
 
-  <header class="cabecalho-textual">
-    <div>
-      CEAD/UNIGRAN · Guia de Estudos
-      <span class="curso">PROBABILIDADE E ESTATÍSTICA (EAD)</span>
-    </div>
-    <img class="logo" src="imagens/logo-unigran.png" alt="Logo UNIGRAN CEAD">
-  </header>
-  <main id="conteudo-principal">
+    <header class="cabecalho-textual">
+      <div>
+        CEAD/UNIGRAN · Guia de Estudos
+        <span class="curso">PROBABILIDADE E ESTATÍSTICA (EAD)</span>
+      </div>
+      <img class="logo" src="imagens/logo-unigran.png" alt="Logo UNIGRAN CEAD">
+    </header>
+    <main id="conteudo-principal">
 
-  <h2 class="bloco-header">Apresentação do(a) Docente</h2>
-  <div class="docente-box">
-    <div>
-      <p><strong>Prof. Dr. Andrey Gaspar Sorrilha Rodrigues</strong></p>
+      <h2 class="bloco-header">Apresentação do(a) Docente</h2>
+      <div class="docente-box">
+        <div>
+          <p><strong>Prof. Dr. Andrey Gaspar Sorrilha Rodrigues</strong></p>
+          <p>
+            Engenheiro Ambiental formado pela Universidade Federal de Mato
+            Grosso do Sul (UFMS, 2018), Mestre em Recursos Naturais pela UFMS
+            (2021), Doutor em Biotecnologia também pela UFMS (2026) e
+            Cientista de Dados pela UFMS (2026). Atua como Cientista de Dados
+            e pesquisador com formação multidisciplinar em Biotecnologia, com
+            experiência em Python, Machine Learning e Redes Neurais aplicadas
+            à análise de dados reais, a mesma perspectiva prática que orienta
+            este Guia de Estudos.
+          </p>
+        </div>
+      </div>
+
+      <h2 class="bloco-header">Sumário</h2>
+      <ol class="sumario-lista">
+        <li class="sumario-item"><span class="sumario-aula">Aula 01</span> A Estatística no Dia a Dia: Números que
+          Contam Histórias<span class="sumario-pontilhado"></span><span class="sumario-pagina">2</span></li>
+        <li class="sumario-item"><span class="sumario-aula">Aula 02</span> Estatística como Processo: Conceitos e
+          Vocabulário Básico<span class="sumario-pontilhado"></span><span class="sumario-pagina">18</span></li>
+        <li class="sumario-item"><span class="sumario-aula">Aula 03</span> Medidas de Tendência Central e de
+          Dispersão<span class="sumario-pontilhado"></span><span class="sumario-pagina">35</span></li>
+        <li class="sumario-item"><span class="sumario-aula">Aula 04</span> Gráficos para Dados Categóricos<span
+            class="sumario-pontilhado"></span><span class="sumario-pagina">50</span></li>
+        <li class="sumario-item"><span class="sumario-aula">Aula 05</span> Gráficos para Dados Numéricos<span
+            class="sumario-pontilhado"></span><span class="sumario-pagina">67</span></li>
+        <li class="sumario-item"><span class="sumario-aula">Aula 06</span> A Distribuição Normal<span
+            class="sumario-pontilhado"></span><span class="sumario-pagina">83</span></li>
+        <li class="sumario-item"><span class="sumario-aula">Aula 07</span> Correlação: Relações entre Variáveis<span
+            class="sumario-pontilhado"></span><span class="sumario-pagina">98</span></li>
+        <li class="sumario-item"><span class="sumario-aula">Aula 08</span> Regressão Linear: Fazendo Previsões<span
+            class="sumario-pontilhado"></span><span class="sumario-pagina">113</span></li>
+      </ol>
+
+      <h2 class="bloco-header">Conversa Inicial</h2>
       <p>
-        Engenheiro Ambiental formado pela Universidade Federal de Mato
-        Grosso do Sul (UFMS, 2018), Mestre em Recursos Naturais pela UFMS
-        (2021), Doutor em Biotecnologia também pela UFMS (2026) e
-        Cientista de Dados pela UFMS (2026). Atua como Cientista de Dados
-        e pesquisador com formação multidisciplinar em Biotecnologia, com
-        experiência em Python, Machine Learning e Redes Neurais aplicadas
-        à análise de dados reais, a mesma perspectiva prática que orienta
-        este Guia de Estudos.
+        Sejam bem-vindos(as) à disciplina de <strong>Probabilidade e
+          Estatística</strong>! Se você está começando em Engenharia de
+        Software, talvez se pergunte por que um curso de exatas tem tanta
+        Estatística. A resposta: decisões de qualidade em tecnologia (bugs,
+        abandono de usuários, modelos de Machine Learning) dependem de saber
+        interpretar números. Estatística não é decorar fórmulas; é
+        desenvolver um olhar crítico diante dos dados, na vida pessoal e na
+        rotina de quem programa e testa sistemas. Vamos caminhar do básico ao
+        aplicado, sempre com exemplos de tecnologia. Não se preocupe se
+        parecer distante agora. Com prática, isso vira natural. Bons
+        estudos!
       </p>
-    </div>
-  </div>
+      <div class="assinatura">Prof. Dr. Andrey Gaspar Sorrilha Rodrigues</div>
 
-  <h2 class="bloco-header">Sumário</h2>
-  <ol class="sumario-lista">
-  <li class="sumario-item"><span class="sumario-aula">Aula 01</span> A Estatística no Dia a Dia: Números que Contam Histórias<span class="sumario-pontilhado"></span><span class="sumario-pagina">2</span></li>
-  <li class="sumario-item"><span class="sumario-aula">Aula 02</span> Estatística como Processo: Conceitos e Vocabulário Básico<span class="sumario-pontilhado"></span><span class="sumario-pagina">18</span></li>
-  <li class="sumario-item"><span class="sumario-aula">Aula 03</span> Medidas de Tendência Central e de Dispersão<span class="sumario-pontilhado"></span><span class="sumario-pagina">35</span></li>
-  <li class="sumario-item"><span class="sumario-aula">Aula 04</span> Gráficos para Dados Categóricos<span class="sumario-pontilhado"></span><span class="sumario-pagina">50</span></li>
-  <li class="sumario-item"><span class="sumario-aula">Aula 05</span> Gráficos para Dados Numéricos<span class="sumario-pontilhado"></span><span class="sumario-pagina">67</span></li>
-  <li class="sumario-item"><span class="sumario-aula">Aula 06</span> A Distribuição Normal<span class="sumario-pontilhado"></span><span class="sumario-pagina">83</span></li>
-  <li class="sumario-item"><span class="sumario-aula">Aula 07</span> Correlação: Relações entre Variáveis<span class="sumario-pontilhado"></span><span class="sumario-pagina">98</span></li>
-  <li class="sumario-item"><span class="sumario-aula">Aula 08</span> Regressão Linear: Fazendo Previsões<span class="sumario-pontilhado"></span><span class="sumario-pagina">113</span></li>
-  </ol>
+      <div class="pagina-abertura">
+        <div class="capa-cabecalho">
+          <div class="capa-numero"><span class="num">1</span><span class="ord-wrap"><span class="ord">a</span><span
+                class="ord-linha"></span></span></div>
+          <div class="capa-aula-fundo"><span>Aula</span></div>
+          <svg class="curva-decorativa" viewBox="0 0 170 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+            focusable="false">
+            <path d="M170,130 L170,20 C110,5 75,55 90,85 C102,110 55,130 0,120 L0,130 Z" fill="#29ABE2" />
+            <path d="M170,130 L170,50 C130,40 105,75 118,95 C128,112 85,130 40,130 Z" fill="#1B3A8C" opacity="0.55" />
+          </svg>
+        </div>
 
-  <h2 class="bloco-header">Conversa Inicial</h2>
-  <p>
-    Sejam bem-vindos(as) à disciplina de <strong>Probabilidade e
-    Estatística</strong>! Se você está começando em Engenharia de
-    Software, talvez se pergunte por que um curso de exatas tem tanta
-    Estatística. A resposta: decisões de qualidade em tecnologia (bugs,
-    abandono de usuários, modelos de Machine Learning) dependem de saber
-    interpretar números. Estatística não é decorar fórmulas; é
-    desenvolver um olhar crítico diante dos dados, na vida pessoal e na
-    rotina de quem programa e testa sistemas. Vamos caminhar do básico ao
-    aplicado, sempre com exemplos de tecnologia. Não se preocupe se
-    parecer distante agora. Com prática, isso vira natural. Bons
-    estudos!
-  </p>
-  <div class="assinatura">Prof. Dr. Andrey Gaspar Sorrilha Rodrigues</div>
+        <h1 class="capa-titulo">O que é Estatística?</h1>
 
-  <div class="pagina-abertura">
-    <div class="capa-cabecalho">
-      <div class="capa-numero"><span class="num">1</span><span class="ord-wrap"><span class="ord">a</span><span class="ord-linha"></span></span></div>
-      <div class="capa-aula-fundo"><span>Aula</span></div>
-      <svg class="curva-decorativa" viewBox="0 0 170 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <path d="M170,130 L170,20 C110,5 75,55 90,85 C102,110 55,130 0,120 L0,130 Z" fill="#29ABE2"/>
-        <path d="M170,130 L170,50 C130,40 105,75 118,95 C128,112 85,130 40,130 Z" fill="#1B3A8C" opacity="0.55"/>
-      </svg>
-    </div>
+        <p class="capa-intro">
+          Bem-vindos e bem-vindas a esta primeira aula! Vamos abrir os olhos
+          para algo que você já faz todo dia sem perceber: conviver com
+          números, em jornais, redes sociais e no trabalho, nem sempre bem
+          explicados. Ao final, você vai saber desconfiar (com jeito!) de
+          números prontos e lê-los com mais segurança. Bom estudo, e em caso de
+          dúvida, procure a plataforma do CEAD.
+        </p>
+        <div class="assinatura">Grande abraço, Prof. Andrey</div>
+      </div>
 
-    <h1 class="capa-titulo">O que é Estatística?</h1>
+      <h2 class="bloco-header">Objetivos de Aprendizagem</h2>
+      <p>Ao término desta aula, vocês serão capazes de:</p>
+      <ul>
+        <li>Compreender o que é Estatística e reconhecer sua presença no
+          cotidiano e no ambiente de trabalho;</li>
+        <li>Diferenciar contagens de taxas e identificar quando cada uma é
+          mais apropriada para contar uma história com números;</li>
+        <li>Calcular corretamente percentuais e taxas simples, evitando erros
+          comuns de interpretação;</li>
+        <li>Reconhecer problemas de amostragem e viés em pesquisas divulgadas
+          na mídia e no trabalho;</li>
+        <li>Adotar uma postura crítica diante de números apresentados por
+          jornais, aplicativos e relatórios profissionais.</li>
+      </ul>
 
-    <p class="capa-intro">
-      Bem-vindos e bem-vindas a esta primeira aula! Vamos abrir os olhos
-      para algo que você já faz todo dia sem perceber: conviver com
-      números, em jornais, redes sociais e no trabalho, nem sempre bem
-      explicados. Ao final, você vai saber desconfiar (com jeito!) de
-      números prontos e lê-los com mais segurança. Bom estudo, e em caso de
-      dúvida, procure a plataforma do CEAD.
-    </p>
-    <div class="assinatura">Grande abraço, Prof. Andrey</div>
-  </div>
+      <h2 class="bloco-header">Seções de Estudo</h2>
+      <ol class="sumario-lista">
+        <li class="sumario-item"><span class="sumario-aula">SEÇÃO 1</span> A Estatística está em toda parte</li>
+        <li class="sumario-item"><span class="sumario-aula">SEÇÃO 2</span> Contagens x taxas: "quantos" nem sempre conta
+          a história toda</li>
+        <li class="sumario-item"><span class="sumario-aula">SEÇÃO 3</span> Amostras, populações e o cuidado com os
+          números</li>
+      </ol>
 
-  <h2 class="bloco-header">Objetivos de Aprendizagem</h2>
-  <p>Ao término desta aula, vocês serão capazes de:</p>
-  <ul>
-    <li>Compreender o que é Estatística e reconhecer sua presença no
-      cotidiano e no ambiente de trabalho;</li>
-    <li>Diferenciar contagens de taxas e identificar quando cada uma é
-      mais apropriada para contar uma história com números;</li>
-    <li>Calcular corretamente percentuais e taxas simples, evitando erros
-      comuns de interpretação;</li>
-    <li>Reconhecer problemas de amostragem e viés em pesquisas divulgadas
-      na mídia e no trabalho;</li>
-    <li>Adotar uma postura crítica diante de números apresentados por
-      jornais, aplicativos e relatórios profissionais.</li>
-  </ul>
+      <figure class="figura">
+        <img src="imagens/secao1-jornal-estatisticas.jpg" alt="Pilha de jornais impressos" loading="lazy"
+          decoding="async">
+        <figcaption>Figura 1 – Jornais impressos: fonte clássica de estatísticas do
+          dia a dia. Fonte: Daniel R. Blume, Wikimedia Commons (CC BY-SA 2.0).
+          Acesso em: 07 jul. 2026.</figcaption>
+      </figure>
 
-  <h2 class="bloco-header">Seções de Estudo</h2>
-  <ol class="sumario-lista">
-  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 1</span> A Estatística está em toda parte</li>
-  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 2</span> Contagens x taxas: "quantos" nem sempre conta a história toda</li>
-  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 3</span> Amostras, populações e o cuidado com os números</li>
-  </ol>
+      <!-- SEÇÃO 1 -->
+      <div class="secao-titulo">
+        <div class="secao-etiqueta">SEÇÃO 1</div>
+        <h3 class="secao-nome">A Estatística está em toda parte</h3>
+      </div>
 
-  <figure class="figura">
-    <img src="imagens/secao1-jornal-estatisticas.jpg" alt="Pilha de jornais impressos" loading="lazy" decoding="async">
-    <figcaption>Figura 1 – Jornais impressos: fonte clássica de estatísticas do
-    dia a dia. Fonte: Daniel R. Blume, Wikimedia Commons (CC BY-SA 2.0).
-    Acesso em: 07 jul. 2026.</figcaption>
-  </figure>
+      <p>
+        <strong>Estatística</strong> é a área que estuda como perguntar,
+        coletar dados, analisá-los e chegar a conclusões sobre o mundo. Não é
+        só "mexer com números": é um processo completo, da pergunta à
+        interpretação do resultado.
+      </p>
+      <p>
+        Um jornal de domingo traz dezenas de estatísticas: acidentes,
+        pesquisas de opinião, exames escolares, esportes. O problema é que a
+        maioria mostra o número pronto, sem dizer como foi calculado, e é
+        aí que mora o risco de interpretação errada.
+      </p>
 
-  <!-- SEÇÃO 1 -->
-  <div class="secao-titulo">
-    <div class="secao-etiqueta">SEÇÃO 1</div>
-    <h3 class="secao-nome">A Estatística está em toda parte</h3>
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo cotidiano</span>
+        Uma notícia diz que "a taxa de acidentes com motociclistas aumentou".
+        Vale perguntar: é uma contagem simples (mais motos circulando) ou uma
+        taxa que já considera o total de veículos? A resposta muda o
+        sentido da notícia. Voltamos a essa diferença na Seção 2.
+      </div>
 
-  <p>
-    <strong>Estatística</strong> é a área que estuda como perguntar,
-    coletar dados, analisá-los e chegar a conclusões sobre o mundo. Não é
-    só "mexer com números": é um processo completo, da pergunta à
-    interpretação do resultado.
-  </p>
-  <p>
-    Um jornal de domingo traz dezenas de estatísticas: acidentes,
-    pesquisas de opinião, exames escolares, esportes. O problema é que a
-    maioria mostra o número pronto, sem dizer como foi calculado, e é
-    aí que mora o risco de interpretação errada.
-  </p>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo em Tecnologia</span>
+        Um post mostra "5 mil curtidas essa semana". Parece muito, mas sem
+        saber quantos seguidores o perfil tem, o número isolado não diz se
+        o post fez sucesso de verdade. Por isso as próprias redes sociais
+        também mostram taxas de engajamento, não só contagens.
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo cotidiano</span>
-    Uma notícia diz que "a taxa de acidentes com motociclistas aumentou".
-    Vale perguntar: é uma contagem simples (mais motos circulando) ou uma
-    taxa que já considera o total de veículos? A resposta muda o
-    sentido da notícia. Voltamos a essa diferença na Seção 2.
-  </div>
+      <figure class="figura">
+        <img src="imagens/secao2-redes-sociais.jpg" alt="Tela de smartphone com ícones de aplicativos de redes sociais"
+          loading="lazy" decoding="async">
+        <figcaption>Figura 2 – Aplicativos de redes sociais: curtidas e
+          visualizações são contagens; taxas de engajamento contam a história
+          completa. Fonte: Mike MacKenzie, Wikimedia Commons (CC BY 2.0).
+          Acesso em: 07 jul. 2026.</figcaption>
+      </figure>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo em Tecnologia</span>
-    Um post mostra "5 mil curtidas essa semana". Parece muito, mas sem
-    saber quantos seguidores o perfil tem, o número isolado não diz se
-    o post fez sucesso de verdade. Por isso as próprias redes sociais
-    também mostram taxas de engajamento, não só contagens.
-  </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Onde aparece</th>
+              <th scope="col">Exemplo do dia a dia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mídia / jornal</td>
+              <td>Taxas de doenças, resultados de pesquisas, previsão do tempo</td>
+            </tr>
+            <tr>
+              <td>Esportes</td>
+              <td>Percentual de vitórias, estatísticas de jogadores</td>
+            </tr>
+            <tr>
+              <td>Trabalho em saúde</td>
+              <td>Pesquisas de satisfação de pacientes</td>
+            </tr>
+            <tr>
+              <td>Redes sociais e apps</td>
+              <td>Curtidas, visualizações, seguidores, travamentos de um aplicativo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <figure class="figura">
-    <img src="imagens/secao2-redes-sociais.jpg" alt="Tela de smartphone com ícones de aplicativos de redes sociais" loading="lazy" decoding="async">
-    <figcaption>Figura 2 – Aplicativos de redes sociais: curtidas e
-    visualizações são contagens; taxas de engajamento contam a história
-    completa. Fonte: Mike MacKenzie, Wikimedia Commons (CC BY 2.0).
-    Acesso em: 07 jul. 2026.</figcaption>
-  </figure>
+      <div class="box box-atencao">
+        <span class="box-titulo">Atenção</span>
+        Número sem origem, cálculo ou base de comparação claros merece
+        cautela (não desconfiança automática, mas uma pergunta antes de
+        acreditar).
+      </div>
 
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Onde aparece</th><th scope="col">Exemplo do dia a dia</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Mídia / jornal</td><td>Taxas de doenças, resultados de pesquisas, previsão do tempo</td></tr>
-    <tr><td>Esportes</td><td>Percentual de vitórias, estatísticas de jogadores</td></tr>
-    <tr><td>Trabalho em saúde</td><td>Pesquisas de satisfação de pacientes</td></tr>
-    <tr><td>Redes sociais e apps</td><td>Curtidas, visualizações, seguidores, travamentos de um aplicativo</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <div class="box box-formula">
+        <span class="box-titulo">Fórmula destacada</span>
+        <div class="formula-math">
+          <span>Percentual (%) =</span>
+          <span class="fracao"><span class="num">parte</span><span class="den">todo</span></span>
+          <span>× 100</span>
+        </div>
+      </div>
 
-  <div class="box box-atencao">
-    <span class="box-titulo">Atenção</span>
-    Número sem origem, cálculo ou base de comparação claros merece
-    cautela (não desconfiança automática, mas uma pergunta antes de
-    acreditar).
-  </div>
+      <div class="box box-resumo">
+        <span class="box-titulo">Resumo da Seção 1</span>
+        Estatística é um processo (perguntar, coletar, analisar, concluir) e
+        está presente em todos os contextos do dia a dia, inclusive em
+        tecnologia.
+      </div>
 
-  <div class="box box-formula">
-    <span class="box-titulo">Fórmula destacada</span>
-    <div class="formula-math">
-      <span>Percentual (%) =</span>
-      <span class="fracao"><span class="num">parte</span><span class="den">todo</span></span>
-      <span>× 100</span>
-    </div>
-  </div>
+      <!-- SEÇÃO 2 -->
+      <div class="secao-titulo">
+        <div class="secao-etiqueta">SEÇÃO 2</div>
+        <h3 class="secao-nome">Contagens x taxas: "quantos" nem sempre conta a história toda</h3>
+      </div>
 
-  <div class="box box-resumo">
-    <span class="box-titulo">Resumo da Seção 1</span>
-    Estatística é um processo (perguntar, coletar, analisar, concluir) e
-    está presente em todos os contextos do dia a dia, inclusive em
-    tecnologia.
-  </div>
+      <p>
+        <strong>Contagem</strong> é o número absoluto de ocorrências (quantos
+        casos, quantos erros). <strong>Taxa</strong> é a contagem relativa a
+        uma base, por exemplo, casos a cada 100.000 pessoas. A taxa costuma
+        ser mais justa para comparar grupos de tamanhos diferentes.
+      </p>
 
-  <!-- SEÇÃO 2 -->
-  <div class="secao-titulo">
-    <div class="secao-etiqueta">SEÇÃO 2</div>
-    <h3 class="secao-nome">Contagens x taxas: "quantos" nem sempre conta a história toda</h3>
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo cotidiano</span>
+        Órgãos de trânsito divulgam a <em>taxa de fatalidade</em> (mortes a
+        cada 100.000 veículos), não apenas a contagem bruta. Assim comparam,
+        de forma justa, cidades com quantidades diferentes de motos.
+      </div>
 
-  <p>
-    <strong>Contagem</strong> é o número absoluto de ocorrências (quantos
-    casos, quantos erros). <strong>Taxa</strong> é a contagem relativa a
-    uma base, por exemplo, casos a cada 100.000 pessoas. A taxa costuma
-    ser mais justa para comparar grupos de tamanhos diferentes.
-  </p>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo em Tecnologia</span>
+        "18 travamentos" isolado não diz muita coisa. Só faz sentido
+        comparar aplicativos (ou versões) quando o número vira taxa, por
+        exemplo, travamentos a cada mil sessões de uso, calculada mais
+        adiante nesta aula.
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo cotidiano</span>
-    Órgãos de trânsito divulgam a <em>taxa de fatalidade</em> (mortes a
-    cada 100.000 veículos), não apenas a contagem bruta. Assim comparam,
-    de forma justa, cidades com quantidades diferentes de motos.
-  </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Situação</th>
+              <th scope="col">Contagem</th>
+              <th scope="col">Taxa equivalente</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Acidentes de moto</td>
+              <td>"350 mortes no ano"</td>
+              <td>"12 mortes/100 mil veículos"</td>
+            </tr>
+            <tr>
+              <td>Falhas em videochamadas de um app</td>
+              <td>"18 chamadas com falha"</td>
+              <td>"1,5 falhas/mil chamadas"</td>
+            </tr>
+            <tr>
+              <td>Cancelamentos de assinatura de streaming</td>
+              <td>"900 cancelamentos no mês"</td>
+              <td>"3 cancelamentos/100 assinantes"</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo em Tecnologia</span>
-    "18 travamentos" isolado não diz muita coisa. Só faz sentido
-    comparar aplicativos (ou versões) quando o número vira taxa, por
-    exemplo, travamentos a cada mil sessões de uso, calculada mais
-    adiante nesta aula.
-  </div>
+      <div class="box box-atencao">
+        <span class="box-titulo">Atenção</span>
+        Nunca compare contagens absolutas de grupos de tamanhos diferentes.
+        Compare sempre taxas, calculadas sobre a mesma base.
+      </div>
 
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Situação</th><th scope="col">Contagem</th><th scope="col">Taxa equivalente</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Acidentes de moto</td><td>"350 mortes no ano"</td><td>"12 mortes/100 mil veículos"</td></tr>
-    <tr><td>Falhas em videochamadas de um app</td><td>"18 chamadas com falha"</td><td>"1,5 falhas/mil chamadas"</td></tr>
-    <tr><td>Cancelamentos de assinatura de streaming</td><td>"900 cancelamentos no mês"</td><td>"3 cancelamentos/100 assinantes"</td></tr>
-    </tbody>
-  </table>
-  </div>
+      <div class="box box-formula">
+        <span class="box-titulo">Fórmula destacada</span>
+        <div class="formula-math">
+          <span>Taxa =</span>
+          <span class="fracao"><span class="num">ocorrências</span><span class="den">total da base</span></span>
+          <span>× constante</span>
+        </div>
+        <span class="nota-formula">constante de referência: ex. 1.000, 100.000, conforme o contexto</span>
+      </div>
 
-  <div class="box box-atencao">
-    <span class="box-titulo">Atenção</span>
-    Nunca compare contagens absolutas de grupos de tamanhos diferentes.
-    Compare sempre taxas, calculadas sobre a mesma base.
-  </div>
+      <div class="box box-resumo">
+        <span class="box-titulo">Resumo da Seção 2</span>
+        Contagem é o número bruto; taxa é a contagem relativizada a uma base.
+        Prefira taxas para comparar grupos diferentes.
+      </div>
 
-  <div class="box box-formula">
-    <span class="box-titulo">Fórmula destacada</span>
-    <div class="formula-math">
-      <span>Taxa =</span>
-      <span class="fracao"><span class="num">ocorrências</span><span class="den">total da base</span></span>
-      <span>× constante</span>
-    </div>
-    <span class="nota-formula">constante de referência: ex. 1.000, 100.000, conforme o contexto</span>
-  </div>
+      <!-- SEÇÃO 3 -->
+      <div class="secao-titulo">
+        <div class="secao-etiqueta">SEÇÃO 3</div>
+        <h3 class="secao-nome">Amostras, populações e o cuidado com os números</h3>
+      </div>
 
-  <div class="box box-resumo">
-    <span class="box-titulo">Resumo da Seção 2</span>
-    Contagem é o número bruto; taxa é a contagem relativizada a uma base.
-    Prefira taxas para comparar grupos diferentes.
-  </div>
+      <p>
+        Para estudar um grupo muito grande (a <strong>população</strong>),
+        raramente é possível ouvir todo mundo. Por isso, coleta-se uma parte
+        menor, a <strong>amostra</strong>. Uma amostra mal escolhida
+        (pequena ou formada só por quem "quis responder") gera <strong>viés
+          de amostragem</strong>.
+      </p>
 
-  <!-- SEÇÃO 3 -->
-  <div class="secao-titulo">
-    <div class="secao-etiqueta">SEÇÃO 3</div>
-    <h3 class="secao-nome">Amostras, populações e o cuidado com os números</h3>
-  </div>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo cotidiano</span>
+        Uma pesquisa diz que "67% dos gestores de RH" pensam algo, mas
+        ouviu só 210 pessoas. Isso representa todos os gestores do país?
+        Quantos foram convidados e não responderam? Sem saber, é difícil
+        confiar no número.
+      </div>
 
-  <p>
-    Para estudar um grupo muito grande (a <strong>população</strong>),
-    raramente é possível ouvir todo mundo. Por isso, coleta-se uma parte
-    menor, a <strong>amostra</strong>. Uma amostra mal escolhida
-    (pequena ou formada só por quem "quis responder") gera <strong>viés
-    de amostragem</strong>.
-  </p>
+      <div class="box box-exemplo">
+        <span class="box-titulo">Exemplo em Tecnologia</span>
+        Uma enquete no story do Instagram chega a milhares de pessoas, mas
+        só alguns clicam para responder, geralmente quem tem opinião mais
+        forte. Decidir com base só nessas respostas pode não representar a
+        opinião de todo mundo. Calculamos essa taxa no exercício 2.
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo cotidiano</span>
-    Uma pesquisa diz que "67% dos gestores de RH" pensam algo, mas
-    ouviu só 210 pessoas. Isso representa todos os gestores do país?
-    Quantos foram convidados e não responderam? Sem saber, é difícil
-    confiar no número.
-  </div>
+      <div class="box box-atencao">
+        <span class="box-titulo">Atenção: erro clássico de percentual</span>
+        Uma reportagem disse que, de 2.200 médicos, 2.800 parariam
+        procedimentos de risco: "18% da amostra". Isso já é impossível antes
+        de qualquer cálculo, pois 2.800 é maior que o total de 2.200
+        entrevistados, então o resultado não pode ser 18% (nem qualquer valor
+        abaixo de 100%). Conferindo:
+        <span class="fracao"><span class="num">2.800</span><span class="den">2.200</span></span>
+        × 100 = <strong>127%</strong>, valor também impossível (parte maior
+        que o todo). Por isso vale sempre refazer a conta antes de confiar.
+      </div>
 
-  <div class="box box-exemplo">
-    <span class="box-titulo">Exemplo em Tecnologia</span>
-    Uma enquete no story do Instagram chega a milhares de pessoas, mas
-    só alguns clicam para responder, geralmente quem tem opinião mais
-    forte. Decidir com base só nessas respostas pode não representar a
-    opinião de todo mundo. Calculamos essa taxa no exercício 2.
-  </div>
+      <div class="box box-formula">
+        <span class="box-titulo">Fórmula destacada</span>
+        <div class="formula-math">
+          <span>Percentual (%) =</span>
+          <span class="fracao"><span class="num">parte</span><span class="den">todo</span></span>
+          <span>× 100</span>
+        </div>
+        <span class="nota-formula">o resultado deve sempre ficar entre 0% e 100%</span>
+      </div>
 
-  <div class="box box-atencao">
-    <span class="box-titulo">Atenção: erro clássico de percentual</span>
-    Uma reportagem disse que, de 2.200 médicos, 2.800 parariam
-    procedimentos de risco: "18% da amostra". Isso já é impossível antes
-    de qualquer cálculo, pois 2.800 é maior que o total de 2.200
-    entrevistados, então o resultado não pode ser 18% (nem qualquer valor
-    abaixo de 100%). Conferindo:
-    <span class="fracao"><span class="num">2.800</span><span class="den">2.200</span></span>
-    × 100 = <strong>127%</strong>, valor também impossível (parte maior
-    que o todo). Por isso vale sempre refazer a conta antes de confiar.
-  </div>
+      <div class="box box-resumo">
+        <span class="box-titulo">Resumo da Seção 3</span>
+        Amostra pequena ou autosselecionada gera viés. Pergunte sempre
+        quantos responderam e refaça a conta do percentual quando algo
+        parecer estranho.
+      </div>
 
-  <div class="box box-formula">
-    <span class="box-titulo">Fórmula destacada</span>
-    <div class="formula-math">
-      <span>Percentual (%) =</span>
-      <span class="fracao"><span class="num">parte</span><span class="den">todo</span></span>
-      <span>× 100</span>
-    </div>
-    <span class="nota-formula">o resultado deve sempre ficar entre 0% e 100%</span>
-  </div>
+      <h2 class="bloco-header">Exemplo Matemático Resolvido</h2>
+      <p>
+        Um aplicativo de streaming registrou 18 travamentos em 12.000
+        sessões de reprodução de vídeo. Qual é a taxa de travamentos a cada
+        mil sessões?
+      </p>
+      <ol>
+        <li><strong>Dados:</strong> travamentos = 18; sessões de reprodução = 12.000</li>
+        <li><strong>Fórmula:</strong> Taxa (por mil sessões) =
+          <span class="fracao"><span class="num">travamentos</span><span class="den">sessões</span></span>
+          × 1.000
+        </li>
+        <li><strong>Substituição:</strong> Taxa =
+          <span class="fracao"><span class="num">18</span><span class="den">12.000</span></span>
+          × 1.000
+        </li>
+        <li><strong>Cálculo:</strong>
+          <span class="fracao"><span class="num">18</span><span class="den">12.000</span></span>
+          = 0,0015; 0,0015 × 1.000 = 1,5
+        </li>
+        <li><strong>Interpretação:</strong> o aplicativo apresenta 1,5
+          travamento a cada mil sessões. Esse valor ganha sentido quando
+          comparado com a taxa de outro aplicativo, de uma versão anterior
+          do mesmo aplicativo, ou com faixas de referência já estabelecidas
+          pela equipe (como as usadas no exemplo em Python a seguir). Sem
+          nenhuma comparação, o número sozinho apenas descreve, não julga, a
+          qualidade do serviço.</li>
+      </ol>
 
-  <div class="box box-resumo">
-    <span class="box-titulo">Resumo da Seção 3</span>
-    Amostra pequena ou autosselecionada gera viés. Pergunte sempre
-    quantos responderam e refaça a conta do percentual quando algo
-    parecer estranho.
-  </div>
-
-  <h2 class="bloco-header">Exemplo Matemático Resolvido</h2>
-  <p>
-    Um aplicativo de streaming registrou 18 travamentos em 12.000
-    sessões de reprodução de vídeo. Qual é a taxa de travamentos a cada
-    mil sessões?
-  </p>
-  <ol>
-    <li><strong>Dados:</strong> travamentos = 18; sessões de reprodução = 12.000</li>
-    <li><strong>Fórmula:</strong> Taxa (por mil sessões) =
-      <span class="fracao"><span class="num">travamentos</span><span class="den">sessões</span></span>
-      × 1.000</li>
-    <li><strong>Substituição:</strong> Taxa =
-      <span class="fracao"><span class="num">18</span><span class="den">12.000</span></span>
-      × 1.000</li>
-    <li><strong>Cálculo:</strong>
-      <span class="fracao"><span class="num">18</span><span class="den">12.000</span></span>
-      = 0,0015; 0,0015 × 1.000 = 1,5</li>
-    <li><strong>Interpretação:</strong> o aplicativo apresenta 1,5
-      travamento a cada mil sessões. Esse valor ganha sentido quando
-      comparado com a taxa de outro aplicativo, de uma versão anterior
-      do mesmo aplicativo, ou com faixas de referência já estabelecidas
-      pela equipe (como as usadas no exemplo em Python a seguir). Sem
-      nenhuma comparação, o número sozinho apenas descreve, não julga, a
-      qualidade do serviço.</li>
-  </ol>
-
-  <h2 class="bloco-header">Exemplo em Python</h2>
-  <p>
-    O programa abaixo recebe o número de travamentos e de sessões de
-    reprodução, calcula a taxa a cada mil sessões e imprime o resultado
-    junto com uma interpretação simples.
-  </p>
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python"><span class="cm-kw">def</span> taxa_por_mil_sessoes(travamentos, sessoes):
+      <h2 class="bloco-header">Exemplo em Python</h2>
+      <p>
+        O programa abaixo recebe o número de travamentos e de sessões de
+        reprodução, calcula a taxa a cada mil sessões e imprime o resultado
+        junto com uma interpretação simples.
+      </p>
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python"><span class="cm-kw">def</span> taxa_por_mil_sessoes(travamentos, sessoes):
     <span class="cm-com"># taxa de travamentos a cada mil sessões</span>
     <span class="cm-kw">return</span> (travamentos / sessoes) * <span class="cm-num">1000</span>
 
@@ -961,60 +1090,60 @@ mensagem = interpretar_taxa(taxa)
 <span class="cm-bi">print</span>(<span class="cm-str">f"Taxa de travamentos: {taxa:.1f} por mil sessões"</span>)
 <span class="cm-bi">print</span>(<span class="cm-str">f"Interpretação: {mensagem}"</span>)
 </code></pre>
-  </div>
-  <div class="explicacao-codigo">
-    <p><strong>Entrada:</strong> travamentos e sessões de reprodução.</p>
-    <p><strong>Processamento:</strong> <code>taxa_por_mil_sessoes</code>
-      aplica a fórmula da taxa; <code>interpretar_taxa</code> classifica
-      o resultado (limites apenas ilustrativos).</p>
-    <p><strong>Saída:</strong> "Taxa de travamentos: 1.5 por mil
-      sessões" e a interpretação.</p>
-    <p><strong>Interpretação:</strong> o programa transforma uma
-      contagem bruta em taxa comparável, como na Seção 2.</p>
-  </div>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Entrada:</strong> travamentos e sessões de reprodução.</p>
+        <p><strong>Processamento:</strong> <code>taxa_por_mil_sessoes</code>
+          aplica a fórmula da taxa; <code>interpretar_taxa</code> classifica
+          o resultado (limites apenas ilustrativos).</p>
+        <p><strong>Saída:</strong> "Taxa de travamentos: 1.5 por mil
+          sessões" e a interpretação.</p>
+        <p><strong>Interpretação:</strong> o programa transforma uma
+          contagem bruta em taxa comparável, como na Seção 2.</p>
+      </div>
 
-  <h2 class="bloco-header">Exercícios</h2>
+      <h2 class="bloco-header">Exercícios</h2>
 
-  <div class="box box-exercicio">
-    <span class="box-titulo">Exercício 1</span>
-    Em um vídeo publicado online, 42 das 50 pessoas que assistiram até
-    o final deixaram like. Escreva um programa em Python que calcule e
-    imprima o percentual de curtidas entre quem assistiu até o fim.
-  </div>
+      <div class="box box-exercicio">
+        <span class="box-titulo">Exercício 1</span>
+        Em um vídeo publicado online, 42 das 50 pessoas que assistiram até
+        o final deixaram like. Escreva um programa em Python que calcule e
+        imprima o percentual de curtidas entre quem assistiu até o fim.
+      </div>
 
-  <div class="box box-exercicio">
-    <span class="box-titulo">Exercício 2</span>
-    Um criador de conteúdo fez uma enquete para os 300 seguidores que
-    estavam online e recebeu 24 respostas. Escreva um programa em
-    Python que: (a) calcule a taxa de resposta da enquete; (b) imprima
-    uma mensagem interpretando se essa amostra parece suficiente para
-    representar a opinião de todos os 300 seguidores, com base no que
-    foi discutido na Seção 3.
-  </div>
+      <div class="box box-exercicio">
+        <span class="box-titulo">Exercício 2</span>
+        Um criador de conteúdo fez uma enquete para os 300 seguidores que
+        estavam online e recebeu 24 respostas. Escreva um programa em
+        Python que: (a) calcule a taxa de resposta da enquete; (b) imprima
+        uma mensagem interpretando se essa amostra parece suficiente para
+        representar a opinião de todos os 300 seguidores, com base no que
+        foi discutido na Seção 3.
+      </div>
 
-  <h2 class="bloco-header">Gabarito Comentado</h2>
+      <h2 class="bloco-header">Gabarito Comentado</h2>
 
-  <p><strong>Exercício 1</strong></p>
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python">curtidas = <span class="cm-num">42</span>
+      <p><strong>Exercício 1</strong></p>
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python">curtidas = <span class="cm-num">42</span>
 espectadores_ate_o_fim = <span class="cm-num">50</span>
 
 percentual_curtidas = (curtidas / espectadores_ate_o_fim) * <span class="cm-num">100</span>
 
 <span class="cm-bi">print</span>(<span class="cm-str">f"Percentual de curtidas: {percentual_curtidas:.1f}%"</span>)
 </code></pre>
-  </div>
-  <div class="explicacao-codigo">
-    <p><strong>Saída:</strong> "Percentual de curtidas: 84.0%".</p>
-    <p><strong>Comentário:</strong> aplicação direta da fórmula da
-      Seção 1. Resultado dentro de 0%–100%, sem indício de erro.</p>
-  </div>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Saída:</strong> "Percentual de curtidas: 84.0%".</p>
+        <p><strong>Comentário:</strong> aplicação direta da fórmula da
+          Seção 1. Resultado dentro de 0%–100%, sem indício de erro.</p>
+      </div>
 
-  <p><strong>Exercício 2</strong></p>
-  <div class="box box-python">
-    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-<pre><code class="language-python">seguidores_online = <span class="cm-num">300</span>
+      <p><strong>Exercício 2</strong></p>
+      <div class="box box-python">
+        <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+        <pre><code class="language-python">seguidores_online = <span class="cm-num">300</span>
 respostas_recebidas = <span class="cm-num">24</span>
 
 taxa_resposta = (respostas_recebidas / seguidores_online) * <span class="cm-num">100</span>
@@ -1026,116 +1155,146 @@ taxa_resposta = (respostas_recebidas / seguidores_online) * <span class="cm-num"
 <span class="cm-kw">else</span>:
     <span class="cm-bi">print</span>(<span class="cm-str">"Resposta razoável, mas investigue o viés."</span>)
 </code></pre>
+      </div>
+      <div class="explicacao-codigo">
+        <p><strong>Saída:</strong> "Taxa de resposta: 8.0%" e o alerta de
+          amostra pequena.</p>
+        <p><strong>Comentário:</strong> só 8% responderam, como no
+          exemplo dos 210 respondentes da Seção 3. Não invalida a enquete,
+          mas exige cautela com o viés de autosseleção.</p>
+      </div>
+
+      <h2 class="bloco-header">Retomando a Conversa Inicial</h2>
+
+      <p><strong>Seção 1, A Estatística está em toda parte:</strong>
+        Estatística é um processo, presente na mídia, no esporte e na
+        tecnologia. Números sem contexto podem enganar.</p>
+
+      <p><strong>Seção 2, Contagens x taxas:</strong> contagens escondem
+        diferenças de base; taxas permitem comparações mais justas, em
+        trânsito ou em travamentos de aplicativos.</p>
+
+      <p><strong>Seção 3, Amostras, populações e viés:</strong> amostras
+        pequenas ou autosselecionadas distorcem conclusões. Por isso vale
+        refazer a conta do percentual sempre que algo parecer estranho.</p>
+
+      <h2 class="bloco-header">Revisão Rápida</h2>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Conceito</th>
+              <th scope="col">Fórmula</th>
+              <th scope="col">Erro comum</th>
+              <th scope="col">Dica de prova</th>
+              <th scope="col">Aplicação em Tecnologia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Percentual</td>
+              <td><span class="fracao"><span class="num">parte</span><span class="den">todo</span></span> × 100</td>
+              <td>Resultado fora de 0%–100%</td>
+              <td>Confira se é plausível</td>
+              <td>Curtidas em um vídeo</td>
+            </tr>
+            <tr>
+              <td>Taxa</td>
+              <td><span class="fracao"><span class="num">ocorrências</span><span class="den">base</span></span> ×
+                constante</td>
+              <td>Comparar bases diferentes</td>
+              <td>Confira a base de referência</td>
+              <td>Travamentos por mil sessões</td>
+            </tr>
+            <tr>
+              <td>População x amostra</td>
+              <td>N/A</td>
+              <td>Achar que amostra pequena é representativa</td>
+              <td>Pergunte "quantos responderam?"</td>
+              <td>Enquetes em redes sociais</td>
+            </tr>
+            <tr>
+              <td>Viés de amostragem</td>
+              <td>N/A</td>
+              <td>Ignorar quem não respondeu</td>
+              <td>Desconfie de autosseleção</td>
+              <td>Avaliações na loja de apps</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="bloco-header">Sugestões de Leituras e Sites</h2>
+      <p><strong>LEITURAS</strong></p>
+      <p>RUMSEY, Deborah J. <em>Statistics For Dummies</em>. 2. ed. Hoboken,
+        NJ: Wiley Publishing, 2011. (livro-base desta aula, recomendado para
+        aprofundamento nos capítulos iniciais de Estatística.)</p>
+      <p><strong>SITES</strong></p>
+      <p>Khan Academy, Estatística e Probabilidade:
+        https://pt.khanacademy.org/math/statistics-probability (aulas gratuitas
+        em português, com exercícios interativos sobre os conceitos desta
+        aula.)</p>
+
+      <h2 class="bloco-header">Glossário</h2>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Termo</th>
+              <th scope="col">Definição</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Estatística</td>
+              <td>Processo de formular perguntas, coletar, organizar, analisar dados e tirar conclusões sobre o mundo.
+              </td>
+            </tr>
+            <tr>
+              <td>Dado</td>
+              <td>Informação bruta coletada (um número, uma resposta, uma medição).</td>
+            </tr>
+            <tr>
+              <td>Contagem</td>
+              <td>Número absoluto de ocorrências de algo, sem relação com uma base.</td>
+            </tr>
+            <tr>
+              <td>Taxa</td>
+              <td>Contagem expressa em relação a uma base de referência (ex.: por 100 mil).</td>
+            </tr>
+            <tr>
+              <td>População</td>
+              <td>Conjunto completo de indivíduos ou itens que se deseja estudar.</td>
+            </tr>
+            <tr>
+              <td>Amostra</td>
+              <td>Parte da população efetivamente estudada.</td>
+            </tr>
+            <tr>
+              <td>Viés de amostragem</td>
+              <td>Distorção causada por uma amostra que não representa bem a população.</td>
+            </tr>
+            <tr>
+              <td>Percentual</td>
+              <td>Proporção de uma parte em relação ao todo, expressa em base 100.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="bloco-header">Referências Bibliográficas</h2>
+      <p>TRIOLA, Mario F. <em>Introdução à Estatística</em>. 14. ed. Rio de
+        Janeiro: LTC, 2024. E-book. p.Capa. ISBN 9788521638780. Disponível em:
+        https://integrada.minhabiblioteca.com.br/reader/books/9788521638780/.
+        Acesso em: 01 dez. 2025.</p>
+      <p>VIEIRA, Sonia. <em>Estatística básica</em> – 2ª edição revista e
+        ampliada. 2. ed. Porto Alegre: +A Educação - Cengage Learning Brasil,
+        2018. E-book. p.Cover. ISBN 9788522128082. Disponível em:
+        https://integrada.minhabiblioteca.com.br/reader/books/9788522128082/.
+        Acesso em: 01 dez. 2025.</p>
+
+    </main>
   </div>
-  <div class="explicacao-codigo">
-    <p><strong>Saída:</strong> "Taxa de resposta: 8.0%" e o alerta de
-      amostra pequena.</p>
-    <p><strong>Comentário:</strong> só 8% responderam, como no
-      exemplo dos 210 respondentes da Seção 3. Não invalida a enquete,
-      mas exige cautela com o viés de autosseleção.</p>
-  </div>
-
-  <h2 class="bloco-header">Retomando a Conversa Inicial</h2>
-
-  <p><strong>Seção 1, A Estatística está em toda parte:</strong>
-  Estatística é um processo, presente na mídia, no esporte e na
-  tecnologia. Números sem contexto podem enganar.</p>
-
-  <p><strong>Seção 2, Contagens x taxas:</strong> contagens escondem
-  diferenças de base; taxas permitem comparações mais justas, em
-  trânsito ou em travamentos de aplicativos.</p>
-
-  <p><strong>Seção 3, Amostras, populações e viés:</strong> amostras
-  pequenas ou autosselecionadas distorcem conclusões. Por isso vale
-  refazer a conta do percentual sempre que algo parecer estranho.</p>
-
-  <h2 class="bloco-header">Revisão Rápida</h2>
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr>
-      <th scope="col">Conceito</th>
-      <th scope="col">Fórmula</th>
-      <th scope="col">Erro comum</th>
-      <th scope="col">Dica de prova</th>
-      <th scope="col">Aplicação em Tecnologia</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>Percentual</td>
-      <td><span class="fracao"><span class="num">parte</span><span class="den">todo</span></span> × 100</td>
-      <td>Resultado fora de 0%–100%</td>
-      <td>Confira se é plausível</td>
-      <td>Curtidas em um vídeo</td>
-    </tr>
-    <tr>
-      <td>Taxa</td>
-      <td><span class="fracao"><span class="num">ocorrências</span><span class="den">base</span></span> × constante</td>
-      <td>Comparar bases diferentes</td>
-      <td>Confira a base de referência</td>
-      <td>Travamentos por mil sessões</td>
-    </tr>
-    <tr>
-      <td>População x amostra</td>
-      <td>N/A</td>
-      <td>Achar que amostra pequena é representativa</td>
-      <td>Pergunte "quantos responderam?"</td>
-      <td>Enquetes em redes sociais</td>
-    </tr>
-    <tr>
-      <td>Viés de amostragem</td>
-      <td>N/A</td>
-      <td>Ignorar quem não respondeu</td>
-      <td>Desconfie de autosseleção</td>
-      <td>Avaliações na loja de apps</td>
-    </tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h2 class="bloco-header">Sugestões de Leituras e Sites</h2>
-  <p><strong>LEITURAS</strong></p>
-  <p>RUMSEY, Deborah J. <em>Statistics For Dummies</em>. 2. ed. Hoboken,
-  NJ: Wiley Publishing, 2011. (livro-base desta aula, recomendado para
-  aprofundamento nos capítulos iniciais de Estatística.)</p>
-  <p><strong>SITES</strong></p>
-  <p>Khan Academy, Estatística e Probabilidade:
-  https://pt.khanacademy.org/math/statistics-probability (aulas gratuitas
-  em português, com exercícios interativos sobre os conceitos desta
-  aula.)</p>
-
-  <h2 class="bloco-header">Glossário</h2>
-  <div class="tabela-wrapper">
-  <table>
-    <thead>
-    <tr><th scope="col">Termo</th><th scope="col">Definição</th></tr>
-    </thead>
-    <tbody>
-    <tr><td>Estatística</td><td>Processo de formular perguntas, coletar, organizar, analisar dados e tirar conclusões sobre o mundo.</td></tr>
-    <tr><td>Dado</td><td>Informação bruta coletada (um número, uma resposta, uma medição).</td></tr>
-    <tr><td>Contagem</td><td>Número absoluto de ocorrências de algo, sem relação com uma base.</td></tr>
-    <tr><td>Taxa</td><td>Contagem expressa em relação a uma base de referência (ex.: por 100 mil).</td></tr>
-    <tr><td>População</td><td>Conjunto completo de indivíduos ou itens que se deseja estudar.</td></tr>
-    <tr><td>Amostra</td><td>Parte da população efetivamente estudada.</td></tr>
-    <tr><td>Viés de amostragem</td><td>Distorção causada por uma amostra que não representa bem a população.</td></tr>
-    <tr><td>Percentual</td><td>Proporção de uma parte em relação ao todo, expressa em base 100.</td></tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h2 class="bloco-header">Referências Bibliográficas</h2>
-  <p>TRIOLA, Mario F. <em>Introdução à Estatística</em>. 14. ed. Rio de
-  Janeiro: LTC, 2024. E-book. p.Capa. ISBN 9788521638780. Disponível em:
-  https://integrada.minhabiblioteca.com.br/reader/books/9788521638780/.
-  Acesso em: 01 dez. 2025.</p>
-  <p>VIEIRA, Sonia. <em>Estatística básica</em> – 2ª edição revista e
-  ampliada. 2. ed. Porto Alegre: +A Educação - Cengage Learning Brasil,
-  2018. E-book. p.Cover. ISBN 9788522128082. Disponível em:
-  https://integrada.minhabiblioteca.com.br/reader/books/9788522128082/.
-  Acesso em: 01 dez. 2025.</p>
-
-  </main>
-</div>
 </body>
+
 </html>
