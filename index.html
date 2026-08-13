@@ -419,32 +419,20 @@
     <span class="cm-kw">return</span> (travamentos / sessoes) * <span class="cm-num">1000</span>
 
 
-<span class="cm-kw">def</span> interpretar_taxa(taxa):
-    <span class="cm-kw">if</span> taxa &lt; <span class="cm-num">1</span>:
-        <span class="cm-kw">return</span> <span class="cm-str">"taxa baixa, indicador positivo"</span>
-    <span class="cm-kw">elif</span> taxa &lt;= <span class="cm-num">3</span>:
-        <span class="cm-kw">return</span> <span class="cm-str">"taxa moderada, vale acompanhar"</span>
-    <span class="cm-kw">else</span>:
-        <span class="cm-kw">return</span> <span class="cm-str">"taxa alta, app com instabilidade"</span>
-
-
 travamentos = <span class="cm-num">18</span>
 sessoes_reproducao = <span class="cm-num">12000</span>
 
 taxa = taxa_por_mil_sessoes(travamentos, sessoes_reproducao)
-mensagem = interpretar_taxa(taxa)
 
 <span class="cm-bi">print</span>(<span class="cm-str">f"Taxa de travamentos: {taxa:.1f} por mil sessões"</span>)
-<span class="cm-bi">print</span>(<span class="cm-str">f"Interpretação: {mensagem}"</span>)
 </code></pre>
       </div>
       <div class="explicacao-codigo">
         <p><strong>Entrada:</strong> travamentos e sessões de reprodução.</p>
         <p><strong>Processamento:</strong> <code>taxa_por_mil_sessoes</code>
-          aplica a fórmula da taxa; <code>interpretar_taxa</code> classifica
-          o resultado (limites apenas ilustrativos).</p>
+          aplica a fórmula da taxa.</p>
         <p><strong>Saída:</strong> "Taxa de travamentos: 1.5 por mil
-          sessões" e a interpretação.</p>
+          sessões".</p>
         <p><strong>Interpretação:</strong> o programa transforma uma
           contagem bruta em taxa comparável, como na Seção 2.</p>
       </div>
@@ -460,12 +448,12 @@ mensagem = interpretar_taxa(taxa)
 
       <div class="box box-exercicio">
         <span class="box-titulo">Exercício 2</span>
-        Um criador de conteúdo fez uma enquete para os 300 seguidores que
-        estavam online e recebeu 24 respostas. Escreva um programa em
-        Python que: (a) calcule a taxa de resposta da enquete; (b) imprima
-        uma mensagem interpretando se essa amostra parece suficiente para
-        representar a opinião de todos os 300 seguidores, com base no que
-        foi discutido na Seção 3.
+        Um provedor de internet considera aceitável uma taxa de até 5
+        quedas de conexão a cada mil acessos. Em um dia, ele registrou 34
+        quedas de conexão em 8.500 acessos. Escreva um programa em Python
+        que calcule a taxa de quedas de conexão a cada mil acessos (mesmo
+        raciocínio do Exemplo Matemático Resolvido) e imprima se essa taxa
+        está dentro do limite aceitável.
       </div>
 
       <h2 class="bloco-header">Gabarito Comentado</h2>
@@ -490,25 +478,26 @@ percentual_curtidas = (curtidas / espectadores_ate_o_fim) * <span class="cm-num"
       <p><strong>Exercício 2</strong></p>
       <div class="box box-python">
         <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
-        <pre><code class="language-python">seguidores_online = <span class="cm-num">300</span>
-respostas_recebidas = <span class="cm-num">24</span>
+        <pre><code class="language-python">quedas_de_conexao = <span class="cm-num">34</span>
+acessos_registrados = <span class="cm-num">8500</span>
+limite_aceitavel = <span class="cm-num">5</span>
 
-taxa_resposta = (respostas_recebidas / seguidores_online) * <span class="cm-num">100</span>
+taxa_quedas = (quedas_de_conexao / acessos_registrados) * <span class="cm-num">1000</span>
 
-<span class="cm-bi">print</span>(<span class="cm-str">f"Taxa de resposta: {taxa_resposta:.1f}%"</span>)
+<span class="cm-bi">print</span>(<span class="cm-str">f"Taxa de quedas de conexão: {taxa_quedas:.1f} por mil acessos"</span>)
 
-<span class="cm-kw">if</span> taxa_resposta &lt; <span class="cm-num">10</span>:
-    <span class="cm-bi">print</span>(<span class="cm-str">"Amostra pequena: risco de viés."</span>)
+<span class="cm-kw">if</span> taxa_quedas &lt;= limite_aceitavel:
+    <span class="cm-bi">print</span>(<span class="cm-str">"Taxa dentro do limite aceitável."</span>)
 <span class="cm-kw">else</span>:
-    <span class="cm-bi">print</span>(<span class="cm-str">"Resposta razoável, mas investigue o viés."</span>)
+    <span class="cm-bi">print</span>(<span class="cm-str">"Taxa acima do limite aceitável."</span>)
 </code></pre>
       </div>
       <div class="explicacao-codigo">
-        <p><strong>Saída:</strong> "Taxa de resposta: 8.0%" e o alerta de
-          amostra pequena.</p>
-        <p><strong>Comentário:</strong> só 8% responderam, como no
-          exemplo dos 210 respondentes da Seção 3. Não invalida a enquete,
-          mas exige cautela com o viés de autosseleção.</p>
+        <p><strong>Saída:</strong> "Taxa de quedas de conexão: 4.0 por mil
+          acessos" e "Taxa dentro do limite aceitável.".</p>
+        <p><strong>Comentário:</strong> mesma fórmula do Exemplo
+          Matemático Resolvido, agora comparada com um limite de
+          referência.</p>
       </div>
 
       <h2 class="bloco-header">Retomando a Conversa Inicial</h2>
