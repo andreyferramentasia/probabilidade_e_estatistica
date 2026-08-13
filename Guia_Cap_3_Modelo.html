@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia de Estudos - Aula 3 - Probabilidade e Estatística (EAD)</title>
+<meta name="description" content="Guia de Estudos CEAD/UNIGRAN — Aula 3 da disciplina de Probabilidade e Estatística (EAD), com teoria, exemplos em Python e exercícios comentados.">
+<style>
+  :root {
+    --azul-escuro: #1B3A8C;
+    --ciano: #29ABE2;
+    --azul-claro: #D6E8F5;
+    --cinza-claro: #F4F4F4;
+    --cinza-texto: #333333;
+    --atencao-borda: #E0932C;
+    --atencao-fundo: #FFF4E0;
+    --branco: #FFFFFF;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--cinza-texto);
+    background: #EAEFF6;
+    margin: 0;
+    padding: 0;
+    line-height: 1.75;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--branco);
+    padding: 48px 56px 70px 56px;
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.12);
+  }
+
+  .cabecalho-textual {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-variant: small-caps;
+    font-style: italic;
+    color: var(--azul-escuro);
+    font-size: 1.05em;
+    letter-spacing: 0.5px;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+
+  .cabecalho-textual .curso {
+    display: block;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 0.75em;
+    color: var(--ciano);
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .cabecalho-textual .logo {
+    height: 48px;
+    flex-shrink: 0;
+  }
+
+  .capa-cabecalho {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 10px;
+    margin-bottom: 40px;
+  }
+
+  .capa-numero {
+    position: relative;
+    flex-shrink: 0;
+    width: 230px;
+    height: 208px;
+    background: var(--ciano);
+    color: var(--branco);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(0 0, 100% 0, 100% 76%, 50% 100%, 0 76%);
+    filter: drop-shadow(6px 8px 6px rgba(0, 0, 0, 0.35));
+  }
+
+  .capa-numero .num {
+    font-size: 5em;
+    line-height: 1;
+  }
+
+  .capa-numero .ord-wrap {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 4px;
+    margin-top: -1.6em;
+  }
+
+  .capa-numero .ord {
+    font-size: 1.8em;
+    line-height: 1;
+  }
+
+  .capa-numero .ord-linha {
+    width: 16px;
+    height: 3px;
+    background: var(--branco);
+    margin-top: 5px;
+  }
+
+  .capa-aula-fundo {
+    flex-grow: 1;
+    height: 158px;
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+    background: linear-gradient(to right, #D9D9D9, #FAFAFA);
+    box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.18);
+  }
+
+  .capa-aula-fundo span {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 3em;
+    color: #1A1A1A;
+  }
+
+  .capa-titulo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 1.55em;
+    line-height: 1.4;
+    color: #1A1A1A;
+    margin: 6px 0 26px;
+  }
+
+  .capa-intro {
+    font-style: italic;
+    text-indent: 0;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .bloco-header {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--azul-escuro);
+    color: var(--branco);
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 13px 22px;
+    font-size: 1.02em;
+    border-radius: 3px;
+    margin-top: 42px;
+    margin-bottom: 22px;
+    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .secao-titulo {
+    display: flex;
+    align-items: stretch;
+    margin-top: 48px;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .secao-etiqueta {
+    background: var(--azul-escuro);
+    color: var(--branco);
+    padding: 10px 20px;
+    white-space: nowrap;
+    border-radius: 4px 0 0 4px;
+    font-size: 0.95em;
+  }
+
+  .secao-nome {
+    background: var(--azul-claro);
+    color: var(--azul-escuro);
+    padding: 10px 20px;
+    flex-grow: 1;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.95em;
+  }
+
+  .subtitulo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: var(--azul-escuro);
+    font-size: 1.02em;
+    margin-top: 22px;
+  }
+
+  p {
+    margin: 16px 0;
+    text-indent: 1.25cm;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .box p,
+  .docente-box p {
+    text-indent: 0;
+    text-align: justify;
+  }
+
+  .box {
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin: 26px 0;
+    page-break-inside: avoid;
+  }
+
+  .box-titulo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.82em;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .box-conceito {
+    background: var(--azul-claro);
+    border-left: 5px solid var(--azul-escuro);
+  }
+  .box-conceito .box-titulo { color: var(--azul-escuro); }
+
+  .box-exemplo {
+    background: #EAF7FC;
+    border-left: 5px solid var(--ciano);
+  }
+  .box-exemplo .box-titulo { color: #1381AD; }
+
+  .box-atencao {
+    background: var(--atencao-fundo);
+    border-left: 5px solid var(--atencao-borda);
+  }
+  .box-atencao .box-titulo { color: var(--atencao-borda); }
+
+  .box-python {
+    background: #FFFFFF;
+    border: 1px solid #DADCE0;
+    border-radius: 8px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15);
+  }
+  .codigo-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #F1F3F4;
+    border-bottom: 1px solid #DADCE0;
+    color: #5F6368;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.78em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 6px 14px;
+  }
+  .botao-play {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #1A73E8;
+    color: #FFFFFF;
+    font-size: 0.65em;
+  }
+  .box-python pre {
+    margin: 0;
+    white-space: pre;
+    overflow-x: auto;
+    padding: 14px 18px;
+    background: #F8F9FA;
+    color: #3C4043;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 0.88em;
+  }
+  .cm-kw  { color: #1967D2; font-weight: bold; }
+  .cm-str { color: #188038; }
+  .cm-com { color: #80868B; font-style: italic; }
+  .cm-num { color: #AF00DB; }
+  .cm-bi  { color: #C5221F; }
+
+  .box-exercicio {
+    background: var(--branco);
+    border: 2px solid var(--ciano);
+  }
+  .box-exercicio .box-titulo { color: #1381AD; }
+
+  .box-resumo {
+    background: var(--azul-claro);
+    border: 1px solid var(--azul-escuro);
+    font-style: italic;
+  }
+  .box-resumo .box-titulo { color: var(--azul-escuro); font-style: normal; }
+
+  .box-formula {
+    background: var(--branco);
+    border: 2px solid var(--azul-escuro);
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.05em;
+    font-weight: bold;
+    color: var(--azul-escuro);
+    padding: 22px 18px;
+  }
+  .box-formula .box-titulo {
+    color: var(--ciano);
+    text-align: left;
+  }
+
+  .formula-math {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 1.15em;
+    margin: 6px 0;
+  }
+  .fracao {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    line-height: 1.3;
+  }
+  .fracao .num {
+    padding: 0 8px 4px;
+    border-bottom: 2px solid var(--azul-escuro);
+  }
+  .fracao .den {
+    padding: 4px 8px 0;
+  }
+  .nota-formula {
+    display: block;
+    margin-top: 10px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: normal;
+    font-style: italic;
+    font-size: 0.75em;
+    color: #5F6368;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 22px 0;
+    font-size: 0.92em;
+  }
+
+  .tabela-wrapper {
+    overflow-x: auto;
+    margin: 26px 0;
+  }
+  .tabela-wrapper table { margin: 0; }
+
+  th {
+    background: var(--azul-escuro);
+    color: var(--branco);
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    padding: 12px 14px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
+  }
+
+  td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  tr:nth-child(even) td {
+    background: var(--cinza-claro);
+  }
+
+  .sumario-item {
+    display: flex;
+    gap: 14px;
+    margin: 14px 0;
+    align-items: baseline;
+  }
+  .sumario-aula {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: var(--ciano);
+    white-space: nowrap;
+  }
+
+  .docente-box {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    background: var(--azul-claro);
+    border-left: 5px solid var(--azul-escuro);
+    border-radius: 6px;
+    padding: 20px;
+  }
+
+  ul, ol {
+    margin: 16px 0;
+    padding-left: 28px;
+  }
+
+  li { margin: 10px 0; }
+
+  .explicacao-codigo {
+    margin: 12px 0 20px 0;
+  }
+
+  .explicacao-codigo p {
+    margin: 3px 0;
+    text-indent: 0;
+    text-align: left;
+  }
+
+  .assinatura {
+    text-align: right;
+    font-style: italic;
+    margin-top: 22px;
+    color: var(--azul-escuro);
+  }
+
+  .figura {
+    margin: 30px 0;
+    text-align: center;
+  }
+  .figura img {
+    max-width: 100%;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  .figura figcaption {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8em;
+    color: #5F6368;
+    margin-top: 10px;
+    text-align: left;
+  }
+
+  @media print {
+    body { background: var(--branco); }
+    .container { box-shadow: none; max-width: 100%; padding: 10px; }
+    .box, table, .secao-titulo, .capa-cabecalho, .capa-titulo, .bloco-header, .figura,
+    .docente-box, .tabela-wrapper, .sumario-item {
+      page-break-inside: avoid;
+    }
+    .cabecalho-textual { display: none; }
+    @page { size: A4; margin: 2cm; }
+  }
+
+  .pagina-abertura {
+    position: relative;
+  }
+
+  .capa-cabecalho {
+    position: relative;
+    overflow: visible;
+  }
+
+  .curva-decorativa {
+    position: absolute;
+    right: -56px;
+    bottom: -46px;
+    width: 170px;
+    height: 130px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .capa-cabecalho > *:not(.curva-decorativa) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav-capitulos {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    background: var(--azul-escuro);
+    padding: 10px 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.85em;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  }
+
+  .nav-capitulos a {
+    color: var(--branco);
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    transition: background 0.15s;
+  }
+
+  .nav-capitulos a:hover {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .nav-capitulos a.ativo {
+    background: var(--ciano);
+  }
+
+  @media print {
+    .nav-capitulos { display: none; }
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--branco);
+    color: var(--azul-escuro);
+    padding: 10px 16px;
+    z-index: 200;
+    border-radius: 0 0 6px 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .skip-link:focus {
+    left: 0;
+  }
+
+  .nav-capitulos a:focus-visible {
+    outline: 2px solid var(--branco);
+    outline-offset: 2px;
+  }
+
+  .secao-nome {
+    margin: 0;
+  }
+
+  .sumario-lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
+<nav class="nav-capitulos" aria-label="Navegação entre aulas">
+  <a href="Guia_Cap_1_Modelo.html">Aula 01</a>
+  <a href="Guia_Cap_2_Modelo.html">Aula 02</a>
+  <a href="Guia_Cap_3_Modelo.html" class="ativo" aria-current="page">Aula 03</a>
+  <a href="Guia_Cap_4_Modelo.html">Aula 04</a>
+  <a href="Guia_Cap_5_Modelo.html">Aula 05</a>
+  <a href="Guia_Cap_6_Modelo.html">Aula 06</a>
+  <a href="Guia_Cap_7_Modelo.html">Aula 07</a>
+  <a href="Guia_Cap_8_Modelo.html">Aula 08</a>
+</nav>
+<div class="container">
+
+  <header class="cabecalho-textual">
+    <div>
+      CEAD/UNIGRAN · Guia de Estudos
+      <span class="curso">PROBABILIDADE E ESTATÍSTICA (EAD)</span>
+    </div>
+    <img class="logo" src="imagens/logo-unigran.png" alt="Logo UNIGRAN CEAD">
+  </header>
+  <main id="conteudo-principal">
+
+  <div class="pagina-abertura">
+    <div class="capa-cabecalho">
+      <div class="capa-numero"><span class="num">3</span><span class="ord-wrap"><span class="ord">a</span><span class="ord-linha"></span></span></div>
+      <div class="capa-aula-fundo"><span>Aula</span></div>
+      <svg class="curva-decorativa" viewBox="0 0 170 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <path d="M170,130 L170,20 C110,5 75,55 90,85 C102,110 55,130 0,120 L0,130 Z" fill="#29ABE2"/>
+        <path d="M170,130 L170,50 C130,40 105,75 118,95 C128,112 85,130 40,130 Z" fill="#1B3A8C" opacity="0.55"/>
+      </svg>
+    </div>
+
+    <h1 class="capa-titulo">O que são média, mediana e desvio padrão?</h1>
+
+    <p class="capa-intro">
+      Nas aulas anteriores vimos o vocabulário básico da Estatística e como
+      ela funciona como um processo. Agora vamos ao coração da Estatística
+      Descritiva: como resumir um conjunto de dados em poucos números que
+      contam a história do "centro" e da "dispersão" dos dados. Média,
+      mediana e desvio padrão são as estatísticas mais usadas, e vamos
+      aprender a calcular e, principalmente, a interpretar cada uma
+      delas.
+    </p>
+    <div class="assinatura">Grande abraço, Prof. Andrey</div>
+  </div>
+
+  <h2 class="bloco-header">Objetivos de Aprendizagem</h2>
+  <p>Ao término desta aula, vocês serão capazes de:</p>
+  <ul>
+    <li>Calcular a média e a mediana de um conjunto de dados numéricos;</li>
+    <li>Reconhecer quando a mediana representa melhor o "centro" dos
+      dados do que a média;</li>
+    <li>Calcular o desvio padrão de uma amostra, passo a passo;</li>
+    <li>Interpretar o que um desvio padrão pequeno ou grande revela
+      sobre a dispersão dos dados;</li>
+    <li>Aplicar média, mediana e desvio padrão para descrever e comparar
+      dados do dia a dia e da tecnologia.</li>
+  </ul>
+
+  <h2 class="bloco-header">Seções de Estudo</h2>
+  <ol class="sumario-lista">
+  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 1</span> Medindo o centro: média e mediana</li>
+  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 2</span> Quando a média engana: o efeito dos outliers</li>
+  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 3</span> Medindo a dispersão: o desvio padrão</li>
+  </ol>
+
+  <!-- SEÇÃO 1 -->
+  <div class="secao-titulo">
+    <div class="secao-etiqueta">SEÇÃO 1</div>
+    <h3 class="secao-nome">Medindo o centro: média e mediana</h3>
+  </div>
+
+  <figure class="figura">
+    <img src="imagens/secao1-balanca.jpg" alt="Balança de dois pratos em equilíbrio" loading="lazy" decoding="async">
+    <figcaption>Figura 1 – Assim como a balança busca o ponto de
+    equilíbrio, média e mediana são duas formas diferentes de encontrar
+    o "centro" de um conjunto de dados. Fonte: Mauro Cateb, Wikimedia
+    Commons (CC BY-SA 3.0). Acesso em: 07 jul. 2026.</figcaption>
+  </figure>
+
+  <p>
+    <strong>Média</strong> é a soma de todos os valores de um conjunto
+    de dados dividida pela quantidade de valores. É a medida de centro
+    mais usada, mas não é a única. A <strong>mediana</strong> é o valor
+    que fica exatamente no meio quando os dados estão ordenados do
+    menor para o maior. Se a quantidade de valores for par, a mediana é
+    a média dos dois valores do meio.
+  </p>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo cotidiano</span>
+    As idades de 5 amigos numa viagem são 22, 23, 24, 25 e 26 anos. A
+    média é
+    <span class="fracao"><span class="num">22+23+24+25+26</span><span class="den">5</span></span>
+    = 24 anos. Como os dados já estão ordenados e há um número ímpar de
+    valores, a mediana é o valor do meio: também 24 anos.
+  </div>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo em Tecnologia</span>
+    Um perfil recebeu estas curtidas nos últimos 6 posts: 40, 45, 50,
+    52, 58 e 60. A média é a soma (305) dividida por 6, ou seja,
+    aproximadamente 50,8 curtidas. Como são 6 valores (número par), a
+    mediana é a média dos dois valores centrais, 50 e 52, ou seja, 51
+    curtidas.
+  </div>
+
+  <div class="tabela-wrapper">
+  <table>
+    <thead>
+    <tr><th scope="col">Estatística</th><th scope="col">Como calcular</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Média</td><td><span class="fracao"><span class="num">soma de todos os valores</span><span class="den">quantidade de valores</span></span></td></tr>
+    <tr><td>Mediana</td><td>Ordenar os valores; pegar o do meio (ou a média dos dois do meio)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box box-atencao">
+    <span class="box-titulo">Atenção</span>
+    Média e mediana podem dar valores diferentes, e isso não é erro de
+    cálculo. Quanto mais parecidos os dois valores, mais "equilibrado"
+    é o conjunto de dados.
+  </div>
+
+  <div class="box box-formula">
+    <span class="box-titulo">Fórmula destacada</span>
+    <div class="formula-math">
+      <span>Média (x̄) =</span>
+      <span class="fracao"><span class="num">soma dos valores</span><span class="den">quantidade de valores (n)</span></span>
+    </div>
+    <span class="nota-formula">a mediana não tem fórmula algébrica: depende apenas de ordenar os dados</span>
+  </div>
+
+  <div class="box box-resumo">
+    <span class="box-titulo">Resumo da Seção 1</span>
+    Média é a soma dividida pela quantidade; mediana é o valor central
+    dos dados ordenados. Ambas medem o "centro" dos dados, mas de
+    formas diferentes.
+  </div>
+
+  <!-- SEÇÃO 2 -->
+  <div class="secao-titulo">
+    <div class="secao-etiqueta">SEÇÃO 2</div>
+    <h3 class="secao-nome">Quando a média engana: o efeito dos outliers</h3>
+  </div>
+
+  <p>
+    <strong>Outlier</strong> é um valor muito maior ou muito menor do
+    que a maioria dos dados do conjunto. A média é sensível a
+    outliers, porque leva em conta o valor exato de cada número: um
+    único valor extremo já é suficiente para puxá-la para cima ou para
+    baixo. A mediana, por olhar apenas para a posição central dos
+    dados ordenados, não sofre esse efeito. Por isso dizemos que a
+    mediana é <strong>resistente</strong> a outliers.
+  </p>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo cotidiano</span>
+    Uma padaria tem 5 funcionários, com salários de R$ 1.800, R$
+    1.900, R$ 2.000, R$ 2.100 e R$ 12.000 (o dono). A média é
+    <span class="fracao"><span class="num">R$ 19.800</span><span class="den">5</span></span>
+    = R$ 3.960, mas nenhum funcionário além do dono ganha perto disso.
+    A mediana, R$ 2.000, representa muito melhor o salário "típico" da
+    padaria.
+  </div>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo em Tecnologia</span>
+    O suporte de um aplicativo levou 1, 2, 2, 3, 3, 4 e 48 horas para
+    resolver 7 chamados (o último ficou esquecido na fila). A média
+    sobe para 9 horas, mas a mediana continua em 3 horas, mostrando
+    que a maioria dos chamados foi resolvida rapidamente, apesar do
+    caso isolado.
+  </div>
+
+  <div class="tabela-wrapper">
+  <table>
+    <thead>
+    <tr><th scope="col">Salários da padaria</th><th scope="col">Média</th><th scope="col">Mediana</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Com o salário do dono</td><td>R$ 3.960</td><td>R$ 2.000</td></tr>
+    <tr><td>Sem o salário do dono</td><td>R$ 1.950</td><td>R$ 1.950</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box box-atencao">
+    <span class="box-titulo">Atenção</span>
+    Quando a média fica bem mais alta (ou mais baixa) do que a
+    mediana, é sinal de que existe pelo menos um outlier puxando a
+    média para longe do "centro" real dos dados.
+  </div>
+
+  <div class="box box-formula">
+    <span class="box-titulo">Fórmula destacada</span>
+    <div class="formula-math">
+      <span>Outlier: valor muito distante da maioria dos dados</span>
+    </div>
+    <span class="nota-formula">uma diferença expressiva entre média e mediana é um bom indício de outlier</span>
+  </div>
+
+  <div class="box box-resumo">
+    <span class="box-titulo">Resumo da Seção 2</span>
+    Outliers distorcem a média, mas não a mediana. Quando os dois
+    valores estão muito diferentes, vale desconfiar de um outlier.
+  </div>
+
+  <!-- SEÇÃO 3 -->
+  <div class="secao-titulo">
+    <div class="secao-etiqueta">SEÇÃO 3</div>
+    <h3 class="secao-nome">Medindo a dispersão: o desvio padrão</h3>
+  </div>
+
+  <figure class="figura">
+    <img src="imagens/secao3-dardos.jpg" alt="Alvo de dardos com dardos espalhados ao redor do centro" loading="lazy" decoding="async">
+    <figcaption>Figura 2 – Dardos espalhados longe do centro do alvo
+    ilustram um desvio padrão grande; dardos concentrados no centro
+    ilustram um desvio padrão pequeno. Fonte: tookapic, Wikimedia
+    Commons (CC0). Acesso em: 07 jul. 2026.</figcaption>
+  </figure>
+
+  <p>
+    Média e mediana descrevem o centro, mas nada dizem sobre o quanto
+    os dados variam entre si. O <strong>desvio padrão</strong> mede
+    essa dispersão: quanto menor o desvio padrão, mais os dados estão
+    concentrados perto da média; quanto maior, mais espalhados eles
+    estão.
+  </p>
+  <p>
+    Para calcular o desvio padrão de uma amostra, siga estes passos:
+    (1) calcule a média; (2) subtraia a média de cada valor; (3) eleve
+    cada resultado ao quadrado; (4) some todos os quadrados; (5)
+    divida a soma por (n − 1); (6) tire a raiz quadrada do resultado.
+  </p>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo cotidiano</span>
+    Um aplicativo de entregas registrou estes tempos de entrega (em
+    minutos) em 5 pedidos: 25, 28, 30, 32 e 35. A média é 30 minutos.
+    Um desvio padrão pequeno aqui significaria entregas bem
+    previsíveis; um desvio padrão grande indicaria tempos de entrega
+    bem inconstantes, mesmo com a mesma média de 30 minutos.
+  </div>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo em Tecnologia</span>
+    As notas de um aplicativo na loja de apps vão de 1 a 5
+    estrelas. Um desvio padrão pequeno indica que os usuários
+    concordam entre si; um desvio padrão grande indica opiniões bem
+    divididas, mesmo que a nota média seja parecida.
+  </div>
+
+  <div class="tabela-wrapper">
+  <table>
+    <thead>
+    <tr><th scope="col">Aplicativo</th><th scope="col">Nota média</th><th scope="col">Desvio padrão</th><th scope="col">Interpretação</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>App A</td><td>4,0</td><td>0,3</td><td>Avaliações parecidas: usuários concordam</td></tr>
+    <tr><td>App B</td><td>4,0</td><td>1,5</td><td>Avaliações bem diferentes: opiniões divididas</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box box-atencao">
+    <span class="box-titulo">Atenção</span>
+    O desvio padrão nunca é negativo. Ele só é igual a zero quando
+    todos os valores do conjunto de dados são exatamente iguais.
+  </div>
+
+  <div class="box box-formula">
+    <span class="box-titulo">Fórmula destacada</span>
+    <div class="formula-math">
+      <span>s = √</span>
+      <span class="fracao"><span class="num">Σ(x − x̄)²</span><span class="den">n − 1</span></span>
+    </div>
+    <span class="nota-formula">x̄ = média da amostra; n = quantidade de valores; Σ = soma de todos os termos</span>
+  </div>
+
+  <div class="box box-resumo">
+    <span class="box-titulo">Resumo da Seção 3</span>
+    Desvio padrão mede a dispersão dos dados em torno da média.
+    Calcula-se somando os quadrados das diferenças em relação à
+    média, dividindo por (n − 1) e tirando a raiz quadrada.
+  </div>
+
+  <h2 class="bloco-header">Exemplo Matemático Resolvido</h2>
+  <p>
+    Um aplicativo de edição de fotos registrou o número de travamentos
+    por dia ao longo de 5 dias: 2, 3, 3, 5 e 7. Qual é o desvio padrão
+    desses travamentos?
+  </p>
+  <ol>
+    <li><strong>Dados:</strong> valores = 2, 3, 3, 5, 7; n = 5</li>
+    <li><strong>Fórmula:</strong> s = √
+      <span class="fracao"><span class="num">Σ(x − x̄)²</span><span class="den">n − 1</span></span></li>
+    <li><strong>Substituição:</strong> média =
+      <span class="fracao"><span class="num">2+3+3+5+7</span><span class="den">5</span></span>
+      = 4; diferenças: −2, −1, −1, 1, 3; quadrados: 4, 1, 1, 1, 9</li>
+    <li><strong>Cálculo:</strong> soma dos quadrados = 16;
+      <span class="fracao"><span class="num">16</span><span class="den">5 − 1</span></span>
+      = 4; s = √4 = 2</li>
+    <li><strong>Interpretação:</strong> o desvio padrão é de 2
+      travamentos por dia em torno da média de 4. Isso mostra uma
+      variação considerável: em alguns dias o app quase não travou, em
+      outros travou bem mais que a média.</li>
+  </ol>
+
+  <h2 class="bloco-header">Exemplo em Python</h2>
+  <p>
+    O programa abaixo recebe a lista de travamentos por dia e calcula a
+    média, a mediana e o desvio padrão, usando o módulo
+    <code>statistics</code> da biblioteca padrão do Python.
+  </p>
+  <div class="box box-python">
+    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+<pre><code class="language-python"><span class="cm-kw">import</span> statistics
+
+travamentos = [<span class="cm-num">2</span>, <span class="cm-num">3</span>, <span class="cm-num">3</span>, <span class="cm-num">5</span>, <span class="cm-num">7</span>]
+
+media = statistics.mean(travamentos)
+mediana = statistics.median(travamentos)
+desvio = statistics.stdev(travamentos)
+
+<span class="cm-bi">print</span>(<span class="cm-str">f"Média: {media:.1f} travamentos por dia"</span>)
+<span class="cm-bi">print</span>(<span class="cm-str">f"Mediana: {mediana:.1f} travamentos por dia"</span>)
+<span class="cm-bi">print</span>(<span class="cm-str">f"Desvio padrão: {desvio:.1f} travamentos por dia"</span>)
+</code></pre>
+  </div>
+  <div class="explicacao-codigo">
+    <p><strong>Entrada:</strong> lista com o número de travamentos em cada um dos 5 dias.</p>
+    <p><strong>Processamento:</strong> <code>statistics.mean</code>,
+      <code>statistics.median</code> e <code>statistics.stdev</code>
+      aplicam as fórmulas da Seção 1 e da Seção 3.</p>
+    <p><strong>Saída:</strong> "Média: 4.0 travamentos por dia",
+      "Mediana: 3.0 travamentos por dia" e "Desvio padrão: 2.0
+      travamentos por dia".</p>
+    <p><strong>Interpretação:</strong> média e mediana ficam próximas
+      (4,0 e 3,0), sinal de que não há outlier forte nesses dados; o
+      desvio padrão de 2,0 confirma a variação calculada no exemplo
+      resolvido.</p>
+  </div>
+
+  <h2 class="bloco-header">Exercícios</h2>
+
+  <div class="box box-exercicio">
+    <span class="box-titulo">Exercício 1</span>
+    Um aplicativo de streaming mediu o tempo de carregamento (em
+    segundos) em 5 testes: 2, 2, 3, 3 e 5. Escreva um programa em
+    Python que calcule e imprima a média e a mediana desses tempos.
+  </div>
+
+  <div class="box box-exercicio">
+    <span class="box-titulo">Exercício 2</span>
+    Uma loja de aplicativos registrou o número de curtidas em 6
+    avaliações recentes de um app: 10, 12, 11, 13, 12 e 90 (essa
+    última avaliação viralizou nas redes sociais). Escreva um programa
+    em Python que: (a) calcule a média, a mediana e o desvio padrão
+    dessas curtidas; (b) imprima os três valores; (c) imprima um
+    alerta se a média for maior que 1,5 vez a mediana, sinalizando que
+    a média pode estar distorcida por um valor fora do padrão.
+  </div>
+
+  <h2 class="bloco-header">Gabarito Comentado</h2>
+
+  <p><strong>Exercício 1</strong></p>
+  <div class="box box-python">
+    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+<pre><code class="language-python"><span class="cm-kw">import</span> statistics
+
+tempos = [<span class="cm-num">2</span>, <span class="cm-num">2</span>, <span class="cm-num">3</span>, <span class="cm-num">3</span>, <span class="cm-num">5</span>]
+
+media = statistics.mean(tempos)
+mediana = statistics.median(tempos)
+
+<span class="cm-bi">print</span>(<span class="cm-str">f"Média: {media:.1f} segundos"</span>)
+<span class="cm-bi">print</span>(<span class="cm-str">f"Mediana: {mediana:.1f} segundos"</span>)
+</code></pre>
+  </div>
+  <div class="explicacao-codigo">
+    <p><strong>Saída:</strong> "Média: 3.0 segundos" e "Mediana: 3.0 segundos".</p>
+    <p><strong>Comentário:</strong> aplicação direta das fórmulas da
+      Seção 1. Média e mediana coincidem, sinal de dados bem
+      equilibrados, sem outliers.</p>
+  </div>
+
+  <p><strong>Exercício 2</strong></p>
+  <div class="box box-python">
+    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+<pre><code class="language-python"><span class="cm-kw">import</span> statistics
+
+curtidas = [<span class="cm-num">10</span>, <span class="cm-num">12</span>, <span class="cm-num">11</span>, <span class="cm-num">13</span>, <span class="cm-num">12</span>, <span class="cm-num">90</span>]
+
+media = statistics.mean(curtidas)
+mediana = statistics.median(curtidas)
+desvio = statistics.stdev(curtidas)
+
+<span class="cm-bi">print</span>(<span class="cm-str">f"Média: {media:.1f} curtidas"</span>)
+<span class="cm-bi">print</span>(<span class="cm-str">f"Mediana: {mediana:.1f} curtidas"</span>)
+<span class="cm-bi">print</span>(<span class="cm-str">f"Desvio padrão: {desvio:.1f} curtidas"</span>)
+
+<span class="cm-kw">if</span> media &gt; <span class="cm-num">1.5</span> * mediana:
+    <span class="cm-bi">print</span>(
+        <span class="cm-str">"Alerta: a média está bem acima da mediana, sinal de "</span>
+        <span class="cm-str">"um valor fora do padrão puxando a média para cima."</span>
+    )
+<span class="cm-kw">else</span>:
+    <span class="cm-bi">print</span>(
+        <span class="cm-str">"Média e mediana estão próximas; não há sinal forte "</span>
+        <span class="cm-str">"de valores fora do padrão."</span>
+    )
+</code></pre>
+  </div>
+  <div class="explicacao-codigo">
+    <p><strong>Saída:</strong> "Média: 24.7 curtidas", "Mediana: 12.0
+      curtidas", "Desvio padrão: 32.0 curtidas" e o alerta de valor
+      fora do padrão.</p>
+    <p><strong>Comentário:</strong> a avaliação com 90 curtidas puxa a
+      média bem acima da mediana, disparando o alerta, exatamente como
+      na padaria da Seção 2.</p>
+  </div>
+
+  <h2 class="bloco-header">Retomando a Conversa Inicial</h2>
+
+  <p><strong>Seção 1, Medindo o centro:</strong> média é a soma dividida
+  pela quantidade; mediana é o valor central dos dados ordenados. As
+  duas medem o centro, mas de formas diferentes.</p>
+
+  <p><strong>Seção 2, Quando a média engana:</strong> outliers puxam a
+  média para longe do centro real dos dados, mas não afetam a
+  mediana. Diferença grande entre as duas é sinal de outlier.</p>
+
+  <p><strong>Seção 3, Medindo a dispersão:</strong> o desvio padrão
+  mostra o quanto os dados variam em torno da média; quanto maior,
+  mais espalhados os dados estão.</p>
+
+  <h2 class="bloco-header">Revisão Rápida</h2>
+  <div class="tabela-wrapper">
+  <table>
+    <thead>
+    <tr>
+      <th scope="col">Conceito</th>
+      <th scope="col">Fórmula</th>
+      <th scope="col">Erro comum</th>
+      <th scope="col">Dica de prova</th>
+      <th scope="col">Aplicação em Tecnologia</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Média</td>
+      <td><span class="fracao"><span class="num">soma</span><span class="den">n</span></span></td>
+      <td>Confundir com mediana</td>
+      <td>É sensível a outliers</td>
+      <td>Nota média de um aplicativo</td>
+    </tr>
+    <tr>
+      <td>Mediana</td>
+      <td>valor central (dados ordenados)</td>
+      <td>Esquecer de ordenar antes</td>
+      <td>É resistente a outliers</td>
+      <td>Curtida "típica" de um perfil</td>
+    </tr>
+    <tr>
+      <td>Outlier</td>
+      <td>N/A</td>
+      <td>Ignorar seu efeito na média</td>
+      <td>Compare média e mediana</td>
+      <td>Avaliação viral distorcendo a média</td>
+    </tr>
+    <tr>
+      <td>Desvio padrão</td>
+      <td><span class="fracao"><span class="num">Σ(x − x̄)²</span><span class="den">n − 1</span></span> (com √ no resultado)</td>
+      <td>Esquecer de dividir por n − 1</td>
+      <td>Nunca é negativo</td>
+      <td>Consistência das notas de um app</td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2 class="bloco-header">Sugestões de Leituras e Sites</h2>
+  <p><strong>LEITURAS</strong></p>
+  <p>RUMSEY, Deborah J. <em>Statistics For Dummies</em>. 2. ed. Hoboken,
+  NJ: Wiley Publishing, 2011. (livro-base desta aula, recomendado para
+  aprofundamento em medidas de centro e de dispersão.)</p>
+  <p><strong>SITES</strong></p>
+  <p>Khan Academy, Estatística e Probabilidade:
+  https://pt.khanacademy.org/math/statistics-probability (aulas
+  gratuitas em português sobre média, mediana e desvio padrão.)</p>
+
+  <h2 class="bloco-header">Glossário</h2>
+  <div class="tabela-wrapper">
+  <table>
+    <thead>
+    <tr><th scope="col">Termo</th><th scope="col">Definição</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Estatística (medida)</td><td>Número que resume uma característica de um conjunto de dados.</td></tr>
+    <tr><td>Média</td><td>Soma de todos os valores dividida pela quantidade de valores.</td></tr>
+    <tr><td>Mediana</td><td>Valor central de um conjunto de dados ordenado.</td></tr>
+    <tr><td>Outlier</td><td>Valor muito maior ou muito menor do que a maioria dos dados.</td></tr>
+    <tr><td>Resistente</td><td>Característica de uma estatística que não é afetada por outliers, como a mediana.</td></tr>
+    <tr><td>Desvio padrão</td><td>Medida de quanto os dados variam em torno da média.</td></tr>
+    <tr><td>Variância</td><td>Soma dos quadrados das diferenças em relação à média, dividida por (n − 1); o desvio padrão é a sua raiz quadrada.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2 class="bloco-header">Referências Bibliográficas</h2>
+  <p>MORETTIN, Pedro A. <em>Estatística básica</em>. 10. ed. Rio de
+  Janeiro: Saraiva Uni, 2023. E-book. p.i. ISBN 9788571441484.
+  Disponível em:
+  https://integrada.minhabiblioteca.com.br/reader/books/9788571441484/.
+  Acesso em: 01 dez. 2025.</p>
+  <p>TRIOLA, Mario F. <em>Introdução à Estatística</em>. 14. ed. Rio de
+  Janeiro: LTC, 2024. E-book. p.Capa. ISBN 9788521638780. Disponível em:
+  https://integrada.minhabiblioteca.com.br/reader/books/9788521638780/.
+  Acesso em: 01 dez. 2025.</p>
+
+  </main>
+</div>
+</body>
+</html>

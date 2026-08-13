@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia de Estudos - Aula 2 - Probabilidade e Estatística (EAD)</title>
+<meta name="description" content="Guia de Estudos CEAD/UNIGRAN — Aula 2 da disciplina de Probabilidade e Estatística (EAD), com teoria, exemplos em Python e exercícios comentados.">
+<style>
+  :root {
+    --azul-escuro: #1B3A8C;
+    --ciano: #29ABE2;
+    --azul-claro: #D6E8F5;
+    --cinza-claro: #F4F4F4;
+    --cinza-texto: #333333;
+    --atencao-borda: #E0932C;
+    --atencao-fundo: #FFF4E0;
+    --branco: #FFFFFF;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--cinza-texto);
+    background: #EAEFF6;
+    margin: 0;
+    padding: 0;
+    line-height: 1.75;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--branco);
+    padding: 48px 56px 70px 56px;
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.12);
+  }
+
+  .cabecalho-textual {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-variant: small-caps;
+    font-style: italic;
+    color: var(--azul-escuro);
+    font-size: 1.05em;
+    letter-spacing: 0.5px;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+
+  .cabecalho-textual .curso {
+    display: block;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 0.75em;
+    color: var(--ciano);
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .cabecalho-textual .logo {
+    height: 48px;
+    flex-shrink: 0;
+  }
+
+  .capa-cabecalho {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 10px;
+    margin-bottom: 40px;
+  }
+
+  .capa-numero {
+    position: relative;
+    flex-shrink: 0;
+    width: 230px;
+    height: 208px;
+    background: var(--ciano);
+    color: var(--branco);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(0 0, 100% 0, 100% 76%, 50% 100%, 0 76%);
+    filter: drop-shadow(6px 8px 6px rgba(0, 0, 0, 0.35));
+  }
+
+  .capa-numero .num {
+    font-size: 5em;
+    line-height: 1;
+  }
+
+  .capa-numero .ord-wrap {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 4px;
+    margin-top: -1.6em;
+  }
+
+  .capa-numero .ord {
+    font-size: 1.8em;
+    line-height: 1;
+  }
+
+  .capa-numero .ord-linha {
+    width: 16px;
+    height: 3px;
+    background: var(--branco);
+    margin-top: 5px;
+  }
+
+  .capa-aula-fundo {
+    flex-grow: 1;
+    height: 158px;
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+    background: linear-gradient(to right, #D9D9D9, #FAFAFA);
+    box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.18);
+  }
+
+  .capa-aula-fundo span {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 3em;
+    color: #1A1A1A;
+  }
+
+  .capa-titulo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 1.55em;
+    line-height: 1.4;
+    color: #1A1A1A;
+    margin: 6px 0 26px;
+  }
+
+  .capa-intro {
+    font-style: italic;
+    text-indent: 0;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .bloco-header {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--azul-escuro);
+    color: var(--branco);
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 13px 22px;
+    font-size: 1.02em;
+    border-radius: 3px;
+    margin-top: 42px;
+    margin-bottom: 22px;
+    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .secao-titulo {
+    display: flex;
+    align-items: stretch;
+    margin-top: 48px;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .secao-etiqueta {
+    background: var(--azul-escuro);
+    color: var(--branco);
+    padding: 10px 20px;
+    white-space: nowrap;
+    border-radius: 4px 0 0 4px;
+    font-size: 0.95em;
+  }
+
+  .secao-nome {
+    background: var(--azul-claro);
+    color: var(--azul-escuro);
+    padding: 10px 20px;
+    flex-grow: 1;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.95em;
+  }
+
+  .subtitulo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: var(--azul-escuro);
+    font-size: 1.02em;
+    margin-top: 22px;
+  }
+
+  p {
+    margin: 16px 0;
+    text-indent: 1.25cm;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .box p,
+  .docente-box p {
+    text-indent: 0;
+    text-align: justify;
+  }
+
+  .box {
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin: 26px 0;
+    page-break-inside: avoid;
+  }
+
+  .box-titulo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.82em;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .box-conceito {
+    background: var(--azul-claro);
+    border-left: 5px solid var(--azul-escuro);
+  }
+  .box-conceito .box-titulo { color: var(--azul-escuro); }
+
+  .box-exemplo {
+    background: #EAF7FC;
+    border-left: 5px solid var(--ciano);
+  }
+  .box-exemplo .box-titulo { color: #1381AD; }
+
+  .box-atencao {
+    background: var(--atencao-fundo);
+    border-left: 5px solid var(--atencao-borda);
+  }
+  .box-atencao .box-titulo { color: var(--atencao-borda); }
+
+  .box-python {
+    background: #FFFFFF;
+    border: 1px solid #DADCE0;
+    border-radius: 8px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15);
+  }
+  .codigo-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #F1F3F4;
+    border-bottom: 1px solid #DADCE0;
+    color: #5F6368;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.78em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 6px 14px;
+  }
+  .botao-play {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #1A73E8;
+    color: #FFFFFF;
+    font-size: 0.65em;
+  }
+  .box-python pre {
+    margin: 0;
+    white-space: pre;
+    overflow-x: auto;
+    padding: 14px 18px;
+    background: #F8F9FA;
+    color: #3C4043;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 0.88em;
+  }
+  .cm-kw  { color: #1967D2; font-weight: bold; }
+  .cm-str { color: #188038; }
+  .cm-com { color: #80868B; font-style: italic; }
+  .cm-num { color: #AF00DB; }
+  .cm-bi  { color: #C5221F; }
+
+  .box-exercicio {
+    background: var(--branco);
+    border: 2px solid var(--ciano);
+  }
+  .box-exercicio .box-titulo { color: #1381AD; }
+
+  .box-resumo {
+    background: var(--azul-claro);
+    border: 1px solid var(--azul-escuro);
+    font-style: italic;
+  }
+  .box-resumo .box-titulo { color: var(--azul-escuro); font-style: normal; }
+
+  .box-formula {
+    background: var(--branco);
+    border: 2px solid var(--azul-escuro);
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.05em;
+    font-weight: bold;
+    color: var(--azul-escuro);
+    padding: 22px 18px;
+  }
+  .box-formula .box-titulo {
+    color: var(--ciano);
+    text-align: left;
+  }
+
+  .formula-math {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 1.15em;
+    margin: 6px 0;
+  }
+  .fracao {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    line-height: 1.3;
+  }
+  .fracao .num {
+    padding: 0 8px 4px;
+    border-bottom: 2px solid var(--azul-escuro);
+  }
+  .fracao .den {
+    padding: 4px 8px 0;
+  }
+  .nota-formula {
+    display: block;
+    margin-top: 10px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: normal;
+    font-style: italic;
+    font-size: 0.75em;
+    color: #5F6368;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 22px 0;
+    font-size: 0.92em;
+  }
+
+  .tabela-wrapper {
+    overflow-x: auto;
+    margin: 26px 0;
+  }
+  .tabela-wrapper table { margin: 0; }
+
+  th {
+    background: var(--azul-escuro);
+    color: var(--branco);
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    padding: 12px 14px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
+  }
+
+  td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  tr:nth-child(even) td {
+    background: var(--cinza-claro);
+  }
+
+  .sumario-item {
+    display: flex;
+    gap: 14px;
+    margin: 14px 0;
+    align-items: baseline;
+  }
+  .sumario-aula {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: var(--ciano);
+    white-space: nowrap;
+  }
+
+  .docente-box {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    background: var(--azul-claro);
+    border-left: 5px solid var(--azul-escuro);
+    border-radius: 6px;
+    padding: 20px;
+  }
+
+  ul, ol {
+    margin: 16px 0;
+    padding-left: 28px;
+  }
+
+  li { margin: 10px 0; }
+
+  .explicacao-codigo {
+    margin: 12px 0 20px 0;
+  }
+
+  .explicacao-codigo p {
+    margin: 3px 0;
+    text-indent: 0;
+    text-align: left;
+  }
+
+  .assinatura {
+    text-align: right;
+    font-style: italic;
+    margin-top: 22px;
+    color: var(--azul-escuro);
+  }
+
+  .figura {
+    margin: 30px 0;
+    text-align: center;
+  }
+  .figura img {
+    max-width: 100%;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  .figura figcaption {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8em;
+    color: #5F6368;
+    margin-top: 10px;
+    text-align: left;
+  }
+
+  @media print {
+    body { background: var(--branco); }
+    .container { box-shadow: none; max-width: 100%; padding: 10px; }
+    .box, table, .secao-titulo, .capa-cabecalho, .capa-titulo, .bloco-header, .figura,
+    .docente-box, .tabela-wrapper, .sumario-item {
+      page-break-inside: avoid;
+    }
+    .cabecalho-textual { display: none; }
+    @page { size: A4; margin: 2cm; }
+  }
+
+  .pagina-abertura {
+    position: relative;
+  }
+
+  .capa-cabecalho {
+    position: relative;
+    overflow: visible;
+  }
+
+  .curva-decorativa {
+    position: absolute;
+    right: -56px;
+    bottom: -46px;
+    width: 170px;
+    height: 130px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .capa-cabecalho > *:not(.curva-decorativa) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav-capitulos {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    background: var(--azul-escuro);
+    padding: 10px 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.85em;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  }
+
+  .nav-capitulos a {
+    color: var(--branco);
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    transition: background 0.15s;
+  }
+
+  .nav-capitulos a:hover {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .nav-capitulos a.ativo {
+    background: var(--ciano);
+  }
+
+  @media print {
+    .nav-capitulos { display: none; }
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--branco);
+    color: var(--azul-escuro);
+    padding: 10px 16px;
+    z-index: 200;
+    border-radius: 0 0 6px 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .skip-link:focus {
+    left: 0;
+  }
+
+  .nav-capitulos a:focus-visible {
+    outline: 2px solid var(--branco);
+    outline-offset: 2px;
+  }
+
+  .secao-nome {
+    margin: 0;
+  }
+
+  .sumario-lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
+<nav class="nav-capitulos" aria-label="Navegação entre aulas">
+  <a href="Guia_Cap_1_Modelo.html">Aula 01</a>
+  <a href="Guia_Cap_2_Modelo.html" class="ativo" aria-current="page">Aula 02</a>
+  <a href="Guia_Cap_3_Modelo.html">Aula 03</a>
+  <a href="Guia_Cap_4_Modelo.html">Aula 04</a>
+  <a href="Guia_Cap_5_Modelo.html">Aula 05</a>
+  <a href="Guia_Cap_6_Modelo.html">Aula 06</a>
+  <a href="Guia_Cap_7_Modelo.html">Aula 07</a>
+  <a href="Guia_Cap_8_Modelo.html">Aula 08</a>
+</nav>
+<div class="container">
+
+  <header class="cabecalho-textual">
+    <div>
+      CEAD/UNIGRAN · Guia de Estudos
+      <span class="curso">PROBABILIDADE E ESTATÍSTICA (EAD)</span>
+    </div>
+    <img class="logo" src="imagens/logo-unigran.png" alt="Logo UNIGRAN CEAD">
+  </header>
+  <main id="conteudo-principal">
+
+  <div class="pagina-abertura">
+    <div class="capa-cabecalho">
+      <div class="capa-numero"><span class="num">2</span><span class="ord-wrap"><span class="ord">a</span><span class="ord-linha"></span></span></div>
+      <div class="capa-aula-fundo"><span>Aula</span></div>
+      <svg class="curva-decorativa" viewBox="0 0 170 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <path d="M170,130 L170,20 C110,5 75,55 90,85 C102,110 55,130 0,120 L0,130 Z" fill="#29ABE2"/>
+        <path d="M170,130 L170,50 C130,40 105,75 118,95 C128,112 85,130 40,130 Z" fill="#1B3A8C" opacity="0.55"/>
+      </svg>
+    </div>
+
+    <h1 class="capa-titulo">Como funciona o processo estatístico?</h1>
+
+    <p class="capa-intro">
+      Na Aula 1 vimos que a Estatística está em toda parte e que contagens
+      e taxas podem contar histórias diferentes. Agora vamos abrir o
+      "capô" da Estatística: entender que, por trás de qualquer número
+      divulgado, existe um processo com etapas bem definidas, e conhecer
+      o vocabulário básico que os estatísticos usam para descrever esse
+      processo. Esse vocabulário vai aparecer ao longo de todo o curso,
+      então vale a pena fixar bem cada termo.
+    </p>
+    <div class="assinatura">Grande abraço, Prof. Andrey</div>
+  </div>
+
+  <h2 class="bloco-header">Objetivos de Aprendizagem</h2>
+  <p>Ao término desta aula, vocês serão capazes de:</p>
+  <ul>
+    <li>Reconhecer a Estatística como um processo de quatro etapas: definir a
+      população, coletar dados, organizar/analisar e concluir;</li>
+    <li>Diferenciar dados numéricos de dados categóricos e, dentro dos
+      numéricos, dados discretos de dados contínuos;</li>
+    <li>Distinguir população de amostra, e parâmetro de estatística;</li>
+    <li>Identificar o que torna uma amostra aleatória, evitando os erros
+      mais comuns de amostragem tendenciosa;</li>
+    <li>Calcular a margem de erro aproximada de uma amostra e interpretar
+      seu significado.</li>
+  </ul>
+
+  <h2 class="bloco-header">Seções de Estudo</h2>
+  <ol class="sumario-lista">
+  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 1</span> Estatística é um processo, não só números</li>
+  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 2</span> Tipos de dados: numéricos e categóricos</li>
+  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 3</span> População, amostra, parâmetro e estatística</li>
+  </ol>
+
+  <!-- SEÇÃO 1 -->
+  <div class="secao-titulo">
+    <div class="secao-etiqueta">SEÇÃO 1</div>
+    <h3 class="secao-nome">Estatística é um processo, não só números</h3>
+  </div>
+
+  <figure class="figura">
+    <img src="imagens/secao1-urna-eleitoral.jpg" alt="Urna eleitoral de metal antiga, usada para depositar votos" loading="lazy" decoding="async">
+    <figcaption>Figura 1 – A urna eleitoral representa bem o processo
+    estatístico completo: definir os eleitores (população), coletar os
+    votos, apurar o resultado e concluir quem venceu, sempre com uma
+    margem de erro. Fonte: Smithsonian Institution, Wikimedia Commons
+    (domínio público). Acesso em: 07 jul. 2026.</figcaption>
+  </figure>
+
+  <p>
+    Quem não trabalha com Estatística costuma pensar que ela é só
+    "mexer com números". Na prática, o número final é apenas a ponta
+    do processo. Toda pesquisa estatística séria segue quatro etapas:
+    (1) definir a população que se quer estudar, (2) coletar os dados,
+    (3) organizar, resumir e analisar esses dados e (4) tirar
+    conclusões e responder à pergunta original.
+  </p>
+  <p>
+    Nenhuma dessas etapas envolve só cálculo. Definir bem a população é
+    uma decisão; coletar dados de forma justa é um desafio prático; e
+    toda conclusão vem com uma margem de incerteza, porque raramente é
+    possível ouvir todo mundo.
+  </p>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo cotidiano</span>
+    Uma emissora quer saber quem vai vencer a eleição para prefeito.
+    Etapa 1: define a população (eleitores que pretendem votar).
+    Etapa 2: coleta dados de uma parte deles, pois entrevistar todos os
+    eleitores da cidade não é viável. Etapa 3: organiza e resume as
+    respostas. Etapa 4: projeta um resultado para toda a população,
+    já sabendo que pode errar por uma margem pequena.
+  </div>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo em Tecnologia</span>
+    Um aplicativo de streaming quer saber se um novo algoritmo de
+    recomendações agrada os usuários. Etapa 1: população = todos os
+    usuários ativos. Etapa 2: coleta as notas de satisfação de uma
+    amostra de usuários que já testaram o algoritmo. Etapa 3: organiza
+    as notas e calcula um resumo (por exemplo, a média das notas).
+    Etapa 4: conclui se o algoritmo agrada mais que o anterior, e essa
+    conclusão costuma abrir novas perguntas de pesquisa.
+  </div>
+
+  <div class="tabela-wrapper">
+  <table>
+    <thead>
+    <tr><th scope="col">Etapa</th><th scope="col">O que acontece</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>1. Definir a população</td><td>Decidir exatamente quem ou o que será estudado</td></tr>
+    <tr><td>2. Coletar os dados</td><td>Escolher uma amostra e registrar as informações</td></tr>
+    <tr><td>3. Organizar e analisar</td><td>Resumir os dados em tabelas, gráficos e medidas</td></tr>
+    <tr><td>4. Concluir</td><td>Responder à pergunta original, com sua margem de incerteza</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box box-atencao">
+    <span class="box-titulo">Atenção</span>
+    Nenhuma conclusão estatística tem 100% de certeza, a não ser que
+    toda a população tenha sido consultada. Por isso toda conclusão
+    séria vem acompanhada de uma medida de confiança ou de erro, e não
+    apenas de um número seco.
+  </div>
+
+  <div class="box box-formula">
+    <span class="box-titulo">Fórmula destacada</span>
+    <div class="formula-math">
+      <span>Definir população → Coletar dados → Organizar/Analisar → Concluir</span>
+    </div>
+    <span class="nota-formula">as quatro etapas do processo estatístico, sempre nessa ordem</span>
+  </div>
+
+  <div class="box box-resumo">
+    <span class="box-titulo">Resumo da Seção 1</span>
+    Estatística é um processo de quatro etapas (população, coleta,
+    organização/análise, conclusão), não apenas um número final.
+  </div>
+
+  <!-- SEÇÃO 2 -->
+  <div class="secao-titulo">
+    <div class="secao-etiqueta">SEÇÃO 2</div>
+    <h3 class="secao-nome">Tipos de dados: numéricos e categóricos</h3>
+  </div>
+
+  <p>
+    <strong>Dado</strong> é qualquer informação registrada durante a
+    coleta. O conjunto de todos os dados coletados numa pesquisa é
+    chamado de <strong>conjunto de dados</strong>. Já a característica
+    que está sendo medida ou observada em cada indivíduo (idade, nota,
+    curso favorito) é chamada de <strong>variável</strong>.
+  </p>
+  <p>
+    Os dados se dividem em dois grandes grupos. <strong>Dados
+    numéricos</strong> representam uma contagem ou uma medida (por
+    exemplo, quantos aplicativos alguém tem instalados). Dentro deles,
+    dados <strong>discretos</strong> só assumem valores que podem ser
+    listados (0, 1, 2, 3...), enquanto dados <strong>contínuos</strong>
+    vêm de uma medição e podem assumir qualquer valor dentro de um
+    intervalo (por exemplo, o tempo exato de carregamento de uma
+    página). Já <strong>dados categóricos</strong> representam um
+    grupo ou rótulo (por exemplo, o sistema operacional do celular),
+    e não fazem sentido somados ou calculados como média.
+  </p>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo cotidiano</span>
+    Numa pesquisa de saúde, "número de consultas no ano" é dado
+    numérico discreto (0, 1, 2...); "peso do paciente em quilos" é
+    numérico contínuo; e "tipo sanguíneo" é dado categórico, mesmo que
+    seja registrado com um código.
+  </div>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo em Tecnologia</span>
+    Em uma loja de aplicativos, "número de avaliações recebidas" é
+    dado numérico discreto; "tempo médio de uso do aplicativo por dia"
+    é numérico contínuo; e "categoria do aplicativo" (jogo, rede
+    social, produtividade) é dado categórico.
+  </div>
+
+  <div class="tabela-wrapper">
+  <table>
+    <thead>
+    <tr><th scope="col">Variável</th><th scope="col">Tipo de dado</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Número de seguidores de um perfil</td><td>Numérico discreto</td></tr>
+    <tr><td>Duração de um vídeo em segundos</td><td>Numérico contínuo</td></tr>
+    <tr><td>Rede social preferida</td><td>Categórico</td></tr>
+    <tr><td>Nota dada a um aplicativo (1 a 5 estrelas)</td><td>Categórico (ordenado)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box box-atencao">
+    <span class="box-titulo">Atenção</span>
+    Um número não é sempre dado numérico. O código "1" para Android e
+    "2" para iOS é categórico: somar ou tirar a média desses códigos
+    não tem nenhum significado.
+  </div>
+
+  <div class="box box-formula">
+    <span class="box-titulo">Fórmula destacada</span>
+    <div class="formula-math">
+      <span>D = {x₁, x₂, x₃, ..., xₙ}</span>
+    </div>
+    <span class="nota-formula">notação de um conjunto de dados D com n observações</span>
+  </div>
+
+  <div class="box box-resumo">
+    <span class="box-titulo">Resumo da Seção 2</span>
+    Dados numéricos medem ou contam (discretos ou contínuos); dados
+    categóricos classificam em grupos. Nem todo número é dado
+    numérico.
+  </div>
+
+  <!-- SEÇÃO 3 -->
+  <div class="secao-titulo">
+    <div class="secao-etiqueta">SEÇÃO 3</div>
+    <h3 class="secao-nome">População, amostra, parâmetro e estatística</h3>
+  </div>
+
+  <figure class="figura">
+    <img src="imagens/secao3-dados-aleatorios.jpg" alt="Vários dados coloridos espalhados, cada um mostrando uma face diferente" loading="lazy" decoding="async">
+    <figcaption>Figura 2 – Assim como o resultado de um dado, uma
+    amostra aleatória depende do acaso: todo elemento da população
+    precisa ter a mesma chance de ser sorteado para a amostra. Fonte:
+    P2u111, Wikimedia Commons (CC BY 4.0). Acesso em: 07 jul. 2026.</figcaption>
+  </figure>
+
+  <p>
+    Como vimos na Aula 1, <strong>população</strong> é o grupo completo
+    que se quer estudar, e <strong>amostra</strong> é a parte dele
+    efetivamente pesquisada. Agora vamos além: quando um número resume
+    a <em>população inteira</em>, ele é chamado de
+    <strong>parâmetro</strong>. Quando o mesmo tipo de número resume
+    apenas a <em>amostra</em>, ele é chamado de <strong>estatística</strong>.
+    Na prática, quase sempre só é possível calcular a estatística da
+    amostra e usá-la para estimar o parâmetro da população.
+  </p>
+  <p>
+    Para essa estimativa ser confiável, a amostra precisa ser
+    <strong>aleatória</strong>: toda amostra possível do mesmo tamanho
+    precisa ter a mesma chance de ser escolhida. Quando isso não
+    acontece (por exemplo, quando só respondem os mais interessados no
+    assunto), a amostra é tendenciosa e o resultado sofre de
+    <strong>viés de amostragem</strong>.
+  </p>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo cotidiano</span>
+    O IBGE quer saber a renda média de todas as famílias brasileiras
+    (o parâmetro). Como entrevistar cada família do país é inviável,
+    calcula a renda média de uma amostra de famílias (a estatística) e
+    usa esse valor para estimar o parâmetro da população inteira.
+  </div>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo em Tecnologia</span>
+    Uma rede social quer saber quantos minutos por dia, em média,
+    todos os seus usuários passam no aplicativo (o parâmetro). Como
+    calcular isso para bilhões de contas seria demorado, o sistema
+    calcula a média de uma amostra aleatória de usuários (a
+    estatística) e usa esse valor para estimar o parâmetro.
+  </div>
+
+  <div class="tabela-wrapper">
+  <table>
+    <thead>
+    <tr><th scope="col">Termo</th><th scope="col">Refere-se a</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>População</td><td>Grupo completo de interesse</td></tr>
+    <tr><td>Amostra</td><td>Parte da população efetivamente estudada</td></tr>
+    <tr><td>Parâmetro</td><td>Número que resume a população inteira</td></tr>
+    <tr><td>Estatística</td><td>Número que resume a amostra</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box box-atencao">
+    <span class="box-titulo">Atenção</span>
+    Quanto maior e mais aleatória a amostra, mais a estatística
+    calculada se aproxima do parâmetro real da população. Amostra
+    grande não compensa amostra tendenciosa: uma amostra pequena e
+    bem escolhida vale mais do que uma amostra grande e viciada.
+  </div>
+
+  <div class="box box-formula">
+    <span class="box-titulo">Fórmula destacada</span>
+    <div class="formula-math">
+      <span>Margem de erro (%) ≈</span>
+      <span class="fracao"><span class="num">100</span><span class="den">√n</span></span>
+    </div>
+    <span class="nota-formula">n = tamanho da amostra; aproximação simples para amostras aleatórias</span>
+  </div>
+
+  <div class="box box-resumo">
+    <span class="box-titulo">Resumo da Seção 3</span>
+    Parâmetro resume a população; estatística resume a amostra. Uma
+    amostra aleatória e suficientemente grande produz uma estatística
+    confiável, com margem de erro pequena.
+  </div>
+
+  <h2 class="bloco-header">Exemplo Matemático Resolvido</h2>
+  <p>
+    Um aplicativo de música entrevistou uma amostra aleatória de 625
+    usuários sobre a satisfação com um novo recurso. Qual é a margem
+    de erro aproximada dessa amostra?
+  </p>
+  <ol>
+    <li><strong>Dados:</strong> tamanho da amostra, n = 625</li>
+    <li><strong>Fórmula:</strong> Margem de erro (%) ≈
+      <span class="fracao"><span class="num">100</span><span class="den">√n</span></span></li>
+    <li><strong>Substituição:</strong> Margem de erro ≈
+      <span class="fracao"><span class="num">100</span><span class="den">√625</span></span></li>
+    <li><strong>Cálculo:</strong> √625 = 25;
+      <span class="fracao"><span class="num">100</span><span class="den">25</span></span>
+      = 4</li>
+    <li><strong>Interpretação:</strong> a margem de erro aproximada é
+      de 4 pontos percentuais. Se 70% da amostra disse estar satisfeita,
+      o valor real na população inteira provavelmente está entre 66% e
+      74%.</li>
+  </ol>
+
+  <h2 class="bloco-header">Exemplo em Python</h2>
+  <p>
+    O programa abaixo recebe o tamanho da amostra e o percentual
+    observado, calcula a margem de erro aproximada e imprime o
+    intervalo provável de resultado na população.
+  </p>
+  <div class="box box-python">
+    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+<pre><code class="language-python"><span class="cm-kw">import</span> math
+
+
+<span class="cm-kw">def</span> margem_de_erro(tamanho_amostra):
+    <span class="cm-com"># margem de erro aproximada, em pontos percentuais</span>
+    <span class="cm-kw">return</span> <span class="cm-num">100</span> / math.sqrt(tamanho_amostra)
+
+
+<span class="cm-kw">def</span> intervalo_estimado(percentual, margem):
+    limite_inferior = percentual - margem
+    limite_superior = percentual + margem
+    <span class="cm-kw">return</span> limite_inferior, limite_superior
+
+
+tamanho_amostra = <span class="cm-num">625</span>
+percentual_satisfeitos = <span class="cm-num">70</span>
+
+margem = margem_de_erro(tamanho_amostra)
+inferior, superior = intervalo_estimado(percentual_satisfeitos, margem)
+
+<span class="cm-bi">print</span>(<span class="cm-str">f"Margem de erro aproximada: {margem:.1f} pontos percentuais"</span>)
+<span class="cm-bi">print</span>(
+    <span class="cm-str">f"Resultado provável na população: entre "</span>
+    <span class="cm-str">f"{inferior:.1f}% e {superior:.1f}%"</span>
+)
+</code></pre>
+  </div>
+  <div class="explicacao-codigo">
+    <p><strong>Entrada:</strong> tamanho da amostra e percentual observado.</p>
+    <p><strong>Processamento:</strong> <code>margem_de_erro</code>
+      aplica a fórmula da Seção 3; <code>intervalo_estimado</code>
+      soma e subtrai essa margem do percentual observado.</p>
+    <p><strong>Saída:</strong> "Margem de erro aproximada: 4.0 pontos
+      percentuais" e "Resultado provável na população: entre 66.0% e
+      74.0%".</p>
+    <p><strong>Interpretação:</strong> o programa transforma o
+      tamanho da amostra em uma faixa de confiança para o parâmetro da
+      população, como no exemplo matemático resolvido.</p>
+  </div>
+
+  <h2 class="bloco-header">Exercícios</h2>
+
+  <div class="box box-exercicio">
+    <span class="box-titulo">Exercício 1</span>
+    Um aplicativo de streaming entrevistou uma amostra aleatória de
+    400 usuários sobre um novo recurso. Escreva um programa em Python
+    que calcule e imprima a margem de erro aproximada dessa amostra,
+    usando a fórmula 100/√n.
+  </div>
+
+  <div class="box box-exercicio">
+    <span class="box-titulo">Exercício 2</span>
+    Uma rede social entrevistou uma amostra aleatória de 150 usuários
+    sobre um novo design, e 58% aprovaram a mudança. Escreva um
+    programa em Python que: (a) calcule a margem de erro aproximada
+    dessa amostra; (b) calcule e imprima o intervalo provável de
+    aprovação na população inteira; (c) imprima um alerta se a margem
+    de erro for maior que 8 pontos percentuais, indicando que a
+    amostra é pequena demais para uma conclusão confiável.
+  </div>
+
+  <h2 class="bloco-header">Gabarito Comentado</h2>
+
+  <p><strong>Exercício 1</strong></p>
+  <div class="box box-python">
+    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+<pre><code class="language-python"><span class="cm-kw">import</span> math
+
+tamanho_amostra = <span class="cm-num">400</span>
+
+margem = <span class="cm-num">100</span> / math.sqrt(tamanho_amostra)
+
+<span class="cm-bi">print</span>(<span class="cm-str">f"Margem de erro aproximada: {margem:.1f} pontos percentuais"</span>)
+</code></pre>
+  </div>
+  <div class="explicacao-codigo">
+    <p><strong>Saída:</strong> "Margem de erro aproximada: 5.0 pontos percentuais".</p>
+    <p><strong>Comentário:</strong> aplicação direta da fórmula da
+      Seção 3, com √400 = 20 e 100/20 = 5.</p>
+  </div>
+
+  <p><strong>Exercício 2</strong></p>
+  <div class="box box-python">
+    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+<pre><code class="language-python"><span class="cm-kw">import</span> math
+
+tamanho_amostra = <span class="cm-num">150</span>
+percentual_aprovacao = <span class="cm-num">58</span>
+
+margem = <span class="cm-num">100</span> / math.sqrt(tamanho_amostra)
+inferior = percentual_aprovacao - margem
+superior = percentual_aprovacao + margem
+
+<span class="cm-bi">print</span>(<span class="cm-str">f"Margem de erro aproximada: {margem:.1f} pontos percentuais"</span>)
+<span class="cm-bi">print</span>(
+    <span class="cm-str">f"Aprovação provável na população: entre "</span>
+    <span class="cm-str">f"{inferior:.1f}% e {superior:.1f}%"</span>
+)
+
+<span class="cm-kw">if</span> margem &gt; <span class="cm-num">8</span>:
+    <span class="cm-bi">print</span>(<span class="cm-str">"Amostra pequena: margem de erro alta, resultado pouco confiável."</span>)
+<span class="cm-kw">else</span>:
+    <span class="cm-bi">print</span>(<span class="cm-str">"Margem de erro razoável para essa estimativa."</span>)
+</code></pre>
+  </div>
+  <div class="explicacao-codigo">
+    <p><strong>Saída:</strong> "Margem de erro aproximada: 8.2 pontos
+      percentuais", "Aprovação provável na população: entre 49.8% e
+      66.2%" e o alerta de amostra pequena.</p>
+    <p><strong>Comentário:</strong> com √150 ≈ 12,2, a margem fica
+      acima de 8 pontos percentuais, disparando o alerta. Isso não
+      invalida a pesquisa, mas mostra que 150 pessoas é pouco para
+      cravar um número exato de aprovação.</p>
+  </div>
+
+  <h2 class="bloco-header">Retomando a Conversa Inicial</h2>
+
+  <p><strong>Seção 1, Estatística é um processo:</strong> toda pesquisa
+  segue quatro etapas (população, coleta, organização/análise,
+  conclusão), e nenhuma conclusão é 100% certa a não ser que a
+  população inteira seja consultada.</p>
+
+  <p><strong>Seção 2, Tipos de dados:</strong> dados numéricos contam ou
+  medem (discretos ou contínuos); dados categóricos classificam em
+  grupos, mesmo quando usam códigos numéricos.</p>
+
+  <p><strong>Seção 3, População, amostra, parâmetro e estatística:</strong>
+  a estatística calculada na amostra estima o parâmetro da população,
+  com uma margem de erro que diminui quanto maior e mais aleatória for
+  a amostra.</p>
+
+  <h2 class="bloco-header">Revisão Rápida</h2>
+  <div class="tabela-wrapper">
+  <table>
+    <thead>
+    <tr>
+      <th scope="col">Conceito</th>
+      <th scope="col">Fórmula</th>
+      <th scope="col">Erro comum</th>
+      <th scope="col">Dica de prova</th>
+      <th scope="col">Aplicação em Tecnologia</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Processo estatístico</td>
+      <td>N/A</td>
+      <td>Achar que Estatística é só cálculo</td>
+      <td>Cite as quatro etapas na ordem</td>
+      <td>Testar um novo recurso de app</td>
+    </tr>
+    <tr>
+      <td>Dado numérico x categórico</td>
+      <td>N/A</td>
+      <td>Tratar código categórico como número</td>
+      <td>Pergunte se faz sentido tirar a média</td>
+      <td>Sistema operacional x tempo de uso</td>
+    </tr>
+    <tr>
+      <td>Parâmetro x estatística</td>
+      <td>N/A</td>
+      <td>Confundir medida da amostra com a da população</td>
+      <td>Parâmetro = população; estatística = amostra</td>
+      <td>Média de uso estimada por amostra</td>
+    </tr>
+    <tr>
+      <td>Margem de erro</td>
+      <td><span class="fracao"><span class="num">100</span><span class="den">√n</span></span></td>
+      <td>Ignorar a margem ao ler um resultado</td>
+      <td>Amostra maior = margem menor</td>
+      <td>Pesquisa de satisfação em aplicativo</td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2 class="bloco-header">Sugestões de Leituras e Sites</h2>
+  <p><strong>LEITURAS</strong></p>
+  <p>RUMSEY, Deborah J. <em>Statistics For Dummies</em>. 2. ed. Hoboken,
+  NJ: Wiley Publishing, 2011. (livro-base desta aula, recomendado para
+  aprofundamento no vocabulário estatístico básico.)</p>
+  <p><strong>SITES</strong></p>
+  <p>Khan Academy, Estatística e Probabilidade:
+  https://pt.khanacademy.org/math/statistics-probability (aulas
+  gratuitas em português sobre população, amostra e desenho de
+  pesquisas.)</p>
+
+  <h2 class="bloco-header">Glossário</h2>
+  <div class="tabela-wrapper">
+  <table>
+    <thead>
+    <tr><th scope="col">Termo</th><th scope="col">Definição</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Dado</td><td>Informação registrada durante a coleta de uma pesquisa.</td></tr>
+    <tr><td>Conjunto de dados</td><td>Conjunto de todos os dados coletados em uma pesquisa.</td></tr>
+    <tr><td>Variável</td><td>Característica observada ou medida em cada indivíduo da amostra.</td></tr>
+    <tr><td>Dado numérico</td><td>Dado que representa uma contagem ou uma medida.</td></tr>
+    <tr><td>Dado categórico</td><td>Dado que representa um grupo ou rótulo, sem valor aritmético.</td></tr>
+    <tr><td>Dado discreto</td><td>Dado numérico contável, com valores que podem ser listados.</td></tr>
+    <tr><td>Dado contínuo</td><td>Dado numérico medido, que pode assumir qualquer valor num intervalo.</td></tr>
+    <tr><td>Parâmetro</td><td>Número que resume uma característica da população inteira.</td></tr>
+    <tr><td>Estatística (medida)</td><td>Número que resume uma característica da amostra.</td></tr>
+    <tr><td>Amostra aleatória</td><td>Amostra em que toda amostra possível do mesmo tamanho tem igual chance de ser escolhida.</td></tr>
+    <tr><td>Margem de erro</td><td>Faixa de variação esperada entre o resultado da amostra e o valor real da população.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2 class="bloco-header">Referências Bibliográficas</h2>
+  <p>MORETTIN, Pedro A. <em>Estatística básica</em>. 10. ed. Rio de
+  Janeiro: Saraiva Uni, 2023. E-book. p.i. ISBN 9788571441484.
+  Disponível em:
+  https://integrada.minhabiblioteca.com.br/reader/books/9788571441484/.
+  Acesso em: 01 dez. 2025.</p>
+  <p>VIEIRA, Sonia. <em>Estatística básica</em> – 2ª edição revista e
+  ampliada. 2. ed. Porto Alegre: +A Educação - Cengage Learning Brasil,
+  2018. E-book. p.Cover. ISBN 9788522128082. Disponível em:
+  https://integrada.minhabiblioteca.com.br/reader/books/9788522128082/.
+  Acesso em: 01 dez. 2025.</p>
+
+  </main>
+</div>
+</body>
+</html>

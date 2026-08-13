@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia de Estudos - Aula 6 - Probabilidade e Estatística (EAD)</title>
+<meta name="description" content="Guia de Estudos CEAD/UNIGRAN — Aula 6 da disciplina de Probabilidade e Estatística (EAD), com teoria, exemplos em Python e exercícios comentados.">
+<style>
+  :root {
+    --azul-escuro: #1B3A8C;
+    --ciano: #29ABE2;
+    --azul-claro: #D6E8F5;
+    --cinza-claro: #F4F4F4;
+    --cinza-texto: #333333;
+    --atencao-borda: #E0932C;
+    --atencao-fundo: #FFF4E0;
+    --branco: #FFFFFF;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--cinza-texto);
+    background: #EAEFF6;
+    margin: 0;
+    padding: 0;
+    line-height: 1.75;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--branco);
+    padding: 48px 56px 70px 56px;
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.12);
+  }
+
+  .cabecalho-textual {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-variant: small-caps;
+    font-style: italic;
+    color: var(--azul-escuro);
+    font-size: 1.05em;
+    letter-spacing: 0.5px;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+
+  .cabecalho-textual .curso {
+    display: block;
+    font-style: normal;
+    font-variant: normal;
+    font-size: 0.75em;
+    color: var(--ciano);
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .cabecalho-textual .logo {
+    height: 48px;
+    flex-shrink: 0;
+  }
+
+  .capa-cabecalho {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 10px;
+    margin-bottom: 40px;
+  }
+
+  .capa-numero {
+    position: relative;
+    flex-shrink: 0;
+    width: 230px;
+    height: 208px;
+    background: var(--ciano);
+    color: var(--branco);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(0 0, 100% 0, 100% 76%, 50% 100%, 0 76%);
+    filter: drop-shadow(6px 8px 6px rgba(0, 0, 0, 0.35));
+  }
+
+  .capa-numero .num {
+    font-size: 5em;
+    line-height: 1;
+  }
+
+  .capa-numero .ord-wrap {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 4px;
+    margin-top: -1.6em;
+  }
+
+  .capa-numero .ord {
+    font-size: 1.8em;
+    line-height: 1;
+  }
+
+  .capa-numero .ord-linha {
+    width: 16px;
+    height: 3px;
+    background: var(--branco);
+    margin-top: 5px;
+  }
+
+  .capa-aula-fundo {
+    flex-grow: 1;
+    height: 158px;
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+    background: linear-gradient(to right, #D9D9D9, #FAFAFA);
+    box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.18);
+  }
+
+  .capa-aula-fundo span {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 3em;
+    color: #1A1A1A;
+  }
+
+  .capa-titulo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 1.55em;
+    line-height: 1.4;
+    color: #1A1A1A;
+    margin: 6px 0 26px;
+  }
+
+  .capa-intro {
+    font-style: italic;
+    text-indent: 0;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .bloco-header {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--azul-escuro);
+    color: var(--branco);
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 13px 22px;
+    font-size: 1.02em;
+    border-radius: 3px;
+    margin-top: 42px;
+    margin-bottom: 22px;
+    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .secao-titulo {
+    display: flex;
+    align-items: stretch;
+    margin-top: 48px;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    box-shadow: 4px 5px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .secao-etiqueta {
+    background: var(--azul-escuro);
+    color: var(--branco);
+    padding: 10px 20px;
+    white-space: nowrap;
+    border-radius: 4px 0 0 4px;
+    font-size: 0.95em;
+  }
+
+  .secao-nome {
+    background: var(--azul-claro);
+    color: var(--azul-escuro);
+    padding: 10px 20px;
+    flex-grow: 1;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.95em;
+  }
+
+  .subtitulo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: var(--azul-escuro);
+    font-size: 1.02em;
+    margin-top: 22px;
+  }
+
+  p {
+    margin: 16px 0;
+    text-indent: 1.25cm;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .box p,
+  .docente-box p {
+    text-indent: 0;
+    text-align: justify;
+  }
+
+  .box {
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin: 26px 0;
+    page-break-inside: avoid;
+  }
+
+  .box-titulo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.82em;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .box-conceito {
+    background: var(--azul-claro);
+    border-left: 5px solid var(--azul-escuro);
+  }
+  .box-conceito .box-titulo { color: var(--azul-escuro); }
+
+  .box-exemplo {
+    background: #EAF7FC;
+    border-left: 5px solid var(--ciano);
+  }
+  .box-exemplo .box-titulo { color: #1381AD; }
+
+  .box-atencao {
+    background: var(--atencao-fundo);
+    border-left: 5px solid var(--atencao-borda);
+  }
+  .box-atencao .box-titulo { color: var(--atencao-borda); }
+
+  .box-python {
+    background: #FFFFFF;
+    border: 1px solid #DADCE0;
+    border-radius: 8px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(60, 64, 67, 0.15);
+  }
+  .codigo-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #F1F3F4;
+    border-bottom: 1px solid #DADCE0;
+    color: #5F6368;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.78em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 6px 14px;
+  }
+  .botao-play {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #1A73E8;
+    color: #FFFFFF;
+    font-size: 0.65em;
+  }
+  .box-python pre {
+    margin: 0;
+    white-space: pre;
+    overflow-x: auto;
+    padding: 14px 18px;
+    background: #F8F9FA;
+    color: #3C4043;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 0.88em;
+  }
+  .cm-kw  { color: #1967D2; font-weight: bold; }
+  .cm-str { color: #188038; }
+  .cm-com { color: #80868B; font-style: italic; }
+  .cm-num { color: #AF00DB; }
+  .cm-bi  { color: #C5221F; }
+
+  .box-exercicio {
+    background: var(--branco);
+    border: 2px solid var(--ciano);
+  }
+  .box-exercicio .box-titulo { color: #1381AD; }
+
+  .box-resumo {
+    background: var(--azul-claro);
+    border: 1px solid var(--azul-escuro);
+    font-style: italic;
+  }
+  .box-resumo .box-titulo { color: var(--azul-escuro); font-style: normal; }
+
+  .box-formula {
+    background: var(--branco);
+    border: 2px solid var(--azul-escuro);
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.05em;
+    font-weight: bold;
+    color: var(--azul-escuro);
+    padding: 22px 18px;
+  }
+  .box-formula .box-titulo {
+    color: var(--ciano);
+    text-align: left;
+  }
+
+  .formula-math {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 1.15em;
+    margin: 6px 0;
+  }
+  .fracao {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    line-height: 1.3;
+  }
+  .fracao .num {
+    padding: 0 8px 4px;
+    border-bottom: 2px solid var(--azul-escuro);
+  }
+  .fracao .den {
+    padding: 4px 8px 0;
+  }
+  .nota-formula {
+    display: block;
+    margin-top: 10px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: normal;
+    font-style: italic;
+    font-size: 0.75em;
+    color: #5F6368;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 22px 0;
+    font-size: 0.92em;
+  }
+
+  .tabela-wrapper {
+    overflow-x: auto;
+    margin: 26px 0;
+  }
+  .tabela-wrapper table { margin: 0; }
+
+  th {
+    background: var(--azul-escuro);
+    color: var(--branco);
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    padding: 12px 14px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18);
+  }
+
+  td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  tr:nth-child(even) td {
+    background: var(--cinza-claro);
+  }
+
+  .sumario-item {
+    display: flex;
+    gap: 14px;
+    margin: 14px 0;
+    align-items: baseline;
+  }
+  .sumario-aula {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: var(--ciano);
+    white-space: nowrap;
+  }
+
+  .docente-box {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    background: var(--azul-claro);
+    border-left: 5px solid var(--azul-escuro);
+    border-radius: 6px;
+    padding: 20px;
+  }
+
+  ul, ol {
+    margin: 16px 0;
+    padding-left: 28px;
+  }
+
+  li { margin: 10px 0; }
+
+  .explicacao-codigo {
+    margin: 12px 0 20px 0;
+  }
+
+  .explicacao-codigo p {
+    margin: 3px 0;
+    text-indent: 0;
+    text-align: left;
+  }
+
+  .assinatura {
+    text-align: right;
+    font-style: italic;
+    margin-top: 22px;
+    color: var(--azul-escuro);
+  }
+
+  .figura {
+    margin: 30px 0;
+    text-align: center;
+  }
+  .figura img {
+    max-width: 100%;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  .figura figcaption {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8em;
+    color: #5F6368;
+    margin-top: 10px;
+    text-align: left;
+  }
+
+  @media print {
+    body { background: var(--branco); }
+    .container { box-shadow: none; max-width: 100%; padding: 10px; }
+    .box, table, .secao-titulo, .capa-cabecalho, .capa-titulo, .bloco-header, .figura,
+    .docente-box, .tabela-wrapper, .sumario-item {
+      page-break-inside: avoid;
+    }
+    .cabecalho-textual { display: none; }
+    @page { size: A4; margin: 2cm; }
+  }
+
+  .pagina-abertura {
+    position: relative;
+  }
+
+  .capa-cabecalho {
+    position: relative;
+    overflow: visible;
+  }
+
+  .curva-decorativa {
+    position: absolute;
+    right: -56px;
+    bottom: -46px;
+    width: 170px;
+    height: 130px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .capa-cabecalho > *:not(.curva-decorativa) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav-capitulos {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    background: var(--azul-escuro);
+    padding: 10px 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.85em;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  }
+
+  .nav-capitulos a {
+    color: var(--branco);
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    transition: background 0.15s;
+  }
+
+  .nav-capitulos a:hover {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .nav-capitulos a.ativo {
+    background: var(--ciano);
+  }
+
+  @media print {
+    .nav-capitulos { display: none; }
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--branco);
+    color: var(--azul-escuro);
+    padding: 10px 16px;
+    z-index: 200;
+    border-radius: 0 0 6px 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .skip-link:focus {
+    left: 0;
+  }
+
+  .nav-capitulos a:focus-visible {
+    outline: 2px solid var(--branco);
+    outline-offset: 2px;
+  }
+
+  .secao-nome {
+    margin: 0;
+  }
+
+  .sumario-lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
+<nav class="nav-capitulos" aria-label="Navegação entre aulas">
+  <a href="Guia_Cap_1_Modelo.html">Aula 01</a>
+  <a href="Guia_Cap_2_Modelo.html">Aula 02</a>
+  <a href="Guia_Cap_3_Modelo.html">Aula 03</a>
+  <a href="Guia_Cap_4_Modelo.html">Aula 04</a>
+  <a href="Guia_Cap_5_Modelo.html">Aula 05</a>
+  <a href="Guia_Cap_6_Modelo.html" class="ativo" aria-current="page">Aula 06</a>
+  <a href="Guia_Cap_7_Modelo.html">Aula 07</a>
+  <a href="Guia_Cap_8_Modelo.html">Aula 08</a>
+</nav>
+<div class="container">
+
+  <header class="cabecalho-textual">
+    <div>
+      CEAD/UNIGRAN · Guia de Estudos
+      <span class="curso">PROBABILIDADE E ESTATÍSTICA (EAD)</span>
+    </div>
+    <img class="logo" src="imagens/logo-unigran.png" alt="Logo UNIGRAN CEAD">
+  </header>
+  <main id="conteudo-principal">
+
+  <div class="pagina-abertura">
+    <div class="capa-cabecalho">
+      <div class="capa-numero"><span class="num">6</span><span class="ord-wrap"><span class="ord">a</span><span class="ord-linha"></span></span></div>
+      <div class="capa-aula-fundo"><span>Aula</span></div>
+      <svg class="curva-decorativa" viewBox="0 0 170 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <path d="M170,130 L170,20 C110,5 75,55 90,85 C102,110 55,130 0,120 L0,130 Z" fill="#29ABE2"/>
+        <path d="M170,130 L170,50 C130,40 105,75 118,95 C128,112 85,130 40,130 Z" fill="#1B3A8C" opacity="0.55"/>
+      </svg>
+    </div>
+
+    <h1 class="capa-titulo">O que é a distribuição normal?</h1>
+
+    <p class="capa-intro">
+      Até agora vimos como descrever e visualizar dados que já temos em
+      mãos. Nesta aula damos um passo além: conhecemos a distribuição
+      normal, um padrão em forma de sino que aparece o tempo todo em
+      dados reais (altura, tempo de uso de um aplicativo, resultados de
+      provas). A partir dela, aprendemos a calcular a probabilidade de
+      um valor cair em determinado intervalo, e o caminho inverso:
+      descobrir qual valor corresponde a um percentil desejado.
+    </p>
+    <div class="assinatura">Grande abraço, Prof. Andrey</div>
+  </div>
+
+  <h2 class="bloco-header">Objetivos de Aprendizagem</h2>
+  <p>Ao término desta aula, vocês serão capazes de:</p>
+  <ul>
+    <li>Reconhecer as características da distribuição normal (formato
+      de sino, simetria, média igual à mediana);</li>
+    <li>Aplicar a Regra Empírica (68-95-99,7%) para estimar
+      probabilidades a partir da média e do desvio-padrão;</li>
+    <li>Padronizar um valor usando a fórmula do escore Z e interpretar
+      o que esse número significa;</li>
+    <li>Calcular probabilidades para a distribuição normal usando a
+      tabela Z;</li>
+    <li>Encontrar o valor de X correspondente a um percentil dado.</li>
+  </ul>
+
+  <h2 class="bloco-header">Seções de Estudo</h2>
+  <ol class="sumario-lista">
+  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 1</span> A distribuição normal: a curva em forma de sino</li>
+  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 2</span> Padronização: a distribuição Z e o escore-padrão</li>
+  <li class="sumario-item"><span class="sumario-aula">SEÇÃO 3</span> Calculando probabilidades e percentis com a tabela Z</li>
+  </ol>
+
+  <!-- SEÇÃO 1 -->
+  <div class="secao-titulo">
+    <div class="secao-etiqueta">SEÇÃO 1</div>
+    <h3 class="secao-nome">A distribuição normal: a curva em forma de sino</h3>
+  </div>
+
+  <p>
+    A <strong>distribuição normal</strong> é um padrão que muitos
+    dados numéricos seguem: quando organizados em um histograma, eles
+    formam uma curva suave em forma de sino, mais alta no meio e
+    descendo para os dois lados. Ela é simétrica: cortando a curva ao
+    meio, as duas metades são imagens espelhadas uma da outra. Por
+    causa dessa simetria, a média e a mediana ficam exatamente no
+    centro da curva.
+  </p>
+  <p>
+    Cada distribuição normal é definida por dois números: a
+    <strong>média</strong> (μ, "mu"), que indica o centro da curva, e
+    o <strong>desvio-padrão</strong> (σ, "sigma"), que indica o quanto
+    os dados variam ao redor da média. Curvas com médias diferentes
+    ficam deslocadas para a esquerda ou direita; curvas com
+    desvios-padrão maiores ficam mais "espalhadas" e achatadas.
+  </p>
+
+  <figure class="figura">
+    <img src="imagens/secao1-regra-empirica.jpg" alt="Curva normal do tempo de uso diário de um aplicativo, com as faixas de 68%, 95% e 99,7% destacadas conforme a Regra Empírica" loading="lazy" decoding="async">
+    <figcaption>Figura 1 – Regra Empírica aplicada ao tempo de uso
+    diário de um aplicativo (média = 60 min, desvio-padrão = 15 min).
+    Fonte: elaborado pelo autor. Acesso em: 07 jul. 2026.</figcaption>
+  </figure>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo cotidiano</span>
+    A altura de pessoas adultas segue, aproximadamente, uma
+    distribuição normal: a maioria das pessoas tem altura próxima da
+    média, poucas são muito baixas e poucas são muito altas.
+  </div>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo em Tecnologia</span>
+    O tempo diário que os usuários passam em um aplicativo de rede
+    social também costuma seguir, aproximadamente, uma distribuição
+    normal. Suponha uma média de 60 minutos por dia, com
+    desvio-padrão de 15 minutos: a maioria dos usuários fica perto de
+    60 minutos, com poucos usando muito pouco ou muito mais que isso.
+  </div>
+
+  <div class="tabela-wrapper">
+  <table>
+    <thead>
+    <tr><th scope="col">O que muda</th><th scope="col">Efeito na curva</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Média (μ) maior ou menor</td><td>A curva inteira se desloca para a direita ou para a esquerda</td></tr>
+    <tr><td>Desvio-padrão (σ) maior</td><td>A curva fica mais espalhada e achatada</td></tr>
+    <tr><td>Desvio-padrão (σ) menor</td><td>A curva fica mais estreita e concentrada perto da média</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box box-atencao">
+    <span class="box-titulo">Atenção</span>
+    Nem todo dado numérico segue uma distribuição normal. Dados com
+    cauda longa de um lado só, como os tempos de resposta de suporte
+    vistos na Aula 5, são assimétricos, não normais. A distribuição
+    normal exige simetria.
+  </div>
+
+  <div class="box box-formula">
+    <span class="box-titulo">Fórmula destacada</span>
+    <div class="formula-math">
+      <span>Regra Empírica: μ ± 1σ ≈ 68% · μ ± 2σ ≈ 95% · μ ± 3σ ≈ 99,7%</span>
+    </div>
+    <span class="nota-formula">quanto mais desvios-padrão de distância da média, maior a porcentagem de dados incluída</span>
+  </div>
+
+  <div class="box box-resumo">
+    <span class="box-titulo">Resumo da Seção 1</span>
+    A distribuição normal é simétrica, em forma de sino, com média e
+    mediana no centro. A Regra Empírica liga a distância da média (em
+    desvios-padrão) à porcentagem de dados esperada nesse intervalo.
+  </div>
+
+  <!-- SEÇÃO 2 -->
+  <div class="secao-titulo">
+    <div class="secao-etiqueta">SEÇÃO 2</div>
+    <h3 class="secao-nome">Padronização: a distribuição Z e o escore-padrão</h3>
+  </div>
+
+  <p>
+    Cada distribuição normal tem sua própria média e seu próprio
+    desvio-padrão, o que dificultaria criar uma tabela de
+    probabilidades para cada caso. A solução é <strong>padronizar</strong>:
+    transformar qualquer valor x em um <strong>escore Z</strong>
+    (também chamado de escore-padrão), que indica quantos
+    desvios-padrão aquele valor está acima ou abaixo da média.
+  </p>
+  <p>
+    Todo escore Z pertence à <strong>distribuição Z</strong> (ou
+    distribuição normal padrão), que tem sempre média 0 e
+    desvio-padrão 1. Um escore Z positivo indica um valor acima da
+    média; um escore Z negativo indica um valor abaixo da média; um
+    escore Z igual a 0 indica um valor exatamente na média.
+  </p>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo cotidiano</span>
+    Ana tirou 8 em uma prova cuja média da turma foi 6 e desvio-padrão
+    1; Bruno tirou 8 em outra prova cuja média foi 7 e desvio-padrão
+    2. Mesmo com a mesma nota, o escore Z mostra que Ana se saiu
+    relativamente melhor: ela ficou 2 desvios-padrão acima da média da
+    turma, enquanto Bruno ficou apenas 0,5 desvio-padrão acima.
+  </div>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo em Tecnologia</span>
+    Retomando o tempo de uso do aplicativo (média 60 minutos,
+    desvio-padrão 15 minutos): um usuário que passa 90 minutos por dia
+    no app tem escore Z = 2, ou seja, está 2 desvios-padrão acima da
+    média. Já um usuário com 45 minutos por dia tem escore Z = -1, um
+    desvio-padrão abaixo da média.
+  </div>
+
+  <div class="tabela-wrapper">
+  <table>
+    <thead>
+    <tr><th scope="col">Tempo de uso (x)</th><th scope="col">Escore Z</th><th scope="col">Interpretação</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>30 min</td><td>-2</td><td>2 desvios-padrão abaixo da média</td></tr>
+    <tr><td>45 min</td><td>-1</td><td>1 desvio-padrão abaixo da média</td></tr>
+    <tr><td>60 min</td><td>0</td><td>exatamente na média</td></tr>
+    <tr><td>75 min</td><td>1</td><td>1 desvio-padrão acima da média</td></tr>
+    <tr><td>90 min</td><td>2</td><td>2 desvios-padrão acima da média</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box box-atencao">
+    <span class="box-titulo">Atenção</span>
+    Um escore Z alto nem sempre é "bom": depende do que está sendo
+    medido. Um tempo de carregamento de app com Z = +2 é ruim (muito
+    acima da média); já um número de curtidas com Z = +2 costuma ser
+    ótimo (muito acima da média).
+  </div>
+
+  <div class="box box-formula">
+    <span class="box-titulo">Fórmula destacada</span>
+    <div class="formula-math">
+      <span>z =</span>
+      <span class="fracao"><span class="num">x − μ</span><span class="den">σ</span></span>
+    </div>
+    <span class="nota-formula">subtraia a média do valor x e divida pelo desvio-padrão</span>
+  </div>
+
+  <div class="box box-resumo">
+    <span class="box-titulo">Resumo da Seção 2</span>
+    Padronizar transforma qualquer valor x em um escore Z, que indica
+    quantos desvios-padrão ele está da média, permitindo comparar
+    valores de distribuições diferentes na mesma escala.
+  </div>
+
+  <!-- SEÇÃO 3 -->
+  <div class="secao-titulo">
+    <div class="secao-etiqueta">SEÇÃO 3</div>
+    <h3 class="secao-nome">Calculando probabilidades e percentis com a tabela Z</h3>
+  </div>
+
+  <p>
+    A <strong>tabela Z</strong> traz, para cada escore Z, a
+    probabilidade de um valor ser menor do que ele: p(Z &lt; z). Com
+    ela, calculamos qualquer probabilidade para uma distribuição
+    normal em três passos: padronizar o valor de interesse (achar z),
+    consultar a tabela e, se necessário, ajustar o resultado.
+  </p>
+  <p>
+    Para "menor que" (p(X &lt; a)), o valor da tabela já é a resposta.
+    Para "maior que" (p(X &gt; b)), subtraia o valor da tabela de 1
+    (porque a probabilidade total é sempre 1). Também é possível
+    fazer o caminho inverso: dado um percentil, buscar na tabela o
+    escore Z mais próximo e depois voltar para a escala original de x.
+  </p>
+
+  <figure class="figura">
+    <img src="imagens/secao3-padronizacao-xz.jpg" alt="Comparação entre a área sob a curva na escala X (tempo de uso) e na escala Z (escore padronizado), ambas representando a mesma probabilidade" loading="lazy" decoding="async">
+    <figcaption>Figura 2 – A mesma probabilidade, vista na escala
+    original (X, em minutos) e na escala padronizada (Z). Fonte:
+    elaborado pelo autor. Acesso em: 07 jul. 2026.</figcaption>
+  </figure>
+
+  <div class="tabela-wrapper">
+  <table>
+    <thead>
+    <tr><th scope="col">Escore Z</th><th scope="col">p(Z &lt; z)</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>-2,00</td><td>0,0228</td></tr>
+    <tr><td>-1,28</td><td>0,1003</td></tr>
+    <tr><td>-1,00</td><td>0,1587</td></tr>
+    <tr><td>0,00</td><td>0,5000</td></tr>
+    <tr><td>1,00</td><td>0,8413</td></tr>
+    <tr><td>1,28</td><td>0,8997</td></tr>
+    <tr><td>2,00</td><td>0,9772</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo cotidiano</span>
+    O tempo de espera na fila de um caixa de supermercado segue
+    distribuição normal com média 5 minutos e desvio-padrão 1,5
+    minuto. A chance de esperar menos de 3,5 minutos (z = -1)
+    corresponde a p(Z &lt; -1) = 0,1587, ou cerca de 15,9%.
+  </div>
+
+  <div class="box box-exemplo">
+    <span class="box-titulo">Exemplo em Tecnologia</span>
+    Com o tempo de uso do app (média 60 min, desvio-padrão 15 min),
+    qual a chance de um usuário aleatório passar mais de 90 minutos
+    por dia? Isso é z = 2, e p(Z &lt; 2) = 0,9772, então p(Z &gt; 2) =
+    1 - 0,9772 = 0,0228: apenas 2,28% dos usuários passam desse
+    tempo. E qual tempo marca os 10% de usuários mais engajados? É o
+    percentil 90, cujo escore Z (pela tabela) é 1,28; voltando à
+    escala original, x = 60 + 1,28 × 15 = 79,2 minutos.
+  </div>
+
+  <div class="box box-atencao">
+    <span class="box-titulo">Atenção</span>
+    Percentil não é a mesma coisa que percentual: um percentual é um
+    número entre 0 e 100; um percentil é um valor de x (um tempo, uma
+    altura, uma nota). Cuidado também com "os 10% melhores": dependendo
+    do contexto, "melhor" pode significar valores mais altos ou mais
+    baixos (por exemplo, tempo de prova: menor é melhor).
+  </div>
+
+  <div class="box box-formula">
+    <span class="box-titulo">Fórmula destacada</span>
+    <div class="formula-math">
+      <span>x = μ + z × σ</span>
+    </div>
+    <span class="nota-formula">fórmula do escore Z reescrita para encontrar x a partir de um percentil (z vem da tabela)</span>
+  </div>
+
+  <div class="box box-resumo">
+    <span class="box-titulo">Resumo da Seção 3</span>
+    A tabela Z converte escores Z em probabilidades (e vice-versa),
+    permitindo calcular tanto "qual a chance de X ficar nesse
+    intervalo" quanto "qual valor de X corresponde a este percentil".
+  </div>
+
+  <h2 class="bloco-header">Exemplo Matemático Resolvido</h2>
+  <p>
+    Usando o tempo de uso diário do aplicativo (média 60 minutos,
+    desvio-padrão 15 minutos), qual é a probabilidade de um usuário
+    aleatório passar mais de 90 minutos por dia no app?
+  </p>
+  <ol>
+    <li><strong>Dados:</strong> μ = 60 min; σ = 15 min; x = 90 min</li>
+    <li><strong>Fórmula:</strong> z =
+      <span class="fracao"><span class="num">x − μ</span><span class="den">σ</span></span>;
+      depois, p(X &gt; x) = 1 − p(Z &lt; z)</li>
+    <li><strong>Substituição:</strong> z =
+      <span class="fracao"><span class="num">90 − 60</span><span class="den">15</span></span></li>
+    <li><strong>Cálculo:</strong> z =
+      <span class="fracao"><span class="num">30</span><span class="den">15</span></span>
+      = 2,00; na tabela Z, p(Z &lt; 2,00) = 0,9772; logo p(Z &gt; 2,00)
+      = 1 − 0,9772 = 0,0228</li>
+    <li><strong>Interpretação:</strong> apenas 2,28% dos usuários
+      passam mais de 90 minutos por dia no aplicativo. É um
+      comportamento raro, bem acima da média.</li>
+  </ol>
+
+  <h2 class="bloco-header">Exemplo em Python</h2>
+  <p>
+    O módulo <code>statistics</code> tem a classe
+    <code>NormalDist</code>, que calcula probabilidades e percentis de
+    uma distribuição normal sem precisar consultar uma tabela
+    impressa. O programa abaixo repete os cálculos do tempo de uso do
+    aplicativo.
+  </p>
+  <div class="box box-python">
+    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+<pre><code class="language-python"><span class="cm-kw">import</span> statistics
+
+MEDIA = <span class="cm-num">60</span>
+DESVIO_PADRAO = <span class="cm-num">15</span>
+
+distribuicao = statistics.NormalDist(MEDIA, DESVIO_PADRAO)
+
+probabilidade_menos_30 = distribuicao.cdf(<span class="cm-num">30</span>)
+probabilidade_mais_90 = <span class="cm-num">1</span> - distribuicao.cdf(<span class="cm-num">90</span>)
+percentil_90 = distribuicao.inv_cdf(<span class="cm-num">0.90</span>)
+
+<span class="cm-bi">print</span>(<span class="cm-str">f"P(X &lt; 30 min): {probabilidade_menos_30:.4f}"</span>)
+<span class="cm-bi">print</span>(<span class="cm-str">f"P(X &gt; 90 min): {probabilidade_mais_90:.4f}"</span>)
+<span class="cm-bi">print</span>(<span class="cm-str">f"90º percentil: {percentil_90:.1f} min"</span>)
+</code></pre>
+  </div>
+  <div class="explicacao-codigo">
+    <p><strong>Entrada:</strong> média (60) e desvio-padrão (15) do
+      tempo de uso diário do aplicativo.</p>
+    <p><strong>Processamento:</strong> <code>NormalDist</code> monta a
+      distribuição; <code>cdf(x)</code> calcula p(X &lt; x) e
+      <code>inv_cdf(p)</code> faz o caminho inverso, encontrando o
+      valor de x para um percentil dado.</p>
+    <p><strong>Saída:</strong> "P(X &lt; 30 min): 0.0228", "P(X &gt; 90
+      min): 0.0228" e "90º percentil: 79.2 min".</p>
+    <p><strong>Interpretação:</strong> os resultados confirmam, com
+      mais casas decimais, os mesmos valores obtidos com a tabela Z:
+      2,28% de chance em cada extremo, e 79,2 minutos marcam o início
+      dos 10% de usuários mais engajados.</p>
+  </div>
+
+  <h2 class="bloco-header">Exercícios</h2>
+
+  <div class="box box-exercicio">
+    <span class="box-titulo">Exercício 1</span>
+    O tempo de resposta do suporte de um aplicativo segue distribuição
+    normal com média 10 minutos e desvio-padrão 2 minutos. Escreva um
+    programa em Python, usando <code>statistics.NormalDist</code>,
+    que calcule e imprima a probabilidade de um chamado ser resolvido
+    em menos de 8 minutos.
+  </div>
+
+  <div class="box box-exercicio">
+    <span class="box-titulo">Exercício 2</span>
+    Considerando a mesma distribuição do Exercício 1 (média 10
+    minutos, desvio-padrão 2 minutos), escreva um programa em Python
+    que calcule e imprima: (a) o tempo que marca os 10% de
+    atendimentos mais rápidos (percentil 10); (b) a probabilidade de
+    um chamado demorar mais de 13 minutos.
+  </div>
+
+  <h2 class="bloco-header">Gabarito Comentado</h2>
+
+  <p><strong>Exercício 1</strong></p>
+  <div class="box box-python">
+    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+<pre><code class="language-python"><span class="cm-kw">import</span> statistics
+
+MEDIA = <span class="cm-num">10</span>
+DESVIO_PADRAO = <span class="cm-num">2</span>
+
+distribuicao = statistics.NormalDist(MEDIA, DESVIO_PADRAO)
+probabilidade = distribuicao.cdf(<span class="cm-num">8</span>)
+
+<span class="cm-bi">print</span>(<span class="cm-str">f"P(X &lt; 8 min): {probabilidade:.4f}"</span>)
+</code></pre>
+  </div>
+  <div class="explicacao-codigo">
+    <p><strong>Saída:</strong> "P(X &lt; 8 min): 0.1587".</p>
+    <p><strong>Comentário:</strong> 8 minutos corresponde a z =
+      <span class="fracao"><span class="num">8 − 10</span><span class="den">2</span></span>
+      = -1,00. Pela tabela Z (ou pelo código), p(Z &lt; -1,00) =
+      0,1587: cerca de 15,87% dos chamados são resolvidos em menos de
+      8 minutos.</p>
+  </div>
+
+  <p><strong>Exercício 2</strong></p>
+  <div class="box box-python">
+    <div class="codigo-cabecalho"><span class="botao-play" aria-hidden="true">&#9654;</span>Python</div>
+<pre><code class="language-python"><span class="cm-kw">import</span> statistics
+
+MEDIA = <span class="cm-num">10</span>
+DESVIO_PADRAO = <span class="cm-num">2</span>
+
+distribuicao = statistics.NormalDist(MEDIA, DESVIO_PADRAO)
+
+percentil_10 = distribuicao.inv_cdf(<span class="cm-num">0.10</span>)
+probabilidade_mais_13 = <span class="cm-num">1</span> - distribuicao.cdf(<span class="cm-num">13</span>)
+
+<span class="cm-bi">print</span>(<span class="cm-str">f"Percentil 10: {percentil_10:.2f} min"</span>)
+<span class="cm-bi">print</span>(<span class="cm-str">f"P(X &gt; 13 min): {probabilidade_mais_13:.4f}"</span>)
+</code></pre>
+  </div>
+  <div class="explicacao-codigo">
+    <p><strong>Saída:</strong> "Percentil 10: 7.44 min" e "P(X &gt; 13
+      min): 0.0668".</p>
+    <p><strong>Comentário:</strong> o percentil 10 usa o escore Z
+      -1,28 (10% mais rápidos ficam abaixo de 7,44 minutos). Para 13
+      minutos, z =
+      <span class="fracao"><span class="num">13 − 10</span><span class="den">2</span></span>
+      = 1,5; p(Z &lt; 1,5) ≈ 0,9332, logo p(Z &gt; 1,5) ≈ 0,0668: só
+      6,68% dos chamados demoram mais que isso.</p>
+  </div>
+
+  <h2 class="bloco-header">Retomando a Conversa Inicial</h2>
+
+  <p><strong>Seção 1, Distribuição normal:</strong> curva simétrica em
+  forma de sino, com média e mediana no centro; a Regra Empírica liga
+  a distância da média (em desvios-padrão) à porcentagem de dados
+  esperada.</p>
+
+  <p><strong>Seção 2, Padronização:</strong> qualquer valor x pode ser
+  convertido em um escore Z, que mede a distância até a média em
+  desvios-padrão, permitindo comparar valores de distribuições
+  diferentes.</p>
+
+  <p><strong>Seção 3, Tabela Z:</strong> converte escores Z em
+  probabilidades (e o caminho inverso), permitindo calcular
+  probabilidades e percentis para qualquer distribuição normal.</p>
+
+  <h2 class="bloco-header">Revisão Rápida</h2>
+  <div class="tabela-wrapper">
+  <table>
+    <thead>
+    <tr>
+      <th scope="col">Conceito</th>
+      <th scope="col">Fórmula</th>
+      <th scope="col">Erro comum</th>
+      <th scope="col">Dica de prova</th>
+      <th scope="col">Aplicação em Tecnologia</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Regra Empírica</td>
+      <td>μ ± 1σ, 2σ, 3σ → 68%, 95%, 99,7%</td>
+      <td>Trocar a ordem das porcentagens</td>
+      <td>1σ = 68%, 2σ = 95%, 3σ = quase tudo</td>
+      <td>Tempo de uso diário de um app</td>
+    </tr>
+    <tr>
+      <td>Escore Z</td>
+      <td><span class="fracao"><span class="num">x − μ</span><span class="den">σ</span></span></td>
+      <td>Esquecer de dividir pelo desvio-padrão</td>
+      <td>Z negativo = abaixo da média</td>
+      <td>Comparar engajamento entre usuários</td>
+    </tr>
+    <tr>
+      <td>Probabilidade "maior que"</td>
+      <td>p(X &gt; b) = 1 − p(Z &lt; z)</td>
+      <td>Esquecer de subtrair de 1</td>
+      <td>Tabela Z só dá "menor que"</td>
+      <td>Chance de tempo de resposta alto</td>
+    </tr>
+    <tr>
+      <td>Percentil</td>
+      <td>x = μ + z × σ</td>
+      <td>Confundir percentil com percentual</td>
+      <td>Percentil é um valor de x, não uma %</td>
+      <td>Cutoff dos usuários mais engajados</td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2 class="bloco-header">Sugestões de Leituras e Sites</h2>
+  <p><strong>LEITURAS</strong></p>
+  <p>RUMSEY, Deborah J. <em>Statistics For Dummies</em>. 2. ed. Hoboken,
+  NJ: Wiley Publishing, 2011. (livro-base desta aula, recomendado para
+  aprofundamento em distribuição normal e escore Z.)</p>
+  <p><strong>SITES</strong></p>
+  <p>Khan Academy, Estatística e Probabilidade:
+  https://pt.khanacademy.org/math/statistics-probability (aulas
+  gratuitas em português sobre distribuição normal e tabela Z.)</p>
+
+  <h2 class="bloco-header">Glossário</h2>
+  <div class="tabela-wrapper">
+  <table>
+    <thead>
+    <tr><th scope="col">Termo</th><th scope="col">Definição</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Distribuição normal</td><td>Padrão de dados numéricos em formato de curva simétrica, em forma de sino.</td></tr>
+    <tr><td>Regra Empírica</td><td>Relação entre distância da média (em desvios-padrão) e porcentagem de dados: 68%, 95%, 99,7% para 1, 2 e 3 desvios-padrão.</td></tr>
+    <tr><td>Distribuição Z (normal padrão)</td><td>Distribuição normal com média 0 e desvio-padrão 1, usada como referência universal.</td></tr>
+    <tr><td>Escore Z (z-score)</td><td>Número de desvios-padrão que um valor está acima ou abaixo da média.</td></tr>
+    <tr><td>Tabela Z</td><td>Tabela que relaciona escores Z a probabilidades p(Z &lt; z).</td></tr>
+    <tr><td>Percentil</td><td>Valor de x abaixo do qual está uma determinada porcentagem dos dados.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2 class="bloco-header">Referências Bibliográficas</h2>
+  <p>MORETTIN, Pedro A. <em>Estatística básica</em>. 10. ed. Rio de
+  Janeiro: Saraiva Uni, 2023. E-book. p.i. ISBN 9788571441484.
+  Disponível em:
+  https://integrada.minhabiblioteca.com.br/reader/books/9788571441484/.
+  Acesso em: 01 dez. 2025.</p>
+  <p>TRIOLA, Mario F. <em>Introdução à Estatística</em>. 14. ed. Rio de
+  Janeiro: LTC, 2024. E-book. p.Capa. ISBN 9788521638780. Disponível em:
+  https://integrada.minhabiblioteca.com.br/reader/books/9788521638780/.
+  Acesso em: 01 dez. 2025.</p>
+
+  </main>
+</div>
+</body>
+</html>
